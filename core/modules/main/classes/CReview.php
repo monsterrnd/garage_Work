@@ -63,15 +63,7 @@ class CReview
 			$this->Error["Add"][] = "Вы не написали отзыв";	
 		
 		
-		$DB->Query(
-			"SELECT * FROM `ga_rewview` "
-			."WHERE "
-			."(`NAME` = '".$arFieldsProp["NAME"]."' AND `PHONE` = '".$arFieldsProp["PHONE"]."') "
-		);
-		
-		$company_exist = $DB->DBprint();
-		if ($company_exist)
-			$this->Error["Add"][] = "Название компании и Телефон уже зарегистрированы";	
+
 		
 		if (is_array($arFieldsProp) && !$company_exist && !is_array($this->Error["Add"]))
 		{			
