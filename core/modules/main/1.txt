@@ -1,0 +1,920 @@
+[
+  {
+    "ID": 1,
+    "ACTIVE": 1,
+    "SORT": 100,
+    "ID_ALLSERVICES": "",
+    "MAINPATH": "REMONT",
+    "NAME": "Ремонт",
+    "DEPTH": 1
+  },
+  {
+    "ID": 2,
+    "ACTIVE": 1,
+    "SORT": 200,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Замена масла",
+    "DEPTH": 2
+  },
+  {
+    "ID": 3,
+    "ACTIVE": 1,
+    "SORT": 300,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Генератор",
+    "DEPTH": 2
+  },
+  {
+    "ID": 4,
+    "ACTIVE": 1,
+    "SORT": 400,
+    "ID_ALLSERVICES": 3,
+    "MAINPATH": "",
+    "NAME": "Ремонт (описать в комментарии)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 5,
+    "ACTIVE": 1,
+    "SORT": 500,
+    "ID_ALLSERVICES": 3,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 6,
+    "ACTIVE": 1,
+    "SORT": 600,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Инжектор",
+    "DEPTH": 2
+  },
+  {
+    "ID": 7,
+    "ACTIVE": 1,
+    "SORT": 700,
+    "ID_ALLSERVICES": 6,
+    "MAINPATH": "",
+    "NAME": "Промывка",
+    "DEPTH": 3
+  },
+  {
+    "ID": 8,
+    "ACTIVE": 1,
+    "SORT": 800,
+    "ID_ALLSERVICES": 6,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 9,
+    "ACTIVE": 1,
+    "SORT": 900,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Кондиционер",
+    "DEPTH": 2
+  },
+  {
+    "ID": 10,
+    "ACTIVE": 1,
+    "SORT": 1000,
+    "ID_ALLSERVICES": 9,
+    "MAINPATH": "",
+    "NAME": "Заправка",
+    "DEPTH": 3
+  },
+  {
+    "ID": 11,
+    "ACTIVE": 1,
+    "SORT": 1100,
+    "ID_ALLSERVICES": 9,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 12,
+    "ACTIVE": 1,
+    "SORT": 1200,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Маслосъемные колпачки (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 13,
+    "ACTIVE": 1,
+    "SORT": 1300,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Масляной насос",
+    "DEPTH": 2
+  },
+  {
+    "ID": 14,
+    "ACTIVE": 1,
+    "SORT": 1400,
+    "ID_ALLSERVICES": 13,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 15,
+    "ACTIVE": 1,
+    "SORT": 1500,
+    "ID_ALLSERVICES": 13,
+    "MAINPATH": "",
+    "NAME": "Ремонт (описать в комментарии)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 16,
+    "ACTIVE": 1,
+    "SORT": 1600,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Топливный насос",
+    "DEPTH": 2
+  },
+  {
+    "ID": 17,
+    "ACTIVE": 1,
+    "SORT": 1700,
+    "ID_ALLSERVICES": 16,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 18,
+    "ACTIVE": 1,
+    "SORT": 1800,
+    "ID_ALLSERVICES": 16,
+    "MAINPATH": "",
+    "NAME": "Ремонт (описать в комментарии)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 19,
+    "ACTIVE": 1,
+    "SORT": 1900,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Помпа замена",
+    "DEPTH": 2
+  },
+  {
+    "ID": 20,
+    "ACTIVE": 1,
+    "SORT": 2000,
+    "ID_ALLSERVICES": 19,
+    "MAINPATH": "",
+    "NAME": "Без замены ремня ГРМ",
+    "DEPTH": 3
+  },
+  {
+    "ID": 21,
+    "ACTIVE": 1,
+    "SORT": 2100,
+    "ID_ALLSERVICES": 19,
+    "MAINPATH": "",
+    "NAME": "С заменой ремня ГРМ",
+    "DEPTH": 3
+  },
+  {
+    "ID": 22,
+    "ACTIVE": 1,
+    "SORT": 2200,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Радиатор",
+    "DEPTH": 2
+  },
+  {
+    "ID": 23,
+    "ACTIVE": 1,
+    "SORT": 2300,
+    "ID_ALLSERVICES": 22,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 24,
+    "ACTIVE": 1,
+    "SORT": 2400,
+    "ID_ALLSERVICES": 22,
+    "MAINPATH": "",
+    "NAME": "Ремонт (описать в комментарии)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 25,
+    "ACTIVE": 1,
+    "SORT": 2500,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Ремень ГРМ (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 26,
+    "ACTIVE": 1,
+    "SORT": 2600,
+    "ID_ALLSERVICES": 25,
+    "MAINPATH": "",
+    "NAME": "Только ремень",
+    "DEPTH": 3
+  },
+  {
+    "ID": 27,
+    "ACTIVE": 1,
+    "SORT": 2700,
+    "ID_ALLSERVICES": 25,
+    "MAINPATH": "",
+    "NAME": "С заменой роликов ГРМ",
+    "DEPTH": 3
+  },
+  {
+    "ID": 28,
+    "ACTIVE": 1,
+    "SORT": 2800,
+    "ID_ALLSERVICES": 25,
+    "MAINPATH": "",
+    "NAME": "С заменой помпы",
+    "DEPTH": 3
+  },
+  {
+    "ID": 29,
+    "ACTIVE": 1,
+    "SORT": 2900,
+    "ID_ALLSERVICES": 25,
+    "MAINPATH": "",
+    "NAME": "С заменой помпы и роликов",
+    "DEPTH": 3
+  },
+  {
+    "ID": 30,
+    "ACTIVE": 1,
+    "SORT": 3000,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Цепь ГРМ",
+    "DEPTH": 2
+  },
+  {
+    "ID": 31,
+    "ACTIVE": 1,
+    "SORT": 3100,
+    "ID_ALLSERVICES": 30,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 32,
+    "ACTIVE": 1,
+    "SORT": 3200,
+    "ID_ALLSERVICES": 30,
+    "MAINPATH": "",
+    "NAME": "Ремонт (описать в комментарии)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 33,
+    "ACTIVE": 1,
+    "SORT": 3300,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Свечи зажигание (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 34,
+    "ACTIVE": 1,
+    "SORT": 3400,
+    "ID_ALLSERVICES": 33,
+    "MAINPATH": "",
+    "NAME": "4 свечи",
+    "DEPTH": 3
+  },
+  {
+    "ID": 35,
+    "ACTIVE": 1,
+    "SORT": 3500,
+    "ID_ALLSERVICES": 33,
+    "MAINPATH": "",
+    "NAME": "6 свечей",
+    "DEPTH": 3
+  },
+  {
+    "ID": 36,
+    "ACTIVE": 1,
+    "SORT": 3600,
+    "ID_ALLSERVICES": 33,
+    "MAINPATH": "",
+    "NAME": "8 свечей",
+    "DEPTH": 3
+  },
+  {
+    "ID": 37,
+    "ACTIVE": 1,
+    "SORT": 3700,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Термостат (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 38,
+    "ACTIVE": 1,
+    "SORT": 3800,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Турбина",
+    "DEPTH": 2
+  },
+  {
+    "ID": 39,
+    "ACTIVE": 1,
+    "SORT": 3900,
+    "ID_ALLSERVICES": 38,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 40,
+    "ACTIVE": 1,
+    "SORT": 4000,
+    "ID_ALLSERVICES": 38,
+    "MAINPATH": "",
+    "NAME": "Ремонт (описать в комментарии)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 41,
+    "ACTIVE": 1,
+    "SORT": 4100,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Салонный фильтр (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 42,
+    "ACTIVE": 1,
+    "SORT": 4200,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Воздушный фильтр (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 43,
+    "ACTIVE": 1,
+    "SORT": 4300,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Масляный фильтр (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 44,
+    "ACTIVE": 1,
+    "SORT": 4400,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Топливный фильтр (замена)",
+    "DEPTH": 2
+  },
+  {
+    "ID": 45,
+    "ACTIVE": 1,
+    "SORT": 4500,
+    "ID_ALLSERVICES": 44,
+    "MAINPATH": "",
+    "NAME": "Навесной фильтр",
+    "DEPTH": 3
+  },
+  {
+    "ID": 46,
+    "ACTIVE": 1,
+    "SORT": 4600,
+    "ID_ALLSERVICES": 44,
+    "MAINPATH": "",
+    "NAME": "Погружной а бак",
+    "DEPTH": 3
+  },
+  {
+    "ID": 47,
+    "ACTIVE": 1,
+    "SORT": 4700,
+    "ID_ALLSERVICES": 44,
+    "MAINPATH": "",
+    "NAME": "С снятием бензобака",
+    "DEPTH": 3
+  },
+  {
+    "ID": 48,
+    "ACTIVE": 1,
+    "SORT": 4800,
+    "ID_ALLSERVICES": 1,
+    "MAINPATH": "",
+    "NAME": "Форсунки",
+    "DEPTH": 2
+  },
+  {
+    "ID": 49,
+    "ACTIVE": 1,
+    "SORT": 4900,
+    "ID_ALLSERVICES": 48,
+    "MAINPATH": "",
+    "NAME": "Чистка",
+    "DEPTH": 3
+  },
+  {
+    "ID": 50,
+    "ACTIVE": 1,
+    "SORT": 5000,
+    "ID_ALLSERVICES": 48,
+    "MAINPATH": "",
+    "NAME": "Замена",
+    "DEPTH": 3
+  },
+  {
+    "ID": 51,
+    "ACTIVE": 1,
+    "SORT": 5100,
+    "ID_ALLSERVICES": "",
+    "MAINPATH": "SHINI",
+    "NAME": "Шиномонтаж",
+    "DEPTH": 1
+  },
+  {
+    "ID": 52,
+    "ACTIVE": 1,
+    "SORT": 5200,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "Хранение шин",
+    "DEPTH": 2
+  },
+  {
+    "ID": 53,
+    "ACTIVE": 1,
+    "SORT": 5300,
+    "ID_ALLSERVICES": 52,
+    "MAINPATH": "",
+    "NAME": "6 месяцев",
+    "DEPTH": 3
+  },
+  {
+    "ID": 54,
+    "ACTIVE": 1,
+    "SORT": 5400,
+    "ID_ALLSERVICES": 52,
+    "MAINPATH": "",
+    "NAME": "12 месяцев",
+    "DEPTH": 3
+  },
+  {
+    "ID": 55,
+    "ACTIVE": 1,
+    "SORT": 5500,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "Обкатка дисков",
+    "DEPTH": 2
+  },
+  {
+    "ID": 56,
+    "ACTIVE": 1,
+    "SORT": 5600,
+    "ID_ALLSERVICES": 55,
+    "MAINPATH": "",
+    "NAME": "Рихтовка",
+    "DEPTH": 3
+  },
+  {
+    "ID": 57,
+    "ACTIVE": 1,
+    "SORT": 5700,
+    "ID_ALLSERVICES": 55,
+    "MAINPATH": "",
+    "NAME": "Сварка",
+    "DEPTH": 3
+  },
+  {
+    "ID": 58,
+    "ACTIVE": 1,
+    "SORT": 5800,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R13",
+    "DEPTH": 2
+  },
+  {
+    "ID": 59,
+    "ACTIVE": 1,
+    "SORT": 5900,
+    "ID_ALLSERVICES": 58,
+    "MAINPATH": "",
+    "NAME": "R13 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 60,
+    "ACTIVE": 1,
+    "SORT": 6000,
+    "ID_ALLSERVICES": 58,
+    "MAINPATH": "",
+    "NAME": "R13 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 61,
+    "ACTIVE": 1,
+    "SORT": 6100,
+    "ID_ALLSERVICES": 58,
+    "MAINPATH": "",
+    "NAME": "R13 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 62,
+    "ACTIVE": 1,
+    "SORT": 6200,
+    "ID_ALLSERVICES": 58,
+    "MAINPATH": "",
+    "NAME": "R13 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 63,
+    "ACTIVE": 1,
+    "SORT": 6300,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R14",
+    "DEPTH": 2
+  },
+  {
+    "ID": 64,
+    "ACTIVE": 1,
+    "SORT": 6400,
+    "ID_ALLSERVICES": 63,
+    "MAINPATH": "",
+    "NAME": "R14 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 65,
+    "ACTIVE": 1,
+    "SORT": 6500,
+    "ID_ALLSERVICES": 63,
+    "MAINPATH": "",
+    "NAME": "R14 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 66,
+    "ACTIVE": 1,
+    "SORT": 6600,
+    "ID_ALLSERVICES": 63,
+    "MAINPATH": "",
+    "NAME": "R14 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 67,
+    "ACTIVE": 1,
+    "SORT": 6700,
+    "ID_ALLSERVICES": 63,
+    "MAINPATH": "",
+    "NAME": "R14 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 68,
+    "ACTIVE": 1,
+    "SORT": 6800,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R15",
+    "DEPTH": 2
+  },
+  {
+    "ID": 69,
+    "ACTIVE": 1,
+    "SORT": 6900,
+    "ID_ALLSERVICES": 68,
+    "MAINPATH": "",
+    "NAME": "R15 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 70,
+    "ACTIVE": 1,
+    "SORT": 7000,
+    "ID_ALLSERVICES": 68,
+    "MAINPATH": "",
+    "NAME": "R15 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 71,
+    "ACTIVE": 1,
+    "SORT": 7100,
+    "ID_ALLSERVICES": 68,
+    "MAINPATH": "",
+    "NAME": "R15 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 72,
+    "ACTIVE": 1,
+    "SORT": 7200,
+    "ID_ALLSERVICES": 68,
+    "MAINPATH": "",
+    "NAME": "R15 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 73,
+    "ACTIVE": 1,
+    "SORT": 7300,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R16",
+    "DEPTH": 2
+  },
+  {
+    "ID": 74,
+    "ACTIVE": 1,
+    "SORT": 7400,
+    "ID_ALLSERVICES": 73,
+    "MAINPATH": "",
+    "NAME": "R16 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 75,
+    "ACTIVE": 1,
+    "SORT": 7500,
+    "ID_ALLSERVICES": 73,
+    "MAINPATH": "",
+    "NAME": "R16 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 76,
+    "ACTIVE": 1,
+    "SORT": 7600,
+    "ID_ALLSERVICES": 73,
+    "MAINPATH": "",
+    "NAME": "R16 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 77,
+    "ACTIVE": 1,
+    "SORT": 7700,
+    "ID_ALLSERVICES": 73,
+    "MAINPATH": "",
+    "NAME": "R16 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 78,
+    "ACTIVE": 1,
+    "SORT": 7800,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R17",
+    "DEPTH": 2
+  },
+  {
+    "ID": 79,
+    "ACTIVE": 1,
+    "SORT": 7900,
+    "ID_ALLSERVICES": 78,
+    "MAINPATH": "",
+    "NAME": "R17 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 80,
+    "ACTIVE": 1,
+    "SORT": 8000,
+    "ID_ALLSERVICES": 78,
+    "MAINPATH": "",
+    "NAME": "R17 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 81,
+    "ACTIVE": 1,
+    "SORT": 8100,
+    "ID_ALLSERVICES": 78,
+    "MAINPATH": "",
+    "NAME": "R17 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 82,
+    "ACTIVE": 1,
+    "SORT": 8200,
+    "ID_ALLSERVICES": 78,
+    "MAINPATH": "",
+    "NAME": "R17 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 83,
+    "ACTIVE": 1,
+    "SORT": 8300,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R18",
+    "DEPTH": 2
+  },
+  {
+    "ID": 84,
+    "ACTIVE": 1,
+    "SORT": 8400,
+    "ID_ALLSERVICES": 83,
+    "MAINPATH": "",
+    "NAME": "R18 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 85,
+    "ACTIVE": 1,
+    "SORT": 8500,
+    "ID_ALLSERVICES": 83,
+    "MAINPATH": "",
+    "NAME": "R18 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 86,
+    "ACTIVE": 1,
+    "SORT": 8600,
+    "ID_ALLSERVICES": 83,
+    "MAINPATH": "",
+    "NAME": "R18 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 87,
+    "ACTIVE": 1,
+    "SORT": 8700,
+    "ID_ALLSERVICES": 83,
+    "MAINPATH": "",
+    "NAME": "R18 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 88,
+    "ACTIVE": 1,
+    "SORT": 8800,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R19",
+    "DEPTH": 2
+  },
+  {
+    "ID": 89,
+    "ACTIVE": 1,
+    "SORT": 8900,
+    "ID_ALLSERVICES": 88,
+    "MAINPATH": "",
+    "NAME": "R19 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 90,
+    "ACTIVE": 1,
+    "SORT": 9000,
+    "ID_ALLSERVICES": 88,
+    "MAINPATH": "",
+    "NAME": "R19 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 91,
+    "ACTIVE": 1,
+    "SORT": 9100,
+    "ID_ALLSERVICES": 88,
+    "MAINPATH": "",
+    "NAME": "R19 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 92,
+    "ACTIVE": 1,
+    "SORT": 9200,
+    "ID_ALLSERVICES": 88,
+    "MAINPATH": "",
+    "NAME": "R19 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 93,
+    "ACTIVE": 1,
+    "SORT": 9300,
+    "ID_ALLSERVICES": 51,
+    "MAINPATH": "",
+    "NAME": "R20",
+    "DEPTH": 2
+  },
+  {
+    "ID": 94,
+    "ACTIVE": 1,
+    "SORT": 9400,
+    "ID_ALLSERVICES": 93,
+    "MAINPATH": "",
+    "NAME": "R20 только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 95,
+    "ACTIVE": 1,
+    "SORT": 9500,
+    "ID_ALLSERVICES": 93,
+    "MAINPATH": "",
+    "NAME": "R20 готовый комплект(резина и диски)",
+    "DEPTH": 3
+  },
+  {
+    "ID": 96,
+    "ACTIVE": 1,
+    "SORT": 9600,
+    "ID_ALLSERVICES": 93,
+    "MAINPATH": "",
+    "NAME": "R20 RunFlat только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 97,
+    "ACTIVE": 1,
+    "SORT": 9700,
+    "ID_ALLSERVICES": 93,
+    "MAINPATH": "",
+    "NAME": "R20 низкий профиль только резина",
+    "DEPTH": 3
+  },
+  {
+    "ID": 98,
+    "ACTIVE": 1,
+    "SORT": 9800,
+    "ID_ALLSERVICES": "",
+    "MAINPATH": "DIAG",
+    "NAME": "Диагностика",
+    "DEPTH": 1
+  },
+  {
+    "ID": 99,
+    "ACTIVE": 1,
+    "SORT": 9900,
+    "ID_ALLSERVICES": 98,
+    "MAINPATH": "",
+    "NAME": "Диагностика двигателя",
+    "DEPTH": 2
+  },
+  {
+    "ID": 100,
+    "ACTIVE": 1,
+    "SORT": 10000,
+    "ID_ALLSERVICES": 98,
+    "MAINPATH": "",
+    "NAME": "Диагностика коробки передач",
+    "DEPTH": 2
+  },
+  {
+    "ID": 101,
+    "ACTIVE": 1,
+    "SORT": 10100,
+    "ID_ALLSERVICES": 98,
+    "MAINPATH": "",
+    "NAME": "Диагностика подвески",
+    "DEPTH": 2
+  },
+  {
+    "ID": 102,
+    "ACTIVE": 1,
+    "SORT": 10200,
+    "ID_ALLSERVICES": 98,
+    "MAINPATH": "",
+    "NAME": "Диагностика электрики",
+    "DEPTH": 2
+  }
+]
