@@ -62,10 +62,11 @@ class CReview
 		if( strlen($arFieldsProp["DESCRIPTION"]) < 2)
 			$this->Error["Add"][] = "Вы не написали отзыв";	
 		
-		
+		///запрос к пользователям
+		///запрос к компаниям
 
 		
-		if (is_array($arFieldsProp) && !$company_exist && !is_array($this->Error["Add"]))
+		if (is_array($arFieldsProp) && !is_array($this->Error["Add"]))
 		{			
 			$strTableElName = $DB->GetTableFields("ga_rewview");
 			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_rewview",$arFieldsProp,$strTableElName));
