@@ -43,16 +43,61 @@ class CPrices
 	* @param array $arFieldsProp массив с параметрами таблицы 
 	* @param string		[PRICE] Цена
 	* @param string		[COMMENT] Доп комментарий
-	* @param integer	[ID_USER] Привязка к Пользователю
+	* @param integer	[ID_CAR_MARK] Привязка к марке авто
 	* @param integer	[ID_ALLSERVICES] Привязка к услуге
 	* @param integer	[ID_COMPANY] Привязка к Компании
 	* @uses CPrices::$Error Для размещения Ошибок
-	* @todo $CPRICES->Add(array("PRICE"=>"","COMMENT"=>"","ID_ALLSERVICES"=>"","ID_USER"=>"","ID_COMPANY"=>""));
+	* @todo $CPRICES->Add(array("PRICE"=>"","COMMENT"=>"","ID_ALLSERVICES"=>"","ID_CAR_MARK"=>"","ID_COMPANY"=>""));
 	* @return array
 	*/
 	function Add($arFieldsProp)
 	{
+		global $DB;
+		unset($arFieldsProp["ID"]);
 		
+
+		
+		if( !$arFieldsProp["COMMENT"] && !$arFieldsProp["PRICE"])
+			$this->Error["Add"][] = "Заполните цену или комментарий";	
+		
+		///запрос к марке авто
+		$DB->Query("SELECT * FROM `car_mark` WHERE `id_car_mark` = '".$arFieldsProp["ID_CAR_MARK"]."'");
+		$car_mark_exist = $DB->DBprint();
+		
+		if(!$car_mark_exist)
+			$this->Error["Add"][] = "Автомобиль не существует";	
+
+		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$company_exist = $DB->DBprint();
+		
+		if(!$company_exist)
+			$this->Error["Add"][] = "Компания не существует";	
+		
+		///запрос к услугам
+		$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = (".$arFieldsProp["ID_ALLSERVICES"].")");
+		$cervices_exist = $DB->DBprint();
+		
+		if(!$cervices_exist)
+			$this->Error["Add"][] = "Данная вид работ не существует";	
+		
+		
+		//////добавить проверку на существование
+		
+		if (is_array($arFieldsProp) && !is_array($this->Error["Add"]))
+		{			
+			$strTableElName = $DB->GetTableFields("ga_prices");
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_prices",$arFieldsProp,$strTableElName));
+			$DB->Query("INSERT INTO ga_prices(".$sqlElColum.") VALUES (".$sqlElValues.");");
+
+			$DB->Query('SELECT MAX(ID) FROM `ga_prices`');
+			$prices_id  = $DB->db_EXEC->fetchColumn();
+			return $prices_id;
+		}
+		else 
+		{
+			return array("ERROR" =>$this->Error["Add"]);
+		}		
 	}
 	
 
@@ -62,11 +107,11 @@ class CPrices
 	* @param integer	[ID]* Ключа в таблице
 	* @param string		[PRICE] Цена
 	* @param string		[COMMENT] Доп комментарий
-	* @param integer	[ID_USER] Привязка к Пользователю
+	* @param integer	[ID_CAR_MARK] Привязка к марке авто
 	* @param integer	[ID_ALLSERVICES] Привязка к услуге
 	* @param integer	[ID_COMPANY] Привязка к компании
 	* @uses CPrices::$Error Для размещения Ошибок
-	* @todo $CPRICES->Update(array("PRICE"=>"","COMMENT"=>"","ID_ALLSERVICES"=>"","ID_USER"=>"","ID_COMPANY"=>""));
+	* @todo $CPRICES->Update(array("PRICE"=>"","COMMENT"=>"","ID_ALLSERVICES"=>"","ID_CAR_MARK"=>"","ID_COMPANY"=>""));
 	* @return array
 	*/	
 	function Update($arFieldsProp)

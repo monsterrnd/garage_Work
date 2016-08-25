@@ -42,6 +42,7 @@ $CSERVICE		=	new CService;
 $CUSER			=	new CUser;
 $CCOMPANY		=	new CCompany;
 $CREVIEW		=	new CReview;
+$CPRICES		=	new CPrices;
 
 
 //$MESSAGE = new CMessage;
@@ -100,7 +101,7 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CREVIEW->Update(array("ID"=>"6","ACTIVE"=>"Y","ANONIME"=>"N","RATING"=>"5","DESCRIPTION"=>"hfghfghfghfgh","ID_USER"=>"34","ID_COMPANY"=>"10")));
+print_r($CPRICES->Add(array("PRICE"=>"565456456","COMMENT"=>"","ID_ALLSERVICES"=>"44","ID_CAR_MARK"=>"111","ID_COMPANY"=>"9")));
 
 
 
