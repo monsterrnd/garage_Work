@@ -63,8 +63,28 @@ class CReview
 			$this->Error["Add"][] = "Вы не написали отзыв";	
 		
 		///запрос к пользователям
-		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = '".$arFieldsProp["ID_USER"]."'");
+		$user_exist = $DB->DBprint();
+		
+		if(!$user_exist)
+			$this->Error["Add"][] = "Пользователь не существует";	
 
+		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$company_exist = $DB->DBprint();
+		
+		if(!$company_exist)
+			$this->Error["Add"][] = "Компания не существует";	
+		
+		$DB->Query(
+			"SELECT * FROM `ga_rewview` "
+			."WHERE "
+			."(`ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' AND `ID_USER` = '".$arFieldsProp["ID_USER"]."') "
+		);
+		$THIS_REVIEW = $DB->DBprint();
+		
+		if($THIS_REVIEW)
+			$this->Error["Add"][] = "Вы уже оставляли отзыв для данной компании";		
 		
 		if (is_array($arFieldsProp) && !is_array($this->Error["Add"]))
 		{			
@@ -98,7 +118,63 @@ class CReview
 	*/	
 	function Update($arFieldsProp)
 	{
-				
+		global $DB;
+		
+		if(!$arFieldsProp["ID"])
+			$this->Error["Update"][] = "ID не указан";
+		else
+		{
+			$DB->Query("SELECT * FROM `ga_rewview` WHERE `ID` = '".$arFieldsProp["ID"]."'");
+			$REVIEW_THIS = $DB->DBprint();	
+			if ($REVIEW_THIS)
+			{
+				$arFieldsProp = array_merge(
+					$REVIEW_THIS[0],
+					$arFieldsProp
+				);	
+			}
+		}
+
+			if($arFieldsProp["RATING"] < 1 || $arFieldsProp["RATING"] > 5)
+			$this->Error["Update"][] = "Поставте отценку от 1 до 5";	
+		
+		if( strlen($arFieldsProp["DESCRIPTION"]) < 2)
+			$this->Error["Update"][] = "Вы не написали отзыв";	
+		
+		///запрос к пользователям
+		$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = '".$arFieldsProp["ID_USER"]."'");
+		$user_exist = $DB->DBprint();
+		
+		if(!$user_exist)
+			$this->Error["Update"][] = "Пользователь не существует";	
+
+		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$company_exist = $DB->DBprint();
+		
+		if(!$company_exist)
+			$this->Error["Update"][] = "Компания не существует";	
+		
+		$DB->Query(
+			"SELECT * FROM `ga_rewview` "
+			."WHERE "
+			."(`ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' AND `ID_USER` = '".$arFieldsProp["ID_USER"]."'  AND `ID` != '".$arFieldsProp["ID"]."') ) "
+		);
+		$THIS_REVIEW = $DB->DBprint();
+		
+		if($THIS_REVIEW)
+			$this->Error["Update"][] = "Вы уже оставляли отзыв для данной компании";		
+		
+		if (is_array($arFieldsProp) && !is_array($this->Error["Update"]))
+		{			
+			$strTableElName = $DB->GetTableFields("ga_rewview");
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_rewview",$arFieldsProp,$strTableElName));
+			$DB->Query("REPLACE INTO ga_rewview(".$sqlElColum.") VALUES (".$sqlElValues.");");
+		
+			return $arFieldsProp["ID"];
+		}
+		else
+			return array("ERROR" => $this->Error["Update"]);			
 	}	
 	
 	/**
@@ -118,4 +194,5 @@ class CReview
 			return $DB->DBprint();
 		}
 	}
+
 }

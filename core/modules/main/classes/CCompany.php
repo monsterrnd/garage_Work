@@ -87,8 +87,8 @@ class CCompany
 			$DB->Query("INSERT INTO ga_company(".$sqlElColum.") VALUES (".$sqlElValues.");");
 
 			$DB->Query('SELECT MAX(ID) FROM `ga_company`');
-			$user_id  = $DB->db_EXEC->fetchColumn();
-			return $user_id;
+			$company_id  = $DB->db_EXEC->fetchColumn();
+			return $company_id;
 		}
 		else 
 		{

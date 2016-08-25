@@ -77,7 +77,7 @@ class CUser
 		if ($user_exist)
 			$this->Error["Add"][] = "Email или Телефон уже зарегистрированы";
 		
-		if (is_array($arFieldsProp) && !$user_exist && !is_array($this->Error["Add"]))
+		if (is_array($arFieldsProp) && !is_array($this->Error["Add"]))
 		{
 			$SESSION = md5(microtime());
 
@@ -148,7 +148,7 @@ class CUser
 		$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = '".$arFieldsProp["ID"]."'");
 		$USER_THIS = $DB->DBprint();	
 		
-		if (is_array($arFieldsProp) &&$USER_THIS && !$user_exist  && !is_array($this->Error["Update"]))
+		if (is_array($arFieldsProp) && $USER_THIS  && !is_array($this->Error["Update"]))
 		{
 			
 			$arFieldsProp = array_merge(

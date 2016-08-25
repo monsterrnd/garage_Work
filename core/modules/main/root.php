@@ -99,8 +99,8 @@ echo "</pre>";
 </select>
  * 
  */
-
-print_r($CREVIEW->Add(array("RATING"=>"4","DESCRIPTION"=>"sdfsdfsdf","ID_USER"=>"","ID_COMPANY"=>"")));
+echo "<pre>";
+print_r($CREVIEW->Update(array("ID"=>"6","ACTIVE"=>"Y","ANONIME"=>"N","RATING"=>"5","DESCRIPTION"=>"hfghfghfghfgh","ID_USER"=>"34","ID_COMPANY"=>"10")));
 
 
 
