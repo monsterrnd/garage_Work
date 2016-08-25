@@ -106,6 +106,7 @@ class CReview
 	/**
 	* @package Обновить элемент
 	* @param array $arFieldsProp массив с параметрами таблицы 
+	* @param integer	[ID]* Ключа в таблице
 	* @param char		[ACTIVE] Активность Элемента (Y/N)
 	* @param char		[ANONIME] Анонимно (Y/N)
 	* @param integer	[RATING] рейтинг от  1 до 5
