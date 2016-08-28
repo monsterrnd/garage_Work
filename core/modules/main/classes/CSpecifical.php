@@ -54,6 +54,47 @@ class CSpecifical
 		global $DB;
 		unset($arFieldsProp["ID"]);
 		
+		///запрос к марке авто
+		$DB->Query("SELECT * FROM `car_mark` WHERE `id_car_mark` = '".$arFieldsProp["ID_CAR_MARK"]."'");
+		$car_mark_exist = $DB->DBprint();
+		
+		if(!$car_mark_exist)
+			$this->Error["Add"][] = "Автомобиль не существует";	
+
+		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$company_exist = $DB->DBprint();
+		
+		if(!$company_exist)
+			$this->Error["Add"][] = "Компания не существует";	
+		
+		//////проверка на существование
+		
+		$DB->Query(
+			"SELECT * FROM `ga_specifical` "
+			."WHERE "
+			."(`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."') "
+		);
+		
+		$THIS_SPECIFICAL = $DB->DBprint();
+		
+		if($THIS_SPECIFICAL)
+			$this->Error["Add"][] = "Значение уже установленно";	
+		
+		if (is_array($arFieldsProp) && !is_array($this->Error["Add"]))
+		{			
+			$strTableElName = $DB->GetTableFields("ga_specifical");
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_specifical",$arFieldsProp,$strTableElName));
+			$DB->Query("INSERT INTO ga_specifical(".$sqlElColum.") VALUES (".$sqlElValues.");");
+
+			$DB->Query('SELECT MAX(ID) FROM `ga_specifical`');
+			$prices_id  = $DB->db_EXEC->fetchColumn();
+			return $prices_id;
+		}
+		else 
+		{
+			return array("ERROR" =>$this->Error["Add"]);
+		}
 	}
 	
 
