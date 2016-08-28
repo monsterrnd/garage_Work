@@ -55,8 +55,6 @@ class CPrices
 		global $DB;
 		unset($arFieldsProp["ID"]);
 		
-
-		
 		if( !$arFieldsProp["COMMENT"] && !$arFieldsProp["PRICE"])
 			$this->Error["Add"][] = "Заполните цену или комментарий";	
 		
@@ -129,7 +127,72 @@ class CPrices
 	*/	
 	function Update($arFieldsProp)
 	{
-					
+		global $DB;
+
+		if(!$arFieldsProp["ID"])
+			$this->Error["Update"][] = "ID не указан";
+		else
+		{
+			$DB->Query("SELECT * FROM `ga_prices` WHERE `ID` = '".$arFieldsProp["ID"]."'");
+			$PRICES_THIS = $DB->DBprint();	
+			if ($PRICES_THIS)
+			{
+				$arFieldsProp = array_merge(
+					$PRICES_THIS[0],
+					$arFieldsProp
+				);	
+			}
+		}		
+		
+
+		if( !$arFieldsProp["COMMENT"] && !$arFieldsProp["PRICE"])
+			$this->Error["Update"][] = "Заполните цену или комментарий";	
+		
+		///запрос к марке авто
+		$DB->Query("SELECT * FROM `car_mark` WHERE `id_car_mark` = '".$arFieldsProp["ID_CAR_MARK"]."'");
+		$car_mark_exist = $DB->DBprint();
+		
+		if(!$car_mark_exist)
+			$this->Error["Update"][] = "Автомобиль не существует";	
+
+		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$company_exist = $DB->DBprint();
+		
+		if(!$company_exist)
+			$this->Error["Update"][] = "Компания не существует";	
+		
+		///запрос к услугам
+		$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = (".$arFieldsProp["ID_ALLSERVICES"].")");
+		$cervices_exist = $DB->DBprint();
+		
+		if(!$cervices_exist)
+			$this->Error["Update"][] = "Данная вид работ не существует";	
+			
+
+		//////проверка на существование
+		
+		$DB->Query(
+			"SELECT * FROM `ga_prices` "
+			."WHERE "
+			."(`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' AND `ID_ALLSERVICES` = '".$arFieldsProp["ID_ALLSERVICES"]."' AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' AND `ID` != '".$arFieldsProp["ID"]."') "
+		);
+		
+		$THIS_PRICES = $DB->DBprint();
+		
+		if($THIS_PRICES)
+			$this->Error["Update"][] = "Цену уже назначена для данной услуги";	
+		
+		if (is_array($arFieldsProp) && !is_array($this->Error["Update"]))
+		{			
+			$strTableElName = $DB->GetTableFields("ga_prices");
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_prices",$arFieldsProp,$strTableElName));
+			$DB->Query("REPLACE INTO ga_prices(".$sqlElColum.") VALUES (".$sqlElValues.");");
+		
+			return $arFieldsProp["ID"];
+		}
+		else
+			return array("ERROR" => $this->Error["Update"]);							
 	}	
 	
 	/**

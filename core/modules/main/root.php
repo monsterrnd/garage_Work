@@ -101,7 +101,7 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CPRICES->Add(array("PRICE"=>"565456456","COMMENT"=>"","ID_ALLSERVICES"=>"44","ID_CAR_MARK"=>"111","ID_COMPANY"=>"9")));
+print_r($CPRICES->Update(array("ID"=>10,"PRICE"=>"565","COMMENT"=>"","ID_ALLSERVICES"=>"44","ID_CAR_MARK"=>"110","ID_COMPANY"=>"9")));
 
 
 
