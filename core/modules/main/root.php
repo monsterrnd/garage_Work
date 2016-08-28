@@ -102,7 +102,7 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CSPECIFICAL->Add(array("SERVICE_GUARANTEE"=>"Y","ID_CAR_MARK"=>110,"ID_COMPANY"=>"9")));
+print_r($CSPECIFICAL->Update(array("ID"=>1,"SERVICE_GUARANTEE"=>"N","ID_CAR_MARK"=>110,"ID_COMPANY"=>"11")));
 
 
 

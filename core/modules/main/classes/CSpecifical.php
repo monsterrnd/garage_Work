@@ -112,7 +112,58 @@ class CSpecifical
 	function Update($arFieldsProp)
 	{
 		global $DB;
-				
+		
+		if(!$arFieldsProp["ID"])
+			$this->Error["Update"][] = "ID не указан";
+		else
+		{
+			$DB->Query("SELECT * FROM `ga_specifical` WHERE `ID` = '".$arFieldsProp["ID"]."'");
+			$SPECIFICAL_THIS = $DB->DBprint();	
+			if ($SPECIFICAL_THIS)
+			{
+				$arFieldsProp = array_merge(
+					$SPECIFICAL_THIS[0],
+					$arFieldsProp
+				);	
+			}
+		}	
+		
+		///запрос к марке авто
+		$DB->Query("SELECT * FROM `car_mark` WHERE `id_car_mark` = '".$arFieldsProp["ID_CAR_MARK"]."'");
+		$car_mark_exist = $DB->DBprint();
+		
+		if(!$car_mark_exist)
+			$this->Error["Update"][] = "Автомобиль не существует";	
+
+		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$company_exist = $DB->DBprint();
+		
+		if(!$company_exist)
+			$this->Error["Update"][] = "Компания не существует";	
+		
+		$DB->Query(
+			"SELECT * FROM `ga_specifical` "
+			."WHERE "
+			."(`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' AND `ID` != '".$arFieldsProp["ID"]."') "
+		);
+		
+		
+		$THIS_SPECIFICAL = $DB->DBprint();
+		
+		if($THIS_SPECIFICAL)
+			$this->Error["Update"][] = "Значение уже установленно";	
+		
+		if (is_array($arFieldsProp) && !is_array($this->Error["Update"]))
+		{			
+			$strTableElName = $DB->GetTableFields("ga_specifical");
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_specifical",$arFieldsProp,$strTableElName));
+			$DB->Query("REPLACE INTO ga_specifical(".$sqlElColum.") VALUES (".$sqlElValues.");");
+		
+			return $arFieldsProp["ID"];
+		}
+		else
+			return array("ERROR" => $this->Error["Update"]);
 	}	
 	
 	/**
