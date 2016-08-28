@@ -82,7 +82,20 @@ class CPrices
 			$this->Error["Add"][] = "Данная вид работ не существует";	
 		
 		
-		//////добавить проверку на существование
+		//////проверка на существование
+		
+		$DB->Query(
+			"SELECT * FROM `ga_prices` "
+			."WHERE "
+			."(`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' AND `ID_ALLSERVICES` = '".$arFieldsProp["ID_ALLSERVICES"]."' AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."') "
+		);
+		
+		$THIS_PRICES = $DB->DBprint();
+		
+		if($THIS_PRICES)
+			$this->Error["Add"][] = "Цену уже назначена для данной услуги";		
+		
+
 		
 		if (is_array($arFieldsProp) && !is_array($this->Error["Add"]))
 		{			
