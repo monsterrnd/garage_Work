@@ -46,7 +46,7 @@ class CSpecifical
 	* @param integer	[ID_CAR_MARK] Привязка к марке авто
 	* @param integer	[ID_COMPANY] Привязка к Компании
 	* @uses CSpecifical::$Error Для размещения Ошибок
-	* @todo $CSPECIFICAL->Add(array("SERVICE_GUARANTEE"=>"Y","ID_CAR_MARK"=>110,"ID_COMPANY"=>"9"));
+	* @todo $CSPECIFICAL->Add(array("SERVICE_GUARANTEE"=>"","ID_CAR_MARK"=>"","ID_COMPANY"=>""));
 	* @return array
 	*/
 	function Add($arFieldsProp)
@@ -106,7 +106,7 @@ class CSpecifical
 	* @param integer	[ID_CAR_MARK] Привязка к марке авто
 	* @param integer	[ID_COMPANY] Привязка к Компании
 	* @uses CSpecifical::$Error Для размещения Ошибок
-	* @todo $CSPECIFICAL->Add(array("ID"=>"","SERVICE_GUARANTEE"=>"Y","ID_CAR_MARK"=>110,"ID_COMPANY"=>"9"));
+	* @todo $CSPECIFICAL->Add(array("ID"=>"","SERVICE_GUARANTEE"=>"","ID_CAR_MARK"=>"","ID_COMPANY"=>""));
 	* @return array
 	*/	
 	function Update($arFieldsProp)

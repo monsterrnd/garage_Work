@@ -44,6 +44,7 @@ $CCOMPANY		=	new CCompany;
 $CREVIEW		=	new CReview;
 $CPRICES		=	new CPrices;
 $CSPECIFICAL	=	new CSpecifical;
+$CORDER			=	new COrder;
 
 
 //$MESSAGE = new CMessage;
@@ -102,7 +103,7 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CSPECIFICAL->Update(array("ID"=>1,"SERVICE_GUARANTEE"=>"N","ID_CAR_MARK"=>110,"ID_COMPANY"=>"11")));
+print_r($CORDER->Add(array("ID"=>"","ID_USER"=>"","ID_PRICES"=>"","ID_COMPANY"=>"","FIRST_NAME"=>"","PHONE"=>"","DATE"=>"","COMMENT"=>"")));
 
 
 
