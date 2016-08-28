@@ -43,6 +43,7 @@ $CUSER			=	new CUser;
 $CCOMPANY		=	new CCompany;
 $CREVIEW		=	new CReview;
 $CPRICES		=	new CPrices;
+$CSPECIFICAL	=	new CSpecifical;
 
 
 //$MESSAGE = new CMessage;
