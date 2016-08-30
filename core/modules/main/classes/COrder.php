@@ -89,8 +89,8 @@ class COrder
 			$DB->Query("INSERT INTO ga_order(".$sqlElColum.") VALUES (".$sqlElValues.");");
 
 			$DB->Query('SELECT MAX(ID) FROM `ga_order`');
-			$prices_id  = $DB->db_EXEC->fetchColumn();
-			return $prices_id;
+			$order_id  = $DB->db_EXEC->fetchColumn();
+			return $order_id;
 		}
 		else 
 		{

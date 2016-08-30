@@ -88,8 +88,8 @@ class CSpecifical
 			$DB->Query("INSERT INTO ga_specifical(".$sqlElColum.") VALUES (".$sqlElValues.");");
 
 			$DB->Query('SELECT MAX(ID) FROM `ga_specifical`');
-			$prices_id  = $DB->db_EXEC->fetchColumn();
-			return $prices_id;
+			$specifical_id  = $DB->db_EXEC->fetchColumn();
+			return $specifical_id;
 		}
 		else 
 		{

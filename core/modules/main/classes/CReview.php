@@ -93,8 +93,8 @@ class CReview
 			$DB->Query("INSERT INTO ga_rewview(".$sqlElColum.") VALUES (".$sqlElValues.");");
 
 			$DB->Query('SELECT MAX(ID) FROM `ga_rewview`');
-			$user_id  = $DB->db_EXEC->fetchColumn();
-			return $user_id;
+			$review_id  = $DB->db_EXEC->fetchColumn();
+			return $review_id;
 		}
 		else 
 		{
