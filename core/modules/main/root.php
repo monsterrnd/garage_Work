@@ -103,7 +103,7 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CORDER->Add(array("ID"=>"","ID_USER"=>"","ID_PRICES"=>"","ID_COMPANY"=>"","FIRST_NAME"=>"","PHONE"=>"","DATE"=>"","COMMENT"=>"")));
+print_r($CORDER->Update(array("ID"=>"10","ID_USER"=>"22","ID_PRICES"=>"123","ID_COMPANY"=>"10","FIRST_NAME"=>"Олег1","PHONE"=>"+79200000000","DATE"=>"65","COMMENT"=>"аfhgdfв")));
 
 
 
