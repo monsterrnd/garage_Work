@@ -85,7 +85,11 @@ class CPrices
 		$DB->Query(
 			"SELECT * FROM `ga_prices` "
 			."WHERE "
-			."(`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' AND `ID_ALLSERVICES` = '".$arFieldsProp["ID_ALLSERVICES"]."' AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."') "
+			."( "
+			. "`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' "
+			. "AND `ID_ALLSERVICES` = '".$arFieldsProp["ID_ALLSERVICES"]."' "
+			. "AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' "
+			. ")"
 		);
 		
 		$THIS_PRICES = $DB->DBprint();
@@ -175,7 +179,12 @@ class CPrices
 		$DB->Query(
 			"SELECT * FROM `ga_prices` "
 			."WHERE "
-			."(`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' AND `ID_ALLSERVICES` = '".$arFieldsProp["ID_ALLSERVICES"]."' AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' AND `ID` != '".$arFieldsProp["ID"]."') "
+			."( "
+			. "`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' "
+			. "AND `ID_ALLSERVICES` = '".$arFieldsProp["ID_ALLSERVICES"]."' "
+			. "AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' "
+			. "AND `ID` != '".$arFieldsProp["ID"]."' "
+			. ")"
 		);
 		
 		$THIS_PRICES = $DB->DBprint();

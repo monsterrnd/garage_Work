@@ -39,12 +39,7 @@ class CUserCar
 		return $DB->DBprint();
 	}
 	
-	ID_USER	integer(16)	  
-	ID_CAR_MARK	integer(16)	  
-	ID_CAR_MODEL	integer(16)	  
-	ID_CAR_GENERATION	integer(16)	  
-	ID_CAR_SERIE	integer(16)	  
-	ID_CAR_MODIFICATION	integer(16)	
+
 	/**
 	* @package Добавить элемент
 	* @param array $arFieldsProp массив с параметрами таблицы 
@@ -62,7 +57,63 @@ class CUserCar
 	{
 		global $DB;
 		unset($arFieldsProp["ID"]);
+		
+		///запрос к пользователям
+		$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = '".$arFieldsProp["ID_USER"]."'");
+		$user_exist = $DB->DBprint();
+		
+		if(!$user_exist)
+			$this->Error["Add"][] = "Пользователь не существует";	
+		
+		///запрос к марке авто
+		$DB->Query("SELECT * FROM `car_mark` WHERE `id_car_mark` = '".$arFieldsProp["ID_CAR_MARK"]."'");
+		$car_mark_exist = $DB->DBprint();
 	
+		if(!$car_mark_exist)
+			$this->Error["Add"][] = "Автомобиль не существует";	
+		/**
+		@TODO Возможно добавить потом
+		* запрос к марке авто 
+		* запрос к моделе авто
+		* запрос к покалению авто
+		* запрос к серии авто
+		* запрос к модификации авто
+		*/
+		
+		//////проверка на существование
+		
+		$DB->Query(
+			"SELECT * FROM `ga_user_car` "
+			."WHERE "
+			."( "
+			. "`ID_USER` = '".$arFieldsProp["ID_USER"]."' "
+			. "AND `ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' "
+			. "AND `ID_CAR_MODEL` = '".$arFieldsProp["ID_CAR_MODEL"]."' "
+			. "AND `ID_CAR_GENERATION` = '".$arFieldsProp["ID_CAR_GENERATION"]."' "
+			. "AND `ID_CAR_SERIE` = '".$arFieldsProp["ID_CAR_SERIE"]."' "
+			. "AND `ID_CAR_MODIFICATION` = '".$arFieldsProp["ID_CAR_MODIFICATION"]."' "
+			. ")"
+		);
+		
+		$THIS_USERCAR = $DB->DBprint();
+		
+		if($THIS_USERCAR)
+			$this->Error["Add"][] = "Данный авто есть у вас в списке";
+		
+		if (is_array($arFieldsProp) && !is_array($this->Error["Add"]))
+		{			
+			$strTableElName = $DB->GetTableFields("ga_user_car");
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_user_car",$arFieldsProp,$strTableElName));
+			$DB->Query("INSERT INTO ga_user_car(".$sqlElColum.") VALUES (".$sqlElValues.");");
+
+			$DB->Query('SELECT MAX(ID) FROM `ga_user_car`');
+			$user_car_id  = $DB->db_EXEC->fetchColumn();
+			return $user_car_id;
+		}
+		else 
+		{
+			return array("ERROR" =>$this->Error["Add"]);
+		}		
 	}
 	
 
@@ -84,7 +135,73 @@ class CUserCar
 	{
 		global $DB;
 		
+		if(!$arFieldsProp["ID"])
+			$this->Error["Update"][] = "ID не указан";
+		else
+		{
+			$DB->Query("SELECT * FROM `ga_user_car` WHERE `ID` = '".$arFieldsProp["ID"]."'");
+			$USERCAR_THIS = $DB->DBprint();	
+			if ($USERCAR_THIS)
+			{
+				$arFieldsProp = array_merge(
+					$USERCAR_THIS[0],
+					$arFieldsProp
+				);	
+			}
+		}
+		
+		///запрос к пользователям
+		$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = '".$arFieldsProp["ID_USER"]."'");
+		$user_exist = $DB->DBprint();
+		
+		if(!$user_exist)
+			$this->Error["Update"][] = "Пользователь не существует";	
+		
+		///запрос к марке авто
+		$DB->Query("SELECT * FROM `car_mark` WHERE `id_car_mark` = '".$arFieldsProp["ID_CAR_MARK"]."'");
+		$car_mark_exist = $DB->DBprint();
 	
+		if(!$car_mark_exist)
+			$this->Error["Update"][] = "Автомобиль не существует";	
+		/**
+		@TODO Возможно добавить потом
+		* запрос к марке авто 
+		* запрос к моделе авто
+		* запрос к покалению авто
+		* запрос к серии авто
+		* запрос к модификации авто
+		*/	
+		
+		//////проверка на существование
+		
+		$DB->Query(
+			"SELECT * FROM `ga_user_car` "
+			."WHERE "
+			."( "
+			. "`ID_USER` = '".$arFieldsProp["ID_USER"]."' "
+			. "AND `ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' "
+			. "AND `ID_CAR_MODEL` = '".$arFieldsProp["ID_CAR_MODEL"]."' "
+			. "AND `ID_CAR_GENERATION` = '".$arFieldsProp["ID_CAR_GENERATION"]."' "
+			. "AND `ID_CAR_SERIE` = '".$arFieldsProp["ID_CAR_SERIE"]."' "
+			. "AND `ID_CAR_MODIFICATION` = '".$arFieldsProp["ID_CAR_MODIFICATION"]."' "
+			. "AND `ID` != '".$arFieldsProp["ID"]."' "
+			. ")"
+		);
+		
+		$THIS_USERCAR = $DB->DBprint();
+		if($THIS_USERCAR)
+			$this->Error["Update"][] = "Данный авто есть у вас в списке";	
+		
+		if (is_array($arFieldsProp) && !is_array($this->Error["Update"]))
+		{			
+			$strTableElName = $DB->GetTableFields("ga_user_car");
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert("ga_user_car",$arFieldsProp,$strTableElName));
+			$DB->Query("REPLACE INTO ga_user_car(".$sqlElColum.") VALUES (".$sqlElValues.");");
+		
+			return $arFieldsProp["ID"];
+		}
+		else
+			return array("ERROR" => $this->Error["Update"]);
 	}	
 	
 	/**

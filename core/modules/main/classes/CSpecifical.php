@@ -145,7 +145,11 @@ class CSpecifical
 		$DB->Query(
 			"SELECT * FROM `ga_specifical` "
 			."WHERE "
-			."(`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' AND `ID` != '".$arFieldsProp["ID"]."') "
+			."( "
+			. "`ID_CAR_MARK` = '".$arFieldsProp["ID_CAR_MARK"]."' "
+			. "AND `ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' "
+			. "AND `ID` != '".$arFieldsProp["ID"]."' "
+			. ")"
 		);
 		
 		

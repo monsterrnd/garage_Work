@@ -159,7 +159,11 @@ class CReview
 		$DB->Query(
 			"SELECT * FROM `ga_rewview` "
 			."WHERE "
-			."(`ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' AND `ID_USER` = '".$arFieldsProp["ID_USER"]."'  AND `ID` != '".$arFieldsProp["ID"]."') ) "
+			."( "
+			. "`ID_COMPANY` = '".$arFieldsProp["ID_COMPANY"]."' "
+			. "AND `ID_USER` = '".$arFieldsProp["ID_USER"]."' "
+			. " AND `ID` != '".$arFieldsProp["ID"]."' "
+			. ")"
 		);
 		$THIS_REVIEW = $DB->DBprint();
 		

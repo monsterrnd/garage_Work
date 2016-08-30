@@ -36,7 +36,7 @@ $DB->Connect("127.0.0.1:31006", "mysql", "garage", "root", "");
 if ($first_load_db != false)
 	CInitTables::NewTableForPlatform();
 
-$APPLICATION = new CAllMain;
+$APPLICATION	=	new CAllMain;
 $APPLICATION->SessionInit();
 $CSERVICE		=	new CService;
 $CUSER			=	new CUser;
@@ -105,7 +105,7 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CORDER->Update(array("ID"=>"10","ID_USER"=>"22","ID_PRICES"=>"123","ID_COMPANY"=>"10","FIRST_NAME"=>"Олег1","PHONE"=>"+79200000000","DATE"=>"65","COMMENT"=>"аfhgdfв")));
+print_r($CUSERCAR->Update(array("ID"=>"10","ID_USER"=>"21","ID_CAR_MARK"=>"1","ID_CAR_MODEL"=>"1","ID_CAR_GENERATION"=>"1","ID_CAR_SERIE"=>"1","ID_CAR_MODIFICATION"=>"1")));
 
 
 
