@@ -45,6 +45,8 @@ $CREVIEW		=	new CReview;
 $CPRICES		=	new CPrices;
 $CSPECIFICAL	=	new CSpecifical;
 $CORDER			=	new COrder;
+$CUSERCAR		=	new CUserCar;
+//$CAR			=	new CCar;
 
 
 //$MESSAGE = new CMessage;
