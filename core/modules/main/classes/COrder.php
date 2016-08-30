@@ -57,7 +57,23 @@ class COrder
 	{
 		global $DB;
 		unset($arFieldsProp["ID"]);
+
+		///запрос к компаниям
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$company_exist = $DB->DBprint();
 		
+		if(!$company_exist)
+			$this->Error["Add"][] = "Компания не существует";	
+
+		///запрос к пользователям
+		$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = '".$arFieldsProp["ID_USER"]."'");
+		$user_exist = $DB->DBprint();
+		
+		if(!$user_exist)
+			$this->Error["Update"][] = "Пользователь не существует";	
+
+		///запрос к ценам не обяз
+
 	}
 	
 
