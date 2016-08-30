@@ -1,12 +1,9 @@
 <?
-class CService 
+/**
+* Ремонт, шиномонтаж, диагностика
+*/	
+class CService extends CAllMain 
 {
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
 	/**
 	* @package Элемент
 	* @param integer $id Ключа в таблице

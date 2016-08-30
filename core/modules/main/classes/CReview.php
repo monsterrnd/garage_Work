@@ -1,12 +1,9 @@
 <?
-class CReview 
+/**
+* Отзывы о компании
+*/	
+class CReview extends CAllMain 
 {
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
 	/**
 	* @package Элемент
 	* @param integer $id Ключа в таблице

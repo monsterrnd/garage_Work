@@ -1,12 +1,9 @@
 <?
-class COrder
+/**
+* Заказ в компанию от клиента
+*/	
+class COrder extends CAllMain
 {
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
 	/**
 	* @package Элемент
 	* @param integer $id Ключа в таблице

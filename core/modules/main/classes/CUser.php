@@ -1,12 +1,9 @@
 <?
-class CUser 
+/**
+* Данные о клиенте
+*/	
+class CUser extends CAllMain 
 {
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
 	/**
 	* @package Элементов
 	* @param integer $id Ключа в таблице

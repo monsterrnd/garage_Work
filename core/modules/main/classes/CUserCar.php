@@ -1,12 +1,9 @@
 <?
-class CUserCar
-{
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
+/**
+* Авто клиента
+*/	
+class CUserCar extends CAllMain
+{	
 	/**
 	* @package Элемент
 	* @param integer $id Ключа в таблице

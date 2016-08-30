@@ -1,12 +1,9 @@
 <?
-class CCompany 
+/**
+* Данные о компании
+*/	
+class CCompany extends CAllMain 
 {
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
 	/**
 	* @package Элемент
 	* @param integer $id Ключа в таблице

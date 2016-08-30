@@ -105,7 +105,7 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CUSERCAR->Update(array("ID"=>"10","ID_USER"=>"21","ID_CAR_MARK"=>"1","ID_CAR_MODEL"=>"1","ID_CAR_GENERATION"=>"1","ID_CAR_SERIE"=>"1","ID_CAR_MODIFICATION"=>"1")));
+print_r($CUSERCAR->Add(array("ID_USER"=>"21","ID_CAR_MARK"=>"1","ID_CAR_MODEL"=>"1","ID_CAR_GENERATION"=>"1","ID_CAR_SERIE"=>"1","ID_CAR_MODIFICATION"=>"1")));
 
 
 

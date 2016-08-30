@@ -1,12 +1,9 @@
 <?
-class CPrices
+/**
+* Цены на ремонт, шиномонтаж, диагностику
+*/	
+class CPrices extends CAllMain
 {
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
 	/**
 	* @package Элемент
 	* @param integer $id Ключа в таблице

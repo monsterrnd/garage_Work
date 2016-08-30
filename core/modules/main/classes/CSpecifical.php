@@ -1,12 +1,9 @@
 <?
-class CSpecifical
-{
-    /**
-    * Хранит ошибки
-    * @var array
-    */
-	var $Error = array();
-	
+/**
+* Поддерживаемые авто,обслуживание по гарантии
+*/	
+class CSpecifical extends CAllMain
+{	
 	/**
 	* @package Элемент
 	* @param integer $id Ключа в таблице
