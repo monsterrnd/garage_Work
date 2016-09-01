@@ -71,4 +71,5 @@ class CCar extends CAllMain
 		global $DB;
 		$DB->Query("SELECT * FROM `car_modification` WHERE `id_car_model` = (".$id.")");			
 		return $res = $DB->DBprint(); 
-	}	
+	}
+}
