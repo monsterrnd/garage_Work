@@ -38,6 +38,7 @@ if ($first_load_db != false)
 
 $APPLICATION	=	new CAllMain;
 $APPLICATION->SessionInit();
+
 $CSERVICE		=	new CService;
 $CUSER			=	new CUser;
 $CCOMPANY		=	new CCompany;
@@ -47,8 +48,7 @@ $CSPECIFICAL	=	new CSpecifical;
 $CORDER			=	new COrder;
 $CUSERCAR		=	new CUserCar;
 $CAR			=	new CCar;
-
-
+$REST			=	new CRestMethod;
 //$MESSAGE = new CMessage;
 
 
@@ -105,7 +105,8 @@ echo "</pre>";
  * 
  */
 echo "<pre>";
-print_r($CAR->GetByIdModification(11));
+//print_r($CAR->GetByIdModification(11));
+
 
 
 
