@@ -1,5 +1,5 @@
 <?
-class PoRequest{
+class CRequest{
 	
 	
 	static function getRequest($val)
