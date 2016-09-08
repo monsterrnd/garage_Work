@@ -10,7 +10,7 @@
 
 <div class="col-lg-12">
 <?
-
+/*
 	///запрос к пользователям
 	$users = new CUser;
 	$uers_list = $users->GetList();
@@ -33,9 +33,22 @@
 	$user_list->SetData($uers_list);
 	// выводим таблицу
 	$user_list->Render();
+*/	
+	
+	///запрос к пользователям
+	$users = new CCar;
+	$uers_list = $users->GetListModification();
 	
 	
-	
+	$user_list = new CAdminTableList;
+
+	//// формеруем названия для шапки
+	$header = "*";
+	$user_list->SetHeader($header);
+	/// записываем массив из результата в таблицу 
+	$user_list->SetData($uers_list);
+	// выводим таблицу
+	$user_list->Render();	
 	
 	
 

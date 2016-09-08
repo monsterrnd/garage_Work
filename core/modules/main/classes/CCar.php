@@ -72,4 +72,11 @@ class CCar extends CAllMain
 		$DB->Query("SELECT * FROM `car_modification` WHERE `id_car_model` = (".$id.")");			
 		return $res = $DB->DBprint(); 
 	}
+	
+	function GetListModification()
+	{
+		global $DB;
+		$DB->Query("SELECT * FROM `car_modification`");			
+		return $res = $DB->DBprint(); 
+	}
 }

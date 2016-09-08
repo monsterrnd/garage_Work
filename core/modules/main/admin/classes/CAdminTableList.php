@@ -10,8 +10,10 @@ class CAdminTableList
 	/**
 	 * pagination
 	*/	
-	public $count_element_pagination = 5;		
-
+	public $count_element_pagination = 30;		
+	public $this_page_pagination = 1;		
+	public $count_array_element_pagination = "";
+	public $max_button_pagination = 3;
 			
 
 
@@ -23,12 +25,14 @@ class CAdminTableList
 	{
 		
 		$pagen = CRequest::getRequest("PAGEN");
+		if ($pagen && $pagen <= count($this->set_data_array) && $pagen > 0)
+			$this->this_page_pagination = $pagen;
 	
 	}
 	/**
 	 * 
 	*/
-	function Sort()
+	function Sort($array)
 	{
 
 		$sort = CRequest::getRequest("sort");
@@ -36,7 +40,7 @@ class CAdminTableList
 		if ($sort == "desc")
 		{
 			//DESC
-			usort($this->set_data_array, function($a, $b){
+			usort($array, function($a, $b){
 				return ($a[CRequest::getRequest("by")] < $b[CRequest::getRequest("by")]);
 			});	
 		}
@@ -44,11 +48,12 @@ class CAdminTableList
 		if ($sort == "asc")
 		{
 			//ASC
-			usort($this->set_data_array, function($a, $b){
+			usort($array, function($a, $b){
 				
 				return ($a[CRequest::getRequest("by")] > $b[CRequest::getRequest("by")]);
 			});	
 		}
+		return $array;
 	}
 	/**
 	 * 
@@ -69,7 +74,7 @@ class CAdminTableList
 	function Validation()
 	{
 		if($this->set_header_noarray == true){
-			foreach (current($this->set_data_array) as $name=>$set_data_array_el)
+			foreach (current(current($this->set_data_array)) as $name=>$set_data_array_el)
 			{
 				
 				$this->set_header_array[$name] = $name;
@@ -81,40 +86,61 @@ class CAdminTableList
 	*/
 	function SetData($array)
 	{
-		//$this->PaginationSet();
-		$this->set_data_array = array_chunk($array , $this->count_element_pagination);
+
+		$array = $this->Sort($array);
+		$this->count_array_element_pagination = count($array);
+		$this->set_data_array = array_chunk($array, $this->count_element_pagination);
 	}
 	/**
 	 * 
 	*/
 	function RenderPagination()
 	{
+		$this->count_element_pagination = ($this->count_element_pagination > $this->count_array_element_pagination) ? $this->count_array_element_pagination : $this->count_element_pagination;
+		
 		$pagination  = array();
-		$pagination["PAGE"]		= CRequest::getRequest("PAGEN");
-		$pagination["PAGES"]	= count($this->set_data_array);
-		echo "<pre>";
-		print_r($pagination);
-		echo "</pre>";
+		$pagination["PAGE"]				= $this->this_page_pagination;
+		$pagination["PAGES"]			= count($this->set_data_array);
+		$pagination["ELEMENTS"]			= $this->count_array_element_pagination;
+		$pagination["MAX_BUTTON"]		= $this->max_button_pagination;
+		$pagination["COUNTS_ELEMENT"]	= $this->count_element_pagination;
+		$pagination["NEXT_PAGE"]		= $this->this_page_pagination + 1;
+		$pagination["PREV_PAGE"]		= $this->this_page_pagination - 1;
 		
 	?>	
 			<nav aria-label="Page navigation" class="clearfix">
-			  <ul class="pagination pagination-sm navbar-right">
-				<li>
-				  <a href="#" aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span>
-				  </a>
-				</li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li>
-				  <a href="#" aria-label="Next">
-					<span aria-hidden="true">&raquo;</span>
-				  </a>
-				</li>
-			  </ul>
+			<?=($pagination["PAGE"] * $pagination["COUNTS_ELEMENT"]) - $pagination["COUNTS_ELEMENT"] + 1?> - <?=$pagination["PAGE"] * $pagination["COUNTS_ELEMENT"]?> из <?=$pagination["ELEMENTS"]?>
+				<ul class="pagination pagination-sm navbar-right">
+					<!--li>
+					  <a href="?PAGEN=<?=$pagination["PREV_PAGE"]?>" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					  </a>
+					</li-->
+					
+						<? for ($el=1; $el <= $pagination["MAX_BUTTON"]; $el++):?>
+							<?if(($lowwer = $pagination["PAGE"]-$pagination["MAX_BUTTON"]+$el-1) > 0):?>
+								<li><a href="?PAGEN=<?=$lowwer?>"><?=$lowwer?></a></li>
+							<?endif?>
+						<?endfor;?>
+								
+						<li class="active"><a href="?PAGEN=<?=$pagination["PAGE"]?>"><?=$pagination["PAGE"]?></a></li>
+						
+						<? for ($el=1; $el <= $pagination["MAX_BUTTON"]; $el++):?>
+							<?if(($upper = $pagination["PAGE"]+$el) < $pagination["PAGES"]):?>
+								<li><a href="?PAGEN=<?=$upper?>"><?=$upper?></a></li>
+							<?endif?>
+						<?endfor;?>
+								
+						<?if($pagination["PAGE"] != $pagination["PAGES"]):?>
+							<li><span>...</span></li>
+							<li><a  href="?PAGEN=<?=$pagination["PAGES"]?>"><?=$pagination["PAGES"]?></a></li>
+						<?endif?>
+					<!--li>
+					  <a href="?PAGEN=<?=$pagination["NEXT_PAGE"]?>" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					  </a>
+					</li-->
+				</ul>
 			</nav>		
 	
 	<?
@@ -124,10 +150,8 @@ class CAdminTableList
 	*/
 	function Render()
 	{
-		//$this->Init();
-		$this->Validation();
-		$this->Sort();	
-		
+		$this->Validation();	
+		$this->SetPagination()
 
 	?>
 		<div class="panel panel-default">
@@ -139,6 +163,8 @@ class CAdminTableList
 					<table class="table table-bordered table-hover table-striped">
 						<thead>
 							<tr>
+								<th>
+								</th>
 								<?foreach($this->set_header_array as $keyHeadName=>$hederEl):?>
 								<th>
 									<a href="?by=<?=$keyHeadName?>&sort=<?=($keyHeadName == CRequest::getRequest("by") && CRequest::getRequest("sort") == "asc") ? "desc": "asc";?>"><?=$hederEl?></a>
@@ -147,10 +173,13 @@ class CAdminTableList
 							</tr>
 						</thead>
 						<tbody>
-							<?foreach($this->set_data_array as $dataEl):?>
+							<?foreach($this->set_data_array[$this->this_page_pagination - 1] as $dataEl):?>
 								<tr>
+									<td>
+										<button type="button" class="btn btn-default"><i class="fa fa-cog"></i></button>
+									</td>
 									<?foreach($this->set_header_array as $nameRows=>$hederEl):?>
-										<th><?=$dataEl[$nameRows]?></th>
+										<td><?=$dataEl[$nameRows]?></td>
 									<?endforeach;?>									
 								</tr>
 							<?endforeach;?>                                         
