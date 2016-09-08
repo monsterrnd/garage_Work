@@ -15,12 +15,11 @@
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 						<tr>
-							<th>#</th>
-							<th>Дата/время</th>
-							<th>Тип услуги</th>
-							<th>Авто</th>
-							<th>Компания</th>
-							<th>Стоимость</th>
+							<th>Активность</th>
+							<th>Имя</th>
+							<th>Почта</th>
+							<th>Авто по умолчанию</th>
+							<th>Aватар</th>
 						</tr>
 					</thead>
 					<tbody>
