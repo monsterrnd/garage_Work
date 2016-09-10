@@ -1,11 +1,16 @@
 <?php
 $root = "/core";
 $images = "/images";
-$first_load_db = true;
+$first_load_db = false;
 
 $site_id="/";
+$template_admin_path = $root."/admin/templates";
+
+
+
 define("ROOT", $root);
 define("SITE_ID", $site_id);
+define("TEMPLATE_ADMIN", $template_admin_path);
 
 
 
@@ -52,7 +57,7 @@ $REST			=	new CRestMethod;
 //$MESSAGE = new CMessage;
 
 
-echo "<pre>";
+//echo "<pre>";
 
 //print_r($USER->Get());
 //print_r($USER->Add());
@@ -86,7 +91,7 @@ echo "<pre>";
 //	echo $CSERVICE->AddService((array)$e_sss);
 //}
 
-echo "</pre>";
+//echo "</pre>";
 
 /*?>
 <select>
@@ -104,7 +109,7 @@ echo "</pre>";
 </select>
  * 
  */
-echo "<pre>";
+//echo "<pre>";
 //print_r($CAR->GetByIdModification(11));
 
 
