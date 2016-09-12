@@ -104,8 +104,8 @@ class CAdminTableList
 		$pagination["ELEMENTS"]			= $this->count_array_element_pagination;
 		$pagination["MAX_BUTTON"]		= $this->max_button_pagination;
 		$pagination["COUNTS_ELEMENT"]	= $this->count_element_pagination;
-		$pagination["NEXT_PAGE"]		= $this->this_page_pagination + 1;
-		$pagination["PREV_PAGE"]		= $this->this_page_pagination - 1;
+		//$pagination["NEXT_PAGE"]		= $this->this_page_pagination + 1;
+		//$pagination["PREV_PAGE"]		= $this->this_page_pagination - 1;
 		
 	?>	
 			<nav aria-label="Page navigation" class="clearfix">

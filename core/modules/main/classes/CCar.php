@@ -12,6 +12,8 @@ class CCar extends CAllMain
 	*/
 	function GetListMark()
 	{
+		
+		
 		global $DB;
 		$DB->Query("SELECT * FROM `car_mark`");			
 		return $DB->DBprint();
@@ -73,10 +75,12 @@ class CCar extends CAllMain
 		return $res = $DB->DBprint(); 
 	}
 	
-	function GetListModification()
+	
+	
+	
+	
+	function GetListModification($arOrder,$arFilter,$pageNav)
 	{
-		global $DB;
-		$DB->Query("SELECT * FROM `car_modification`");			
-		return $res = $DB->DBprint(); 
+		return $this->ParentGetList("car_modification", $arOrder, $arFilter, $pageNav);	
 	}
 }

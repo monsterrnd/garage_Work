@@ -5,7 +5,10 @@
         <group>
             <file>file:/C:/Bitrix/6455/core/modules/main/classes/CUser.php</file>
             <file>file:/C:/Bitrix/6455/core/admin/user_list.php</file>
+            <file>file:/C:/Bitrix/6455/core/modules/main/root.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/admin/classes/CAdminTableList.php</file>
+            <file>file:/C:/Bitrix/6455/core/modules/main/classes/CRequest.php</file>
+            <file>file:/C:/Bitrix/6455/core/modules/main/classes/CCar.php</file>
         </group>
     </open-files>
 </project-private>

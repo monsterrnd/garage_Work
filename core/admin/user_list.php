@@ -35,10 +35,15 @@
 	$user_list->Render();
 */	
 	
+
+
 	///запрос к пользователям
 	$users = new CCar;
-	$uers_list = $users->GetListModification();
+	$uers_list = $users->GetListModification(array("id_car_modification"=>"DESC", "id_car_model"=>"ASC", "id_car_type"=>"ASC"),false,false);
 	
+	//echo "<pre>";
+	//print_r($uers_list);
+	//echo "</pre>";
 	
 	$user_list = new CAdminTableList;
 
