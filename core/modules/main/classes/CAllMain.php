@@ -43,12 +43,56 @@ class CAllMain
 		
 		//////////filter
 		
-		$strTableElNamefilter = $DB->GetTableFields($table);
-		list(,,$arOrder) = ($DB->PrepareInsert($table,$arOrder,$strTableElNamefilter));	
+		
+		
+		$typeWhere= array("!","<","<=",">",">=");
+		$arrayNotWhere = array();
+		
+		foreach ($arFilter as $arFilterKey=>$arFilterEl)
+		{
+			$newFilterKey = $arFilterKey;
+			foreach ($typeWhere as $typeWhereEl)
+			{
+				
+				
+				$pos = stripos($arFilterKey, $typeWhereEl);
+				if($pos !== false)
+				{
+
+					$noTypeTag = str_replace($typeWhereEl, "", $arFilterKey);
+					$arrayNotWhere[$noTypeTag] = $arFilterKey;
+					
+					$newFilterKey = $noTypeTag;
+					
+					echo "<pre>";
+					print_r($pos."-".$typeWhereEl."-".$arFilterKey."-".$bodytag);
+					echo "</pre>";					
+				}
+
+			}
+			
+			$arFilterCorrect[$newFilterKey] = $arFilterEl;
+		}
 		
 		echo "<pre>";
-		print_r("SELECT * FROM `".$table."`".$sOrderBy."LIMIT 20");
-		echo "</pre>";
+		print_r($arFilter);
+		print_r($arFilterCorrect);
+		print_r($arrayNotWhere);
+		echo "</pre>";	
+		
+		
+		
+		
+		//$strTableElNamefilter = $DB->GetTableFields($table);
+		//list(,,$arFilter) = ($DB->PrepareInsert($table,$arFilter,$strTableElNamefilter));	
+		
+		
+		
+		
+		
+		
+		
+
 		
 
 		//ORDER BY `id_car_model` DESC, `name` DESC  
