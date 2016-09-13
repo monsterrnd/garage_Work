@@ -4,3 +4,4 @@ function loadClasses($class_name) {
 }
 
 loadClasses("CAdminTableList");
+loadClasses("CAdminTableListSQL");

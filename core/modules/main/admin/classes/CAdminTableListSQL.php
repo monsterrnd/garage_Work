@@ -2,7 +2,7 @@
 /**
 * таблица для работы с базой
 */	
-class CAdminTableList 
+class CAdminTableListSQL 
 {
 	public $set_header_array = array();
 	public $set_header_noarray = false;

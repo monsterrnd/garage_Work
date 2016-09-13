@@ -5,8 +5,9 @@ class CAllMain
     * Хранит ошибки
     * @var array
     */
-	var $Error = array();
-	
+	public $Error = array();
+	public $pagination_list = array();
+
 	function SessionInit(){
 		session_start();
 		if (!isset($_SESSION['PRIVATE_KEY']))
@@ -15,7 +16,25 @@ class CAllMain
 		}		
 	}
 	
-	function filterArray($filter,$dif = " = ")
+	/**
+    * 
+    */
+	function deBugTimer(){
+		
+	}
+	/**
+    * 
+    */
+	function PaginationRender(){
+		
+	}
+	
+	/**
+    * Формерует фильтер для GetList
+    * @var $filter массив либо значение
+    * @var $dif ОПЕРАТОР
+    */	
+	function filterArray($filter,$dif = "=")
 	{
 		$sql = "";
 		if (is_array($filter))
@@ -43,9 +62,11 @@ class CAllMain
 		return $sql;
 	}
 	
-	function ParentGetList($table,$arOrder = array("ID"=>"ASC"),$arFilter = array(),$pageNav = false)
+	function ParentGetList($table,$arOrder = array("ID"=>"ASC"),$arFilter = array(),$pageNav = array())
 	{
 		global $DB;
+		
+		
 		
 		///////////order
 		$strTableElNameOrder = $DB->GetTableFields($table);
@@ -72,26 +93,32 @@ class CAllMain
 		$typeWhere= array("<=",">=","!!","<<",">>");
 		$arrayNotWhere = array();
 		
-		foreach ($arFilter as $arFilterKey=>$arFilterEl)
+		if(count($arFilter))
 		{
-			$newFilterKey = $arFilterKey;
-			foreach ($typeWhere as $typeWhereEl)
+			foreach ($arFilter as $arFilterKey=>$arFilterEl)
 			{
-				$pos = stripos($arFilterKey, $typeWhereEl);
-				if($pos !== false)
+				$newFilterKey = $arFilterKey;
+				foreach ($typeWhere as $typeWhereEl)
 				{
-					$noTypeTag = str_replace($typeWhereEl, "", $arFilterKey);
-					$arrayNotWhere[$noTypeTag] = $typeWhereEl;	
-					$newFilterKey = $noTypeTag;			
+					$pos = stripos($arFilterKey, $typeWhereEl);
+					if($pos !== false)
+					{
+						$noTypeTag = str_replace($typeWhereEl, "", $arFilterKey);
+						$arrayNotWhere[$noTypeTag] = $typeWhereEl;	
+						$newFilterKey = $noTypeTag;			
+					}
+
 				}
 
+				$arFilterCorrect[$newFilterKey] = $arFilterEl;
 			}
+		
+			$strTableElNameOrder = $DB->GetTableFields($table);
+			list(,,$arFilterCorrect) = ($DB->PrepareInsert($table,$arFilterCorrect,$strTableElNameOrder));			
 			
-			$arFilterCorrect[$newFilterKey] = $arFilterEl;
 		}
 		
-		$strTableElNameOrder = $DB->GetTableFields($table);
-		list(,,$arFilterCorrect) = ($DB->PrepareInsert($table,$arFilterCorrect,$strTableElNameOrder));	
+	
 			
 		$sqlWhere ="";
 		$logic = " AND ";
@@ -119,7 +146,6 @@ class CAllMain
 						//больше
 						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,">");
 					break;
-
 					case ">=":
 						//больше либо равно
 						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,">=");
@@ -136,20 +162,34 @@ class CAllMain
 			}
 		}
 
-		
-		
-		
-		echo "SELECT * FROM `".$table."`".$sqlWhere.$sOrderBy." LIMIT 30";
+		$limit = "";
+		///Формирование постраничной навигации
+		if (count($pageNav))
+		{
+			if ($pageNav["TOP_COUNT"])
+				$limit = " LIMIT ".$pageNav["TOP_COUNT"];
+			else
+			{
+				$DB->Query("SELECT COUNT(*) FROM `".$table."`".$sqlWhere);
 
-		
+				$pageNav["COUNTS_ELEMENT"]		= $DB->db_EXEC->fetchColumn();
+				$pageNav["ELEMENT_TO_PAGE"]		= ($pageNav["ELEMENT_TO_PAGE"] > $pageNav["COUNTS_ELEMENT"]) ? $pageNav["COUNTS_ELEMENT"] : $pageNav["ELEMENT_TO_PAGE"];
+				$pageNav["PAGES"]				= ceil($pageNav["COUNTS_ELEMENT"] / $pageNav["ELEMENT_TO_PAGE"]);
+				$pageNav["END_PAGE_LIMIT"]		= $pageNav["PAGE"] * $pageNav["ELEMENT_TO_PAGE"];
+				$pageNav["START_PAGE_LIMIT"]	= $pageNav["END_PAGE_LIMIT"] - $pageNav["ELEMENT_TO_PAGE"];
+				$this->pagination_list			= $pageNav;
+				
+				$limit = " LIMIT ".$pageNav["START_PAGE_LIMIT"].",".$pageNav["ELEMENT_TO_PAGE"];
+			}
+		}
 
-		//ORDER BY `id_car_model` DESC, `name` DESC  
-		//WHERE `id_car_model` IN ('350','353') AND `name` IN ('1.4 HDi AT (68 л. с.)')
-		//LIMIT 49100,20
-		//echo $sOrderBy;
-		
-		$DB->Query("SELECT * FROM `".$table."`".$sqlWhere.$sOrderBy." LIMIT 30");			
-		return $res = $DB->DBprint(); 
+		$DB->Query("SELECT * FROM `".$table."`".$sqlWhere.$sOrderBy.$limit);
+		$res = $DB->DBprint();
+			
+		//echo "<pre>";
+		//print_r($countElementTable);
+		//echo "</pre>";
+		return  $res;
 	}
 	
 }

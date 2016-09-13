@@ -1,4 +1,11 @@
 <?php
+
+$start_time = microtime();
+$start_array = explode(" ",$start_time);
+$start_time = $start_array[1] + $start_array[0];
+
+
+
 $root = "/core";
 $images = "/images";
 $first_load_db = false;
@@ -44,15 +51,15 @@ if ($first_load_db != false)
 $APPLICATION	=	new CAllMain;
 $APPLICATION->SessionInit();
 
-$CSERVICE		=	new CService;
-$CUSER			=	new CUser;
-$CCOMPANY		=	new CCompany;
-$CREVIEW		=	new CReview;
-$CPRICES		=	new CPrices;
-$CSPECIFICAL	=	new CSpecifical;
-$CORDER			=	new COrder;
-$CUSERCAR		=	new CUserCar;
-$CAR			=	new CCar;
+//$CSERVICE		=	new CService;
+//$CUSER		=	new CUser;
+//$CCOMPANY		=	new CCompany;
+//$CREVIEW		=	new CReview;
+//$CPRICES		=	new CPrices;
+//$CSPECIFICAL	=	new CSpecifical;
+//$CORDER		=	new COrder;
+//$CUSERCAR		=	new CUserCar;
+//$CAR			=	new CCar;
 $REST			=	new CRestMethod;
 //$MESSAGE = new CMessage;
 
