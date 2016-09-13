@@ -9,16 +9,15 @@
 
 
 <div class="col-lg-12">
+	
 <?
-/*
-	///запрос к пользователям
-	$users = new CUser;
-	$uers_list = $users->GetList();
 	
-	
-	$user_list = new CAdminTableList;
+
+	$users = new CAllMain;		
+	$tableList = new CAdminTableListSQL;
 
 	//// формеруем названия для шапки
+	
 	$header = array(
 		"ID"=>"ID",
 		"ACTIVE"=>"Активность",
@@ -28,31 +27,38 @@
 		"MAIN_AUTO"=>"Авто по умолчанию",
 		"AVATAR"=>"Путь к аватарке",
 	);
-	$user_list->SetHeader($header);
-	/// записываем массив из результата в таблицу 
-	$user_list->SetData($uers_list);
-	// выводим таблицу
-	$user_list->Render();
-*/	
+	$tableList->SetHeader($header);
 	
-
-
+	
+	///добавляем кнопки 
+	$button =array(
+		array(
+			"NAME"=>"Добавить",
+			"TYPE"=>"",
+			"LINK"=>"user_add.php",
+			"CLASS"=>"btn btn-success btn-xl",
+			"ICON"=>"fa fa-plus"
+		),	
+		array(
+			"NAME"=>"ИНФО",
+			"TYPE"=>"",
+			"LINK"=>"",
+			"CLASS"=>"btn btn-success btn-xl",
+			"ICON"=>""
+		),	
+	);
+	$tableList->AddButton($button);
 	///запрос к пользователям
-
-	$users = new CAllMain;		
-	$user_list = new CAdminTableListSQL;
-
-	//// формеруем названия для шапки
-	$header = "*";
-	$user_list->SetHeader($header);
+	$tableList->SetData($users,"ga_user");
 	
-	$user_list->SetData($users,"ga_allservices");
 	// выводим таблицу
-	$user_list->Render();	
+	$tableList->Render();	
+?>
 	
 	
 
-?>
+
+
 </div>
 
 
