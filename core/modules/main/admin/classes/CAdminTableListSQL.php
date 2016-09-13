@@ -111,7 +111,7 @@ class CAdminTableListSQL
 										<a class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-cog"></i></a>
 										<ul class="dropdown-menu dropdown-tasks">
 											<li>
-												<a href="#">Изменить</a>
+												<a href="user_edit.php?ID=<?=$dataEl["ID"]?>">Изменить</a>
 											</li>
 											<li>
 												<a href="#">Удалить</a>

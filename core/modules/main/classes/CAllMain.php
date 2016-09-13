@@ -115,6 +115,28 @@ class CAllMain
 		return $sql;
 	}
 	
+	function ParentGetById($table,$id)
+	{
+		global $DB;
+
+		if (intval($id) || $id == 0)
+		{		
+			$DB->Query("SELECT * FROM `".$table."` WHERE `ID` = (".$id.")");			
+			$res = $DB->DBprint();
+			return $res[0]; 
+		}
+	}
+	function ParentDelete($table,$id)
+	{
+		global $DB;
+		
+		if (intval($id))
+		{		
+			$DB->Query("DELETE FROM `".$table."` WHERE `ID` = (".$id.")");			
+			return $DB->DBprint();
+		}
+	}
+	
 	function ParentGetList($table,$arOrder = array("ID"=>"ASC"),$arFilter = array(),$pageNav = array())
 	{
 		global $DB;

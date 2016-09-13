@@ -35,7 +35,7 @@
 		array(
 			"NAME"=>"Добавить",
 			"TYPE"=>"",
-			"LINK"=>"user_add.php",
+			"LINK"=>"user_edit.php",
 			"CLASS"=>"btn btn-success btn-xl",
 			"ICON"=>"fa fa-plus"
 		),	
