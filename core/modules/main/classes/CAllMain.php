@@ -15,6 +15,33 @@ class CAllMain
 		}		
 	}
 	
+	function filterArray($filter,$dif = " = ")
+	{
+		$sql = "";
+		if (is_array($filter))
+		{
+			foreach ($filter as $filterEl)
+			{
+				if($sql=="")
+				{
+					if ($dif == "!=")
+						$sql = " NOT";
+					$sql .= " IN( ";
+				}
+					
+				else
+					$sql .= ", ";
+				$sql .= "'".$filterEl."'";
+			}
+			$sql .= ") ";
+		}
+		else 
+		{
+			$sql = " ".$dif." '".$filter."'";
+		}
+		
+		return $sql;
+	}
 	
 	function ParentGetList($table,$arOrder = array("ID"=>"ASC"),$arFilter = array(),$pageNav = false)
 	{
@@ -36,16 +63,13 @@ class CAllMain
 					else
 						$sOrderBy .= ", ";
 
-					$sOrderBy .= "`".$arOrderKey."` ".$arOrderEl." ";
+					$sOrderBy .= "`".$arOrderKey."` ".$arOrderEl;
 				}
 			}
 		}
 		
 		//////////filter
-		
-		
-		
-		$typeWhere= array("!","<","<=",">",">=");
+		$typeWhere= array("<=",">=","!!","<<",">>");
 		$arrayNotWhere = array();
 		
 		foreach ($arFilter as $arFilterKey=>$arFilterEl)
@@ -53,20 +77,12 @@ class CAllMain
 			$newFilterKey = $arFilterKey;
 			foreach ($typeWhere as $typeWhereEl)
 			{
-				
-				
 				$pos = stripos($arFilterKey, $typeWhereEl);
 				if($pos !== false)
 				{
-
 					$noTypeTag = str_replace($typeWhereEl, "", $arFilterKey);
-					$arrayNotWhere[$noTypeTag] = $arFilterKey;
-					
-					$newFilterKey = $noTypeTag;
-					
-					echo "<pre>";
-					print_r($pos."-".$typeWhereEl."-".$arFilterKey."-".$bodytag);
-					echo "</pre>";					
+					$arrayNotWhere[$noTypeTag] = $typeWhereEl;	
+					$newFilterKey = $noTypeTag;			
 				}
 
 			}
@@ -74,24 +90,56 @@ class CAllMain
 			$arFilterCorrect[$newFilterKey] = $arFilterEl;
 		}
 		
-		echo "<pre>";
-		print_r($arFilter);
-		print_r($arFilterCorrect);
-		print_r($arrayNotWhere);
-		echo "</pre>";	
+		$strTableElNameOrder = $DB->GetTableFields($table);
+		list(,,$arFilterCorrect) = ($DB->PrepareInsert($table,$arFilterCorrect,$strTableElNameOrder));	
+			
+		$sqlWhere ="";
+		$logic = " AND ";
+		if ($arFilterCorrect)
+		{
+			foreach ($arFilterCorrect as $arFilterCorrectKey=>$arFilterCorrectEl)
+			{
+
+				if($sqlWhere=="")
+					$sqlWhere .=" WHERE "; 
+				else
+					$sqlWhere .= $logic;
+
+				switch ($arrayNotWhere[$arFilterCorrectKey]) 
+				{
+					case "<<":
+						//меньше
+						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,"<");
+					break;
+					case "<=":
+						//меньше либо равно
+						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,"<=");
+					break;
+					case ">>":
+						//больше
+						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,">");
+					break;
+
+					case ">=":
+						//больше либо равно
+						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,">=");
+					break;
+					case "!!":
+						//не равно
+						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,"!=");
+					break;
+					default:
+						//без условия
+						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,"=");
+					break;
+				}
+			}
+		}
+
 		
 		
 		
-		
-		//$strTableElNamefilter = $DB->GetTableFields($table);
-		//list(,,$arFilter) = ($DB->PrepareInsert($table,$arFilter,$strTableElNamefilter));	
-		
-		
-		
-		
-		
-		
-		
+		echo "SELECT * FROM `".$table."`".$sqlWhere.$sOrderBy." LIMIT 30";
 
 		
 
@@ -100,7 +148,7 @@ class CAllMain
 		//LIMIT 49100,20
 		//echo $sOrderBy;
 		
-		$DB->Query("SELECT * FROM `".$table."`".$sOrderBy."LIMIT 20");			
+		$DB->Query("SELECT * FROM `".$table."`".$sqlWhere.$sOrderBy." LIMIT 30");			
 		return $res = $DB->DBprint(); 
 	}
 	
