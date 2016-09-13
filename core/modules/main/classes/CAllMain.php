@@ -25,8 +25,61 @@ class CAllMain
 	/**
     * 
     */
-	function PaginationRender(){
+	function PaginationRender()
+	{
 		
+		$pagination  = array();
+		$pagination["ELEMENT_TO_PAGE"]		= $this->pagination_list["ELEMENT_TO_PAGE"];
+		$pagination["COUNTS_ELEMENT"]		= $this->pagination_list["COUNTS_ELEMENT"];
+		$pagination["PAGE"]					= $this->pagination_list["PAGE"];
+		$pagination["PAGES"]				= $this->pagination_list["PAGES"];
+		$pagination["END_PAGE_LIMIT"]		= $this->pagination_list["END_PAGE_LIMIT"];
+		$pagination["START_PAGE_LIMIT"]		= $this->pagination_list["START_PAGE_LIMIT"];
+		$pagination["MAX_BUTTON"]			= 4;
+		
+		
+		
+	?>	
+			<nav aria-label="Page navigation" class="clearfix">
+				<?=($pagination["PAGE"] * $pagination["ELEMENT_TO_PAGE"]) - $pagination["ELEMENT_TO_PAGE"] + 1?> - <?=$pagination["PAGE"] * $pagination["ELEMENT_TO_PAGE"]?> из <?=$pagination["COUNTS_ELEMENT"]?>
+
+				<ul class="pagination pagination-sm navbar-right">
+						<!--li>
+						  <a href="?PAGEN=<?=$pagination["PREV_PAGE"]?>" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						  </a>
+						</li-->
+
+						<? for ($el=1; $el <= $pagination["MAX_BUTTON"]; $el++):?>
+							<?if(($lowwer = $pagination["PAGE"]-$pagination["MAX_BUTTON"]+$el-1) > 0):?>
+						
+								<li><a href="<?=CRequest::GetPageParam(array("PAGEN"=>$lowwer))?>"><?=$lowwer?></a></li>
+							<?endif?>
+						<?endfor;?>
+				
+						<li class="active"><a href="<?=CRequest::GetPageParam(array("PAGEN"=>$pagination["PAGE"]))?>"><?=$pagination["PAGE"]?></a></li>
+
+						<? for ($el=1; $el <= $pagination["MAX_BUTTON"]; $el++):?>
+							<?if(($upper = $pagination["PAGE"]+$el) < $pagination["PAGES"]):?>
+								<li><a href="<?=CRequest::GetPageParam(array("PAGEN"=>$upper))?>"><?=$upper?></a></li>
+								<?CRequest::GetPageParam(array("PAGEN"=>$upper))?>
+							<?endif?>
+						<?endfor;?>
+
+						<?if($pagination["PAGE"] != $pagination["PAGES"]):?>
+							<li><span>...</span></li>	
+							<li><a  href="<?=CRequest::GetPageParam(array("PAGEN"=>$pagination["PAGES"]))?>"><?=$pagination["PAGES"]?></a></li>
+						<?endif?>
+
+						<!--li>
+						  <a href="?PAGEN=<?=$pagination["NEXT_PAGE"]?>" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						  </a>
+						</li-->
+				</ul>
+			</nav>		
+	
+	<?		
 	}
 	
 	/**
@@ -166,6 +219,8 @@ class CAllMain
 		///Формирование постраничной навигации
 		if (count($pageNav))
 		{
+
+			
 			if ($pageNav["TOP_COUNT"])
 				$limit = " LIMIT ".$pageNav["TOP_COUNT"];
 			else
@@ -175,10 +230,18 @@ class CAllMain
 				$pageNav["COUNTS_ELEMENT"]		= $DB->db_EXEC->fetchColumn();
 				$pageNav["ELEMENT_TO_PAGE"]		= ($pageNav["ELEMENT_TO_PAGE"] > $pageNav["COUNTS_ELEMENT"]) ? $pageNav["COUNTS_ELEMENT"] : $pageNav["ELEMENT_TO_PAGE"];
 				$pageNav["PAGES"]				= ceil($pageNav["COUNTS_ELEMENT"] / $pageNav["ELEMENT_TO_PAGE"]);
+				
+				$pagen = CRequest::getRequest("PAGEN");
+				if ($pagen && $pagen <=  $pageNav["COUNTS_ELEMENT"] && $pagen > 0)
+					$pageNav["PAGE"] = $pagen;		
+				
 				$pageNav["END_PAGE_LIMIT"]		= $pageNav["PAGE"] * $pageNav["ELEMENT_TO_PAGE"];
 				$pageNav["START_PAGE_LIMIT"]	= $pageNav["END_PAGE_LIMIT"] - $pageNav["ELEMENT_TO_PAGE"];
+				$pageNav["PAGE_TABLE_NAME"]		= $table;
 				$this->pagination_list			= $pageNav;
 				
+
+
 				$limit = " LIMIT ".$pageNav["START_PAGE_LIMIT"].",".$pageNav["ELEMENT_TO_PAGE"];
 			}
 		}

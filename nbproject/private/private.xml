@@ -6,9 +6,10 @@
             <file>file:/C:/Bitrix/6455/core/modules/main/database.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/classes/CUser.php</file>
             <file>file:/C:/Bitrix/6455/core/admin/user_list.php</file>
-            <file>file:/C:/Bitrix/6455/core/modules/main/admin/classes/CAdminTableList.php</file>
+            <file>file:/C:/Bitrix/6455/core/modules/main/admin/classes/autoload.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/classes/CAllMain.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/classes/CCar.php</file>
+            <file>file:/C:/Bitrix/6455/core/modules/main/admin/classes/CAdminTableListSQL.php</file>
         </group>
     </open-files>
 </project-private>

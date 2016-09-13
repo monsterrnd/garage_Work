@@ -38,20 +38,15 @@
 
 
 	///запрос к пользователям
-	$users = new CCar;
-	$uers_list = $users->GetListModification(array("id_car_modification"=>"DESC",),array("!!id_car_model"=>"20717"),array("ELEMENT_TO_PAGE"=>30,"PAGE"=>1637));
-	
-	echo "<pre>";
-	print_r($users);
-	echo "</pre>";
-	
+
+	$users = new CAllMain;		
 	$user_list = new CAdminTableListSQL;
 
 	//// формеруем названия для шапки
 	$header = "*";
 	$user_list->SetHeader($header);
-	/// записываем массив из результата в таблицу 
-	$user_list->SetData($uers_list);
+	
+	$user_list->SetData($users,"ga_allservices");
 	// выводим таблицу
 	$user_list->Render();	
 	
