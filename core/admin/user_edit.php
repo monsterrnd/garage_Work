@@ -9,8 +9,9 @@
 
 
 <div class="col-lg-12">
-	
-
+	<div class="reeee">
+		
+	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			
@@ -31,7 +32,7 @@
 				<div class="tab-pane fade active in" id="home">
 					<h4>Основные</h4>
 					<div class="well well-lg">
-						<form role="form">
+						<form role="form" id="user_edit">
 							<?
 								global $DB;
 
@@ -50,13 +51,13 @@
 
 										?>
 
-										<div class="form-group">
+										<div class="form-group ">
 											<div class="row">
 												<div class="col-md-6 text-right">
 													<span><?=$key?>:</span>
 												</div>
 												<div class="col-md-6">
-													<input type="text" class="form-control" <?=($key == "ID")? 'disabled="disabled"' : ''?> id="<?=$key?>_input" value="<?=$data[$key]?>">	
+													<input type="text" c-data-needed="1" c-data-name="Ваше <?=$key?>" name="<?=$key?>" class="form-control " <?=($key == "ID")? 'disabled="disabled"' : ''?> id="<?=$key?>_input" value="<?=$data[$key]?>">	
 												</div>
 											</div>
 
@@ -82,7 +83,7 @@
 			</div>
 		</div>
 		<div class="panel-footer">
-			<button type="button" class="btn btn-success">Сохранить</button>
+			<a href="javascript:void(0)"  class="btn btn-success" onclick="ExFormated.getModule('#user_edit','user_edit','','','.reeee',true);">Отправить</a>
 			<button type="button" class="btn btn-default">Применить</button>
 			<button type="button" class="btn btn-default">Отменить</button>
 		</div>

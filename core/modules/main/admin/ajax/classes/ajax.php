@@ -1,5 +1,5 @@
 <?
-class PoAjax
+class AdminAjax
 {
 	public $ajax_error = array(); 
 	public $ajax_module_output = array();

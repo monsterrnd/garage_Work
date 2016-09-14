@@ -111,13 +111,16 @@ class CAdminTableListSQL
 										<a class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-cog"></i></a>
 										<ul class="dropdown-menu dropdown-tasks">
 											<li>
-												<a href="user_edit.php?ID=<?=$dataEl["ID"]?>">Изменить</a>
+												<a href="user_edit.php?ID=<?=$dataEl["ID"]?>"><i class="glyphicon glyphicon-edit"></i> Изменить</a>
 											</li>
 											<li>
-												<a href="#">Удалить</a>
+												<a href="#"><i class="glyphicon glyphicon-remove"></i> Удалить</a>
 											</li>
 											<li>
-												<a href="#">Деактивировать</a>
+												<a href="#"><i class="fa fa-copy"></i> Копировать</a>
+											</li>
+											<li>
+												<a href="#"><i class="fa fa-circle-thin"></i> Деактивировать</a>
 											</li> 
 										</ul>
 									</div>
@@ -135,7 +138,7 @@ class CAdminTableListSQL
 			<?$this->get_list_object->PaginationRender();?>
 		</div>
 	</div>
-
+						
 
 	<?
 	}

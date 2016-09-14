@@ -137,6 +137,46 @@ class CAllMain
 		}
 	}
 	
+	function ParentAdd($table,$arFieldsProp)
+	{	
+		global $DB;
+		unset($arFieldsProp["ID"]);
+		
+		if (is_array($arFieldsProp))
+		{
+			$strTableElName = $DB->GetTableFields($table);
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert($table,$arFieldsProp,$strTableElName));
+			$DB->Query("INSERT INTO `".$table."` (".$sqlElColum.") VALUES (".$sqlElValues.");");
+
+			$DB->Query("SELECT MAX(ID) FROM `".$table."`");
+			$user_id  = $DB->db_EXEC->fetchColumn();
+			return $user_id;
+		}
+		
+	}	
+	
+	function ParentUpdate($table,$arFieldsProp)
+	{
+		global $DB;
+		
+		$DB->Query("SELECT * FROM `".$table."` WHERE `ID` = '".$arFieldsProp["ID"]."'");
+		$USER_THIS = $DB->DBprint();	
+		
+		if (is_array($arFieldsProp) && $USER_THIS )
+		{
+			
+			$arFieldsProp = array_merge(
+				$USER_THIS[0],
+				$arFieldsProp
+			);				
+			$strTableElName = $DB->GetTableFields($table);
+			list($sqlElColum,$sqlElValues,$sqlElAll) = ($DB->PrepareInsert($table,$arFieldsProp,$strTableElName));
+			$DB->Query("REPLACE INTO `".$table."` (".$sqlElColum.") VALUES (".$sqlElValues.");");	
+
+			return $arFieldsProp["ID"];
+		}		
+	}	
+	
 	function ParentGetList($table,$arOrder = array("ID"=>"ASC"),$arFilter = array(),$pageNav = array())
 	{
 		global $DB;

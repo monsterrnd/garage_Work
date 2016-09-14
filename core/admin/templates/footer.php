@@ -18,7 +18,9 @@
     <script src="<?=TEMPLATE_ADMIN;?>/js/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
+	<script src="<?=TEMPLATE_ADMIN;?>/dist/js/mainAjax.js"></script>
     <script src="<?=TEMPLATE_ADMIN;?>/dist/js/sb-admin-2.js"></script>
+    
 
 </body>
 </html>

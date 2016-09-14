@@ -1,8 +1,8 @@
-<?require $_SERVER['DOCUMENT_ROOT'] . '/core/modules/main/include/prolog_before.php';
+<?require $_SERVER['DOCUMENT_ROOT'] . '/core/modules/main/admin/include/prolog_before.php';
 
 require_once(__DIR__ . '/classes/ajax.php');
 
-$PoAjax = new PoAjax;
+$AdminAjax = new AdminAjax;
 
 
 header('Content-type: application/json');
@@ -10,28 +10,28 @@ header('Content-type: application/json');
 /*
  * Проверка на существования ajax;
 */
-if (PoRequest::getRequest('method') != "ajax")
+if (CRequest::getRequest('method') != "ajax")
 {
-	$PoAjax->ErrorAjaxSet("ajax_routing","Не является ajax запросом",true);
+	$AdminAjax->ErrorAjaxSet("ajax_routing","Не является ajax запросом",true);
 }
 
 /*
  * Проверка присутствия модуля;
 */
-if (count(PoRequest::getRequest('modules')) < 1 )
+if (count(CRequest::getRequest('modules')) < 1 )
 {
-	$PoAjax->ErrorAjaxSet("ajax_routing","В запросе нет обращения к модулю",true);
+	$AdminAjax->ErrorAjaxSet("ajax_routing","В запросе нет обращения к модулю",true);
 }
 
 /*
  * Проверка присутствия модуля;
 */
-$post_modules = PoRequest::getRequest('modules');
+$post_modules = CRequest::getRequest('modules');
 
 /*
  * Проверка сессии;
 */
-$sesid = PoRequest::getRequest('PHPSESSION');
+$sesid = CRequest::getRequest('PHPSESSION');
 
 /*
  * Сортировка запросов;
@@ -49,10 +49,10 @@ uasort($post_modules, function ($a, $b)
 */
 foreach ($post_modules as $name_module => $params_module)
 {	
-	$PoAjax->IncludeModule($name_module, $params_module, $sesid);
+	$AdminAjax->IncludeModule($name_module, $params_module, $sesid);
 }
 	
 /*
  * Ответ роутера
 */	
-echo json_encode($PoAjax->ModulesAjaxGet());
+echo json_encode($AdminAjax->ModulesAjaxGet());
