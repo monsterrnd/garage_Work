@@ -43,18 +43,33 @@
 								
 										
 								$strTableElName = $DB->GetTableFields("ga_user");		
-										//echo "<pre>";
-										//print_r($strTableElName);
-										//echo "</pre>";
+
+								
+								
+								////Загрузка параметров на форму
+								$tablesLoad = array();
+								$TablesForEdit= new CAllMain;						
+								$tablesLoad = $TablesForEdit->ParentGetList("ga_admin_name_param", array(), array("IS_TABLE"=>"ga_user"));
+								////сортируем по ключу
+								$tableResLoadSort = array();
+								foreach ($tablesLoad as $tablesLoadEL)
+								{
+									$tableResLoadSort[$tablesLoadEL["FILD"]] = $tablesLoadEL;			
+								}
+								
+								//echo "<pre>";
+								//print_r($strTableElName);
+								//echo "</pre>";	
+								
 								foreach ($strTableElName as $key => $arItem)
 								{
 
 										?>
-
+										<?$hederName = ($tableResLoadSort[$key]["NAME"]) ? $tableResLoadSort[$key]["NAME"] : $key;?>
 										<div class="form-group ">
 											<div class="row">
 												<div class="col-md-6 text-right">
-													<span><?=$key?>:</span>
+													<span><?=$hederName?>:</span>
 												</div>
 												<div class="col-md-6">
 													<input type="text" c-data-needed="1" c-data-name="Ваше <?=$key?>" name="<?=$key?>" class="form-control " <?=($key == "ID")? 'disabled="disabled"' : ''?> id="<?=$key?>_input" value="<?=$data[$key]?>">	

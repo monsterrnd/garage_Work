@@ -89,6 +89,22 @@ class CAdminTableListSQL
 
 		</div>
 		<div class="panel-body">
+			<?
+			
+			////Загрузка параметров на форму
+			$tablesLoad = array();
+			$TablesForEdit= new CAllMain;						
+			$tablesLoad = $TablesForEdit->ParentGetList("ga_admin_name_param", array(), array("IS_TABLE"=>$this->get_list_object_table));
+			////сортируем по ключу
+			$tableResLoadSort = array();
+			foreach ($tablesLoad as $tablesLoadEL)
+			{
+				$tableResLoadSort[$tablesLoadEL["FILD"]] = $tablesLoadEL;			
+			}
+			//echo "<pre>";
+			//print_r($tableResLoadSort);
+			//echo "</pre>";
+			?>
 			<div class="table-responsive">
 
 				<table class="table table-bordered table-hover table-striped">
@@ -98,6 +114,9 @@ class CAdminTableListSQL
 							</th>
 							<?foreach($this->set_header_array as $keyHeadName=>$hederEl):?>
 							<th>
+								
+								
+								<?$hederEl = ($tableResLoadSort[$keyHeadName]["NAME"]) ? $tableResLoadSort[$keyHeadName]["NAME"] : $hederEl;?>
 								<?$sort =($keyHeadName == CRequest::getRequest("by") && CRequest::getRequest("sort") == "asc") ? "desc": "asc";?>
 								<a href="<?=CRequest::GetPageParam(array("by"=>$keyHeadName,"sort"=>$sort))?>"><?=$hederEl?></a>
 

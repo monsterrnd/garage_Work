@@ -24,14 +24,13 @@
 					<?
 						global $DB;
 
-
-		
 						
 						$strTableElName = $DB->GetTableFields(CRequest::getRequest("TABLE"));	
 
 
 						///заголовки таблицы
 						$header = array(
+							"IS_TABLE"=>"",
 							"FILD"=>"Поле",
 							"NAME"=>"Имя",
 							"TYPE"=>"Тип поля",
@@ -49,16 +48,22 @@
 							"INPUT"=>"Поле",
 							"LIST"=>"Список",
 							"TEXTAREA"=>"Текст",
+							"YN"=>"Вкл/выкл",
 						);
 
-						$typesList = "";	
-						foreach ($typs as $typsEl)
-						{
-							$typesList .= "<option>".$typsEl."</option>";
-						}
-						$typesList = "<select class=\"form-control\">".$typesList."</select>";
 
-						
+
+
+						////Загрузка параметров на форму
+						$tablesLoad = array();
+						$TablesForEdit= new CAllMain;						
+						$tablesLoad = $TablesForEdit->ParentGetList("ga_admin_name_param", array(), array("IS_TABLE"=>CRequest::getRequest("TABLE")));
+						////сортируем по ключу
+						$tableResLoadSort = array();
+						foreach ($tablesLoad as $tablesLoadEL)
+						{
+							$tableResLoadSort[$tablesLoadEL["FILD"]] = $tablesLoadEL;			
+						}								
 
 						/////список таблиц
 						$tablesSQLList = array();
@@ -67,47 +72,90 @@
 						{
 							$tablesSQLList[]= current($tableNamesEl);
 						}
+						
 						$tablesList = "";
-						$tablesList .= "<option>НЕТ</option>";
+						$tablesList .= "<option></option>";
 						foreach ($tablesSQLList as $tablesSQLListEl)
 						{
-							$tablesList .= "<option>".$tablesSQLListEl."</option>";
+							$tablesList .= "<option value=\"$tablesSQLListEl\">".$tablesSQLListEl."</option>";
 						}
-						$tablesList = "<select class=\"form-control\">".$tablesList."</select>";
+
 						
-						
+
 						
 						$table_fild = array();
 						foreach ($strTableElName as $KeyTableElName => $ElTableElName) 
 						{
+
 							foreach ($header as $keyHeader => $ElHeader) 
 							{
-
+								
+								
 								switch ($keyHeader)
 								{
+									case "IS_TABLE":
+										$table_fild[$KeyTableElName][$keyHeader] = "<input name=\"".$KeyTableElName.":".$keyHeader."\""
+											. " type=\"hidden\" value=\"".CRequest::getRequest("TABLE")."\">";	
+									break;
 									case "FILD":
-										$table_fild[$KeyTableElName][$keyHeader] = $KeyTableElName;
+										$table_fild[$KeyTableElName][$keyHeader] = $KeyTableElName."<input name=\"".$KeyTableElName.":".$keyHeader."\""
+											. " type=\"hidden\" value=\"".$KeyTableElName."\">";
 									break;
 									case "NAME":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\" name=\"".$KeyTableElName."[".$keyHeader."]\" size=\"30\" class=\"form-control\" type=\"text\">";
+										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" "
+											. "c-data-name=\"\" name=\"".$KeyTableElName.":".$keyHeader."\" size=\"30\" "
+											. "class=\"form-control\" type=\"text\""
+											. "value=\"".(($tableResLoadSort[$KeyTableElName][$keyHeader])? $tableResLoadSort[$KeyTableElName][$keyHeader]: "" )."\""
+											. ">";
 									break;
 									case "TYPE":
-										$table_fild[$KeyTableElName][$keyHeader] = $typesList;
+										$typesList = "";	
+										foreach ($typs as $typsKey=>$typsEl)
+										{
+											$typesList .= "<option "
+											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == $typsKey)? " selected ": "" ).""
+											. "value=\"$typsKey\">".$typsEl."</option>";
+										}
+										
+										$table_fild[$KeyTableElName][$keyHeader] = "<select name=\"".$KeyTableElName.":".$keyHeader."\""
+											. " class=\"form-control\">".$typesList."</select>";
 									break;
 									case "TO_TABLE":
-										$table_fild[$KeyTableElName][$keyHeader] = $tablesList;
+										$tablesList = "";
+										$tablesList .= "<option></option>";
+										foreach ($tablesSQLList as $tablesSQLListEl)
+										{
+											$tablesList .= "<option "
+											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == $tablesSQLListEl)? " selected ": "" ).""
+											. "value=\"$tablesSQLListEl\">".$tablesSQLListEl."</option>";
+										}
+										
+										$table_fild[$KeyTableElName][$keyHeader] = "<select name=\"".$KeyTableElName.":".$keyHeader."\""
+											. " class=\"form-control\">".$tablesList."</select>";
 									break;
 									case "REQ":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\" name=\"".$KeyTableElName."[".$keyHeader."]\" type=\"checkbox\">";
+										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
+											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
+											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
+											. ">";
 									break;
 									case "HIDDEN":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\" name=\"".$KeyTableElName."[".$keyHeader."]\" type=\"checkbox\">";
+										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
+											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
+											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
+											. ">";
 									break;
 									case "INDEX":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\" name=\"".$KeyTableElName."[".$keyHeader."]\" type=\"checkbox\">";
+										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
+											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
+											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
+											. ">";
 									break;
 									case "NAME_FILD":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\" name=\"".$KeyTableElName."[".$keyHeader."]\" type=\"checkbox\">";
+										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
+											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
+											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
+											. ">";
 									break;
 								}										
 							}
@@ -115,33 +163,10 @@
 						
 
 
-						echo "<pre>";
-						//print_r($tablesSQLList);
-						echo "</pre>";
-						/*
-						foreach ($strTableElName as $key => $arItem)
-						{
-
-								?>
-
-								<div class="form-group ">
-									<div class="row">
-										<div class="col-md-6 text-right">
-											<span><?=$key?>:</span>
-										</div>
-										<div class="col-md-6">
-											<input type="text" c-data-needed="1" c-data-name="Ваше <?=$key?>" name="<?=$key?>" class="form-control " <?=($key == "ID")? 'disabled="disabled"' : ''?> id="<?=$key?>_input" value="<?=$data[$key]?>">	
-										</div>
-									</div>
-
-								</div>
-
-								<?
-								//echo "<pre>";
-								//print_r($key);
-								//echo "</pre>";
-						}
-						*/
+						//echo "<pre>";
+					//	print_r($tableResLoadSort);
+						//echo "</pre>";
+						
 
 					?>
 
@@ -176,8 +201,8 @@
 		
 		</div>
 		<div class="panel-footer">
-			<a href="javascript:void(0)"  class="btn btn-success" onclick="ExFormated.getModule('#user_edit','user_edit','','','.reeee',true);">Отправить</a>
-			<button type="button" class="btn btn-default">Применить</button>
+			<a href="javascript:void(0)"  class="btn btn-success" onclick="ExFormated.getModule('#menu_table_edit','menu_table_edit','','','','','window.location.href =\' /core/admin/user_list.php\'');">Сохранить</a>
+			<a href="javascript:void(0)"  class="btn btn-default" onclick="ExFormated.getModule('#menu_table_edit','menu_table_edit','','','','','');">Применить</a>
 			<button type="button" class="btn btn-default">Отменить</button>
 		</div>
 		<!-- /.panel-body -->

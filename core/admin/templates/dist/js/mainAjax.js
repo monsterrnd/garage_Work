@@ -247,6 +247,10 @@ MainAjax = {
 			
 			if (data.hasOwnProperty("HTML")){
 				$(data.RETURN_PARAMS.BLOCK_RETURN).html(data.HTML)
+				
+				eval(data.RETURN_PARAMS.CALL_BACK);
+				
+				
 			}
 			
 			if (data.hasOwnProperty("ERROR")){
@@ -351,11 +355,17 @@ ExForm = {
 	},
 	///////перебор из полей формы
 	getData: function(name, form) {
-		var selector = "[name=" + name + "]";
+		
+		var selector = "[name='" + name + "']";
 		var count = $(form).find(selector).length;
 		
 		if(count === 1) {
-			return $(form).find(selector).val();
+			if ($(form).find(selector).prop("type") == "checkbox"){
+				return $(form).find(selector).prop('checked');
+			}
+			else{
+				return $(form).find(selector).val();
+			}
 		}
 		
 		var data = [];
@@ -389,7 +399,9 @@ ExForm = {
 				
 				
 				name = $(this).attr("name");
+
 				name_fild = $(this).attr("c-data-name");
+				
 				value = ExForm.getData($(this).attr('name'), form);
 				
 				objforsend[name] = value;
@@ -410,7 +422,7 @@ ExForm = {
 }
 var ExFormated;
 ExFormated = {
-	getModule : function (el,module,act,type,block,clear_form){
+	getModule : function (el,module,act,type,block,clear_form,call_back){
 		ExForm.serializeForm(el,function(objforsend,objforsendandname){
 			
 			if (!clear_form)
@@ -432,6 +444,7 @@ ExFormated = {
 				query[module] = {
 					"ACTION" : act,
 					"BLOCK_RETURN" : block,
+					"CALL_BACK" : call_back,
 					"ELEMENT": el,
 					"CLEAR_FORM": clear_form,
 					"FILDS" : objforsendandname
@@ -445,6 +458,7 @@ ExFormated = {
 				query[module] = {
 					"ACTION" : act,
 					"BLOCK_RETURN" : block,
+					"CALL_BACK" : call_back,
 					"ELEMENT": el,
 					"CLEAR_FORM": clear_form,
 					"FILDS" : objforsend

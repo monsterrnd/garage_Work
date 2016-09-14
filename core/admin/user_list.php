@@ -27,7 +27,7 @@
 		"MAIN_AUTO"=>"Авто по умолчанию",
 		"AVATAR"=>"Путь к аватарке",
 	);
-	$tableList->SetHeader($header);
+	$tableList->SetHeader("*");
 	
 	
 	///добавляем кнопки 
