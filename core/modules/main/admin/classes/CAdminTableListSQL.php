@@ -11,6 +11,7 @@ class CAdminTableListSQL
 	 * getlist Object 
 	*/	
 	public $get_list_object;
+	public $get_list_object_table;
 	
 	/**
 	 * Button
@@ -66,6 +67,7 @@ class CAdminTableListSQL
 	function SetData($object,$table)
 	{
 		$this->get_list_object = $object;
+		$this->get_list_object_table = $table;
 		$sort[CRequest::getRequest("by")]= CRequest::getRequest("sort");
 		$data = $this->get_list_object->ParentGetList($table, $sort, array("!!id_car_model"=>"20717"), array("ELEMENT_TO_PAGE"=>20,"PAGE"=>1));
 		$this->set_data_array = $data;
@@ -83,6 +85,8 @@ class CAdminTableListSQL
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<?$this->buttonRender()?>
+			<a href="menu_table_edit.php?TABLE=<?=$this->get_list_object_table?>" class="btn btn-default btn-xl"><i class="fa fa-cog"></i></a>
+
 		</div>
 		<div class="panel-body">
 			<div class="table-responsive">

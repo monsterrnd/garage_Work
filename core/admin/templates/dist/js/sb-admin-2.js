@@ -1,60 +1,4 @@
 
-var ExFormated;
-ExFormated = {
-	variab:{
-		changebasketTime: "",
-	},	
-	getModule : function (el,module,act,type,block,clear_form){
-		ExForm.serializeForm(el,function(objforsend,objforsendandname){
-			
-			if (!clear_form)
-				clear_form = "";
-			
-			bag.i("ExFormated.getModule.el ",el);
-			bag.i("ExFormated.getModule.objforsendandname ",objforsendandname);
-			
-
-			if (typeof(el) == "object")
-			{
-				el = "";
-			}
-			
-			var res;
-			if (type == "c-data-name")
-			{
-				var query = {};
-				query[module] = {
-					"ACTION" : act,
-					"BLOCK_RETURN" : block,
-					"ELEMENT": el,
-					"CLEAR_FORM": clear_form,
-					"FILDS" : objforsendandname
-				}
-				MainAjax.returnOneToBlocks(query,true)		
-				
-			}
-			else
-			{
-				var query = {};
-				query[module] = {
-					"ACTION" : act,
-					"BLOCK_RETURN" : block,
-					"ELEMENT": el,
-					"CLEAR_FORM": clear_form,
-					"FILDS" : objforsend
-				}
-				MainAjax.returnOneToBlocks(query,true)
-
-			}
-			bag.i("ExFormated.getModule.res ", res);
-		})
-	}
-}
-
-
-
-
-
 
 
 
@@ -107,23 +51,3 @@ $(function() {
     }
 });
 
-
-//
-//
-//SSS = "<div class=\"modal fade\" id=\"queryModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"queryModalLabel\" aria-hidden=\"true\" style=\"display: none;\"> \n\
-//			<div class=\"modal-dialog\"> \n\
-//				<div class=\"modal-content\"> \n\
-//					<div class=\"modal-header\"> \n\
-//						<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button> \n\
-//						<h4 class=\"modal-title\" id=\"queryModalLabel\">"+title+"</h4> \n\
-//					</div> \n\
-//					<div class=\"modal-body\"> \n\
-//						"+text+" \n\
-//					</div> \n\
-//					<div class=\"modal-footer\"> \n\
-//						<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Отмена</button> \n\
-//						<button type=\"button\" class=\"btn btn-danger\">Удалить</button> \n\
-//					</div> \n\
-//				</div> \n\
-//			</div> \n\
-//        </div>";
