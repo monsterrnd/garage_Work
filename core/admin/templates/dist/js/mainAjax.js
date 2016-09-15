@@ -1,4 +1,4 @@
-var debagger = 1;
+var debagger = 0;
 var bag;
 bag = {
 	i : function (varib,name){
@@ -12,12 +12,14 @@ var ExStatus;
 ExStatus = {
 	loadimg : function(el){
 		
-		console.log("loadding "+el+"....")
-		$(".load_site").css("display","block")
+		console.log("loadding ....");
+		console.log(el);
+		$(".load_site").css("display","block");
 	},	
 	loadimgClaer : function(el){
-		console.log("loaded "+el+".")
-		$(".load_site").css("display","none")
+		console.log("loaded .");
+		console.log(el);
+		$(".load_site").css("display","none");
 	}
 }
 
@@ -44,31 +46,31 @@ ExModail = {
 		if (modal_length){			
 			this.indexmodal(el);
 			$("body").prepend(
-				"<div style=\"z-index:" + this.variab.overlay_zindex + "\" c-data-id=\""+number_modal+"\" class=\"bxmag-overlay bxmag-overlaymini \"></div>\n\
-				<div c-data-id=\""+number_modal+"\" style=\"z-index:" + this.variab.popup_zindex + "\" class=\"bxmag-popup bxmag-popupmini\">\n\
-				<div c-data-id=\""+number_modal+"\" class=\"bxmag-close_popup bxmag-close_popupmini\">\n\
-				<img src=\"/ajax/img/xhover.png\" alt=\"\" /></div>\n\
-				<div c-data-id=\""+number_modal+"\" class=\"bxmag-ok_popup\">\n\
-				<img src=\"/ajax/img/xhover.png\" alt=\"\" /></div>\n\
+				"<div style=\"z-index:" + this.variab.overlay_zindex + "\" c-data-id=\""+number_modal+"\" class=\"ga-overlay ga-overlaymini \"></div>\n\
+				<div c-data-id=\""+number_modal+"\" style=\"z-index:" + this.variab.popup_zindex + "\" class=\"ga-popup ga-popupmini\">\n\
+				<div c-data-id=\""+number_modal+"\" class=\"ga-close_popup ga-close_popupmini\">\n\
+				<img src=\"../img/xhover.png\" alt=\"\" /></div>\n\
+				<div c-data-id=\""+number_modal+"\" class=\"ga-ok_popup\">\n\
+				<img src=\"../img/xhover.png\" alt=\"\" /></div>\n\
 				</div>"
 			);
 		}
 		setTimeout(function(){
-			$(".bxmag-overlay, .bxmag-popup").addClass("bxmag-show");
-			$(".bxmag-popup").style("top",$(click_el).offset().top - 5 + "px","important");
-			$(".bxmag-popup").css("left",$(click_el).offset().left - 5 + "px");
+			$(".ga-overlay, .ga-popup").addClass("ga-show");
+			$(".ga-popup").style("top",$(click_el).offset().top - 5 + "px","important");
+			$(".ga-popup").css("left",$(click_el).offset().left - 5 + "px");
 		}, 100);
 		
 		modail_html = $(el).html();
 		$(el).empty();
 		
-		var form = $('[c-data-id = ' + number_modal + '].bxmag-popup').prepend(modail_html);
-		form.find('.bxmag-close_popup').click(function(){
-			var number = $(this).closest('.bxmag-popup').attr('c-data-id');
+		var form = $('[c-data-id = ' + number_modal + '].ga-popup').prepend(modail_html);
+		form.find('.ga-close_popup').click(function(){
+			var number = $(this).closest('.ga-popup').attr('c-data-id');
 			ExModail.close(number);
 		});
-		form.find('.bxmag-ok_popup').click(function(){
-			var number = $(this).closest('.bxmag-popup').attr('c-data-id');
+		form.find('.ga-ok_popup').click(function(){
+			var number = $(this).closest('.ga-popup').attr('c-data-id');
 			ExModail.ok(number);
 		});
 	},
@@ -93,19 +95,19 @@ ExModail = {
 		if (modal_length){			
 			this.indexmodal(el);
 			$("body").prepend(
-				"<div style=\"z-index:" + this.variab.overlay_zindex + "\" c-data-id=\""+number_modal+"\" class=\"bxmag-overlay bxmag-transition\"></div>\n\
-				<div c-data-id=\""+number_modal+"\" style=\"z-index:" + this.variab.popup_zindex + "\" class=\"bxmag-popup bxmag-transition\">\n\
-				<div c-data-id=\""+number_modal+"\" class=\"bxmag-close_popup\">\n\
-				<img src=\"/core/modules/ajax/img/xhover.png\" alt=\"\" /></div></div>"
+				"<div style=\"z-index:" + this.variab.overlay_zindex + "\" c-data-id=\""+number_modal+"\" class=\"ga-overlay ga-transition\"></div>\n\
+				<div c-data-id=\""+number_modal+"\" style=\"z-index:" + this.variab.popup_zindex + "\" class=\"ga-popup ga-transition\">\n\
+				<div c-data-id=\""+number_modal+"\" class=\"ga-close_popup\">\n\
+				<img src=\"../img/xhover.png\" alt=\"\" /></div></div>"
 			);
 	
 			if (param.hasOwnProperty("style")){
-				$('[c-data-id = ' + number_modal + '].bxmag-popup').css(param.style)
+				$('[c-data-id = ' + number_modal + '].ga-popup').css(param.style)
 			}
 			
 			setTimeout(function(){
-				$(".bxmag-overlay, .bxmag-popup").addClass("bxmag-show");
-				$(".bxmag-popup").css("top",window.pageYOffset+30+"px")
+				$(".ga-overlay, .ga-popup").addClass("ga-show");
+				$(".ga-popup").css("top",window.pageYOffset+30+"px")
 			}, 100);
 			
 			if (modal_string == true){
@@ -116,17 +118,17 @@ ExModail = {
 				$(el).empty();
 			}
 			
-			var form = $('[c-data-id = ' + number_modal + '].bxmag-popup').prepend(modail_html);
+			var form = $('[c-data-id = ' + number_modal + '].ga-popup').prepend(modail_html);
 			//$(".user_tel").mask("+7(999)999-99-99"); //////////////плохой вызов
 			
 			if (param.hasOwnProperty("tab")){
-				form.find('[c-data-popup-tab]').addClass("bxmag-popup-tab").removeClass("bxmag-popup-tab-show");
-				$('[c-data-popup-tab = ' + param.tab + ']').removeClass("bxmag-popup-tab").addClass("bxmag-popup-tab-show");
+				form.find('[c-data-popup-tab]').addClass("ga-popup-tab").removeClass("ga-popup-tab-show");
+				$('[c-data-popup-tab = ' + param.tab + ']').removeClass("ga-popup-tab").addClass("ga-popup-tab-show");
 			}
 			
 			bag.i("init var number_modal: ",number_modal);
-			form.find('.bxmag-close_popup').click(function(){
-				var number = $(this).closest('.bxmag-popup').attr('c-data-id');
+			form.find('.ga-close_popup').click(function(){
+				var number = $(this).closest('.ga-popup').attr('c-data-id');
 				ExModail.close(number);
 			});
 			
@@ -134,16 +136,16 @@ ExModail = {
 		return number_modal;
 	},
 	tab: function (el,name){
-		$(el).closest('.bxmag-popup').find('[c-data-popup-tab]').addClass("bxmag-popup-tab").removeClass("bxmag-popup-tab-show");
-		$(el).closest('.bxmag-popup').find('[c-data-popup-tab = ' + name + ']').removeClass("bxmag-popup-tab").addClass("bxmag-popup-tab-show");
+		$(el).closest('.ga-popup').find('[c-data-popup-tab]').addClass("ga-popup-tab").removeClass("ga-popup-tab-show");
+		$(el).closest('.ga-popup').find('[c-data-popup-tab = ' + name + ']').removeClass("ga-popup-tab").addClass("ga-popup-tab-show");
 	},
 	close: function (id){
 		var idvalid = /^[#].+$/i;
 		
-		$('[c-data-id = ' + id + ']').removeClass("bxmag-show");
+		$('[c-data-id = ' + id + ']').removeClass("ga-show");
 		if (idvalid.test(this.variab[id]))
 		{
-			modail_html = $('[c-data-id = ' + id + '].bxmag-popup').html();
+			modail_html = $('[c-data-id = ' + id + '].ga-popup').html();
 			$(this.variab[id]).html(modail_html);
 		}
 		
@@ -152,7 +154,7 @@ ExModail = {
 		}, 500);
 	},
 	ok: function (id){
-		$('[c-data-id = ' + id + '].bxmag-popup input').each(function(){
+		$('[c-data-id = ' + id + '].ga-popup input').each(function(){
 			$(this).attr("value",$(this).val());
 		})
 		
@@ -227,14 +229,14 @@ MainAjax = {
 			dataType: 'json',
 		})
 		.done(function(e){
-			ExStatus.loadimgClaer(variab);
+			ExStatus.loadimgClaer(e);
 			if (typeof(callback) == "function")
 			{
 				callback(e)
 			}
 		})
 		.fail(function(e){
-			ExStatus.loadimgClear(variab);
+			ExStatus.loadimgClear(e);
 			if (typeof(callback) == "function")
 			{
 				callback(e)	
@@ -255,12 +257,12 @@ MainAjax = {
 			
 			if (data.hasOwnProperty("ERROR")){
 					bag.i("returnData var data.ERROR: ",data.ERROR);
-					ExModail.info("<div class=\"bxmag-info_modal\"><h2>Ошибка</h2><br>"+data.ERROR+"</div>",3000);
+					ExModail.info("<div class=\"ga-info_modal\"><h2>Ошибка</h2><br>"+data.ERROR+"</div>",3000);
 			}	
 			
 			if (data.hasOwnProperty("DONE")){
 					bag.i("returnData var data.ERROR: ",data.DONE);
-					ExModail.info("<div class=\"bxmag-info_modal\"><h2>Информация</h2><br>"+data.DONE+"</div>",3000);
+					ExModail.info("<div class=\"ga-info_modal\"><h2>Информация</h2><br>"+data.DONE+"</div>",3000);
 			}		
 			
 			
@@ -280,7 +282,7 @@ MainAjax = {
 //				
 //				if (data.ANSWER.hasOwnProperty("ERROR")){
 //					bag.i("returnData var data.ERROR: ",data.ERROR);
-//					ExModail.info("<div class=\"bxmag-info_modal\"><h2>Ошибка</h2><br>"+data.ANSWER.ERROR+"</div>",3000);
+//					ExModail.info("<div class=\"ga-info_modal\"><h2>Ошибка</h2><br>"+data.ANSWER.ERROR+"</div>",3000);
 //				}
 //				
 //				if (data.ANSWER.hasOwnProperty("INFO")){
@@ -295,7 +297,7 @@ MainAjax = {
 //							$(form).find("input[type=text], input[type=radio], input[type=checkbox], input[type=tel], input[type=password], input[type=email], textarea").val("");
 //						}
 //					}
-//					bxMagModail.info("<div class=\"bxmag-info_modal\"><h2>!</h2><br>"+data.ANSWER.INFO+"</div>",5000);
+//					bxMagModail.info("<div class=\"ga-info_modal\"><h2>!</h2><br>"+data.ANSWER.INFO+"</div>",5000);
 //				}
 //			}
 		})

@@ -2,12 +2,20 @@
 $arResult["NAME_MODULE"] = "Создание/редактирование пользователя";
 
 
-
+foreach ($arParams["FILDS"] as &$fff)
+{
+	if ($fff == "false")
+		$fff = "N";
+	if ($fff == "true")
+		$fff = "Y";	
+}
 
 
 $cuser = new CUser;
-$res = $cuser->Add($arParams["FILDS"]);;
-$arResult["DONE"] = $res;
+$res = $cuser->Add($arParams["FILDS"]);
+if (is_array($res["ERROR"]))
+	$arResult["ERROR"] = $res["ERROR"];
+
 ob_start();
 /*
 ?>

@@ -21,6 +21,9 @@
 
     <!-- Custom CSS -->
     <link href="<?=TEMPLATE_ADMIN;?>/dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom CSS -->
+	
+    <link href="<?=TEMPLATE_ADMIN;?>/dist/css/style.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="<?=TEMPLATE_ADMIN;?>/bower_components/morrisjs/morris.css" rel="stylesheet">
@@ -38,7 +41,7 @@
 </head>
 
 <body>
-
+	<div class="load_site"></div>
     <div id="wrapper">
 
         <!-- Navigation -->

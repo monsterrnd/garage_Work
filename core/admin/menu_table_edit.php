@@ -48,6 +48,7 @@
 							"SELECT"=>"Список",
 							"TEXTAREA"=>"Текст",
 							"YN"=>"Вкл/выкл",
+							"HIDDEN"=>"Скрытое ",
 						);
 
 
@@ -92,7 +93,6 @@
 								switch ($keyHeader)
 								{
 									case "IS_TABLE":
-										CForms::TypeFilds($fildType, $name, $req, $errorMsg, $val, $class);
 										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
 											"HIDDEN",
 											$KeyTableElName.":".$keyHeader,

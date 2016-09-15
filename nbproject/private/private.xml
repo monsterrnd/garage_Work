@@ -3,22 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Bitrix/6455/core/modules/main/database.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/classes/CUser.php</file>
-            <file>file:/C:/Bitrix/6455/core/admin/menu_table_edit.php</file>
-            <file>file:/C:/Bitrix/6455/core/admin/templates/dist/js/mainAjax.js</file>
             <file>file:/C:/Bitrix/6455/core/admin/user_list.php</file>
-            <file>file:/C:/Bitrix/6455/core/modules/main/admin/ajax/ajax_routing.php</file>
-            <file>file:/C:/Bitrix/6455/core/modules/main/admin/ajax/classes/ajax.php</file>
-            <file>file:/C:/Bitrix/6455/core/admin/templates/header.php</file>
-            <file>file:/C:/Bitrix/6455/core/modules/main/admin/classes/CAdminElement.php</file>
-            <file>file:/C:/Bitrix/6455/core/modules/main/classes/CRequest.php</file>
-            <file>file:/C:/Bitrix/6455/core/admin/templates/dist/js/sb-admin-2.js</file>
+            <file>file:/C:/Bitrix/6455/core/admin/menu_table_edit.php</file>
+            <file>file:/C:/Bitrix/6455/core/modules/main/classes/CCompany.php</file>
+            <file>file:/C:/Bitrix/6455/core/admin/templates/dist/js/mainAjax.js</file>
+            <file>file:/C:/Bitrix/6455/core/modules/main/classes/CForms.php</file>
+            <file>file:/C:/Bitrix/6455/core/admin/templates/dist/css/style.css</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/admin/ajax/modules/user_edit.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/classes/CAllMain.php</file>
             <file>file:/C:/Bitrix/6455/core/admin/user_edit.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/admin/ajax/modules/menu_table_edit.php</file>
             <file>file:/C:/Bitrix/6455/core/modules/main/admin/classes/CAdminTableListSQL.php</file>
-            <file>file:/C:/Bitrix/6455/core/modules/main/classes/CUserCar.php</file>
         </group>
     </open-files>
 </project-private>

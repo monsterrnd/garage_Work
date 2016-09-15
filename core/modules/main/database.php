@@ -39,8 +39,8 @@ class CDatabase
 	function Query($strSql, $bIgnoreErrors=false)
 	{
 
-		echo "<div style=\"border:1px solid #f00; color: #f00; padding: 10px; margin: 10px 0;\">";
-		print_r($strSql);
+		//echo "<div style=\"border:1px solid #f00; color: #f00; padding: 10px; margin: 10px 0;\">";
+		//print_r($strSql);
 		
 		
 		$start_timeSQL = microtime();
@@ -54,9 +54,9 @@ class CDatabase
 		$end_arraySQL = explode(" ",$end_timeSQL);
 		$end_timeSQL = $end_arraySQL[1] + $end_arraySQL[0];
 		$timeSQL = $end_timeSQL - $start_timeSQL;
-		echo "<br><b>";
-		printf("Запрос за %f секунд",  $timeSQL);
-		echo "</b></div>";
+		//echo "<br><b>";
+		//printf("Запрос за %f секунд",  $timeSQL);
+		//echo "</b></div>";
 		
 		return true;
 	}	
