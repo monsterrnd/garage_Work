@@ -29,7 +29,7 @@ class CCar extends CAllMain
 	function GetByIdModel($id)
 	{
 		global $DB;
-		$DB->Query("SELECT * FROM `car_model` WHERE `id_car_mark` = (".$id.")");			
+		$DB->Query("SELECT * FROM `car_model` WHERE `id_car_mark` = '".$id."'");			
 		return $res = $DB->DBprint(); 
 	}
 	
@@ -43,7 +43,7 @@ class CCar extends CAllMain
 	function GetByIdSerie($id)
 	{
 		global $DB;
-		$DB->Query("SELECT * FROM `car_serie` WHERE `id_car_model` = (".$id.")");			
+		$DB->Query("SELECT * FROM `car_serie` WHERE `id_car_model` = '".$id."'");			
 		return $res = $DB->DBprint(); 
 	}	
 	
@@ -57,7 +57,7 @@ class CCar extends CAllMain
 	function GetByIdGeneration($id)
 	{
 		global $DB;
-		$DB->Query("SELECT * FROM `car_generation` WHERE `id_car_model` = (".$id.")");			
+		$DB->Query("SELECT * FROM `car_generation` WHERE `id_car_model` = '".$id."'");			
 		return $res = $DB->DBprint(); 
 	}
 	
@@ -71,7 +71,7 @@ class CCar extends CAllMain
 	function GetByIdModification($id)
 	{
 		global $DB;
-		$DB->Query("SELECT * FROM `car_modification` WHERE `id_car_model` = (".$id.")");			
+		$DB->Query("SELECT * FROM `car_modification` WHERE `id_car_model` = '".$id."'");			
 		return $res = $DB->DBprint(); 
 	}
 	

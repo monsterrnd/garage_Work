@@ -16,7 +16,7 @@ class CService extends CAllMain
 		global $DB;
 		if (intval($id) || $id == 0)
 		{		
-			$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = (".$id.")");
+			$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = '".$id."'");
 			$res = $DB->DBprint();
 			return $res[0]; 
 		}
@@ -34,7 +34,7 @@ class CService extends CAllMain
 		global $DB;
 		if (intval($id) || $id == 0)
 		{		
-			$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID_ALLSERVICES` = (".$id.")");			
+			$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID_ALLSERVICES` = '".$id."'");			
 			return $DB->DBprint();
 		}
 	}
@@ -173,7 +173,7 @@ class CService extends CAllMain
 		
 		if (intval($id))
 		{		
-			$DB->Query("DELETE FROM `ga_allservices` WHERE `ID` = (".$id.")");			
+			$DB->Query("DELETE FROM `ga_allservices` WHERE `ID` = '".$id."'");			
 			return $DB->DBprint();
 		}
 	}

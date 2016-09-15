@@ -38,8 +38,26 @@ class CDatabase
 	
 	function Query($strSql, $bIgnoreErrors=false)
 	{
+
+		echo "<div style=\"border:1px solid #f00; color: #f00; padding: 10px; margin: 10px 0;\">";
+		print_r($strSql);
+		
+		
+		$start_timeSQL = microtime();
+		$start_arraySQL = explode(" ",$start_timeSQL);
+		$start_timeSQL = $start_arraySQL[1] + $start_arraySQL[0];
+		
 		$this->db_EXEC = $this->db_Conn->prepare($strSql);
 		$this->Execute();
+		
+		$end_timeSQL = microtime();
+		$end_arraySQL = explode(" ",$end_timeSQL);
+		$end_timeSQL = $end_arraySQL[1] + $end_arraySQL[0];
+		$timeSQL = $end_timeSQL - $start_timeSQL;
+		echo "<br><b>";
+		printf("Запрос за %f секунд",  $timeSQL);
+		echo "</b></div>";
+		
 		return true;
 	}	
 	

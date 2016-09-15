@@ -16,7 +16,7 @@ class CCompany extends CAllMain
 		global $DB;
 		if (intval($id) || $id == 0)
 		{		
-			$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$id.")");
+			$DB->Query("SELECT * FROM `ga_company` WHERE `ID` =  '".$id."'");
 			$res = $DB->DBprint();
 			return $res[0]; 
 		}
@@ -177,7 +177,7 @@ class CCompany extends CAllMain
 		
 		if (intval($id))
 		{		
-			$DB->Query("DELETE FROM `ga_company` WHERE `ID` = (".$id.")");			
+			$DB->Query("DELETE FROM `ga_company` WHERE `ID` =  '".$id."'");		
 			return $DB->DBprint();
 		}
 	}

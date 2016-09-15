@@ -10,7 +10,9 @@
 
 <div class="col-lg-12">
 	<div class="reeee">
-		
+		<?$ss = new CAllMain;
+		$ss->ParentGetList("car_modification");
+		?>
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -57,9 +59,9 @@
 									$tableResLoadSort[$tablesLoadEL["FILD"]] = $tablesLoadEL;			
 								}
 								
-								//echo "<pre>";
-								//print_r($strTableElName);
-								//echo "</pre>";	
+								echo "<pre>";
+								print_r($tableResLoadSort);
+								echo "</pre>";	
 								
 								foreach ($strTableElName as $key => $arItem)
 								{
@@ -72,7 +74,14 @@
 													<span><?=$hederName?>:</span>
 												</div>
 												<div class="col-md-6">
-													<input type="text" c-data-needed="1" c-data-name="Ваше <?=$key?>" name="<?=$key?>" class="form-control " <?=($key == "ID")? 'disabled="disabled"' : ''?> id="<?=$key?>_input" value="<?=$data[$key]?>">	
+													<input type="text" 
+														   c-data-needed="<?=($tableResLoadSort[$key]["REQ"]== "Y") ? "1" : "0"?>" 
+														   c-data-name="<?=$hederName?>"
+														   name="<?=$key?>" class="form-control"
+														   <?=($key == "ID")? 'disabled="disabled"' : ''?> 
+														   id="<?=$key?>_input" 
+														   value="<?=$data[$key]?>"
+													>	
 												</div>
 											</div>
 

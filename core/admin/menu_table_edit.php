@@ -40,24 +40,22 @@
 							"INDEX"=>"Является индексным",
 							"NAME_FILD"=>"Является Названием",
 						);
-
-						
+		
 						
 						//////список типов полей
 						$typs = array(
-							"INPUT"=>"Поле",
-							"LIST"=>"Список",
+							"TEXT"=>"Поле",
+							"SELECT"=>"Список",
 							"TEXTAREA"=>"Текст",
 							"YN"=>"Вкл/выкл",
 						);
-
-
 
 
 						////Загрузка параметров на форму
 						$tablesLoad = array();
 						$TablesForEdit= new CAllMain;						
 						$tablesLoad = $TablesForEdit->ParentGetList("ga_admin_name_param", array(), array("IS_TABLE"=>CRequest::getRequest("TABLE")));
+						
 						////сортируем по ключу
 						$tableResLoadSort = array();
 						foreach ($tablesLoad as $tablesLoadEL)
@@ -94,19 +92,26 @@
 								switch ($keyHeader)
 								{
 									case "IS_TABLE":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input name=\"".$KeyTableElName.":".$keyHeader."\""
-											. " type=\"hidden\" value=\"".CRequest::getRequest("TABLE")."\">";	
+										CForms::TypeFilds($fildType, $name, $req, $errorMsg, $val, $class);
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"HIDDEN",
+											$KeyTableElName.":".$keyHeader,
+											CRequest::getRequest("TABLE")
+										);
 									break;
 									case "FILD":
-										$table_fild[$KeyTableElName][$keyHeader] = $KeyTableElName."<input name=\"".$KeyTableElName.":".$keyHeader."\""
-											. " type=\"hidden\" value=\"".$KeyTableElName."\">";
+										$table_fild[$KeyTableElName][$keyHeader] = $KeyTableElName.CForms::TypeFilds(
+											"HIDDEN",
+											$KeyTableElName.":".$keyHeader,
+											$KeyTableElName
+										);
 									break;
 									case "NAME":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" "
-											. "c-data-name=\"\" name=\"".$KeyTableElName.":".$keyHeader."\" size=\"30\" "
-											. "class=\"form-control\" type=\"text\""
-											. "value=\"".(($tableResLoadSort[$KeyTableElName][$keyHeader])? $tableResLoadSort[$KeyTableElName][$keyHeader]: "" )."\""
-											. ">";
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"TEXT",
+											$KeyTableElName.":".$keyHeader,
+											(($tableResLoadSort[$KeyTableElName][$keyHeader])? $tableResLoadSort[$KeyTableElName][$keyHeader]: "" )
+										);										
 									break;
 									case "TYPE":
 										$typesList = "";	
@@ -117,8 +122,12 @@
 											. "value=\"$typsKey\">".$typsEl."</option>";
 										}
 										
-										$table_fild[$KeyTableElName][$keyHeader] = "<select name=\"".$KeyTableElName.":".$keyHeader."\""
-											. " class=\"form-control\">".$typesList."</select>";
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"SELECT",
+											$KeyTableElName.":".$keyHeader,
+											$typesList
+										);		
+										
 									break;
 									case "TO_TABLE":
 										$tablesList = "";
@@ -130,42 +139,44 @@
 											. "value=\"$tablesSQLListEl\">".$tablesSQLListEl."</option>";
 										}
 										
-										$table_fild[$KeyTableElName][$keyHeader] = "<select name=\"".$KeyTableElName.":".$keyHeader."\""
-											. " class=\"form-control\">".$tablesList."</select>";
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"SELECT",
+											$KeyTableElName.":".$keyHeader,
+											$tablesList
+										);			
 									break;
 									case "REQ":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
-											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
-											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
-											. ">";
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"YN",
+											$KeyTableElName.":".$keyHeader,
+											$tableResLoadSort[$KeyTableElName][$keyHeader]
+										);										
 									break;
 									case "HIDDEN":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
-											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
-											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
-											. ">";
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"YN",
+											$KeyTableElName.":".$keyHeader,
+											$tableResLoadSort[$KeyTableElName][$keyHeader]
+										);	
 									break;
 									case "INDEX":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
-											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
-											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
-											. ">";
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"YN",
+											$KeyTableElName.":".$keyHeader,
+											$tableResLoadSort[$KeyTableElName][$keyHeader]
+										);	
 									break;
 									case "NAME_FILD":
-										$table_fild[$KeyTableElName][$keyHeader] = "<input c-data-needed=\"0\" c-data-name=\"\""
-											. " name=\"".$KeyTableElName.":".$keyHeader."\" type=\"checkbox\""
-											. "".(($tableResLoadSort[$KeyTableElName][$keyHeader] == "Y")? "checked=\"checked\"": "" ).""
-											. ">";
+										$table_fild[$KeyTableElName][$keyHeader] = CForms::TypeFilds(
+											"YN",
+											$KeyTableElName.":".$keyHeader,
+											$tableResLoadSort[$KeyTableElName][$keyHeader]
+										);	
 									break;
 								}										
 							}
 						}
 						
-
-
-						//echo "<pre>";
-					//	print_r($tableResLoadSort);
-						//echo "</pre>";
 						
 
 					?>

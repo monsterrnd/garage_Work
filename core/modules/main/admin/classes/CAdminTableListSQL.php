@@ -69,7 +69,7 @@ class CAdminTableListSQL
 		$this->get_list_object = $object;
 		$this->get_list_object_table = $table;
 		$sort[CRequest::getRequest("by")]= CRequest::getRequest("sort");
-		$data = $this->get_list_object->ParentGetList($table, $sort, array("!!id_car_model"=>"20717"), array("ELEMENT_TO_PAGE"=>20,"PAGE"=>1));
+		$data = $this->get_list_object->ParentGetList($table, $sort, array(), array("ELEMENT_TO_PAGE"=>30,"PAGE"=>1));
 		$this->set_data_array = $data;
 	}
 

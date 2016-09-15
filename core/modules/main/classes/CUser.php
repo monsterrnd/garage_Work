@@ -17,7 +17,7 @@ class CUser extends CAllMain
 
 		if (intval($id) || $id == 0)
 		{		
-			$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = (".$id.")");			
+			$DB->Query("SELECT * FROM `ga_user` WHERE `ID` = '".$id."'");			
 			$res = $DB->DBprint();
 			return $res[0]; 
 		}

@@ -16,7 +16,7 @@ class CUserCar extends CAllMain
 		global $DB;
 		if (intval($id) || $id == 0)
 		{		
-			$DB->Query("SELECT * FROM `ga_user_car` WHERE `ID` = (".$id.")");
+			$DB->Query("SELECT * FROM `ga_user_car` WHERE `ID` = '".$id."'");
 			$res = $DB->DBprint();
 			return $res[0]; 
 		}
@@ -214,7 +214,7 @@ class CUserCar extends CAllMain
 		
 		if (intval($id))
 		{		
-			$DB->Query("DELETE FROM `ga_user_car` WHERE `ID` = (".$id.")");			
+			$DB->Query("DELETE FROM `ga_user_car` WHERE `ID` = '".$id."'");		
 			return $DB->DBprint();
 		}
 	}

@@ -16,7 +16,7 @@ class CPrices extends CAllMain
 		global $DB;
 		if (intval($id) || $id == 0)
 		{		
-			$DB->Query("SELECT * FROM `ga_prices` WHERE `ID` = (".$id.")");
+			$DB->Query("SELECT * FROM `ga_prices` WHERE `ID` = '".$id."'");;
 			$res = $DB->DBprint();
 			return $res[0]; 
 		}
@@ -63,14 +63,14 @@ class CPrices extends CAllMain
 			$this->Error["Add"][] = "Автомобиль не существует";	
 
 		///запрос к компаниям
-		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = '".$arFieldsProp["ID_COMPANY"]."'");
 		$company_exist = $DB->DBprint();
 		
 		if(!$company_exist)
 			$this->Error["Add"][] = "Компания не существует";	
 		
 		///запрос к услугам
-		$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = (".$arFieldsProp["ID_ALLSERVICES"].")");
+		$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = '".$arFieldsProp["ID_ALLSERVICES"]."'");
 		$cervices_exist = $DB->DBprint();
 		
 		if(!$cervices_exist)
@@ -157,14 +157,14 @@ class CPrices extends CAllMain
 			$this->Error["Update"][] = "Автомобиль не существует";	
 
 		///запрос к компаниям
-		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = (".$arFieldsProp["ID_COMPANY"].")");
+		$DB->Query("SELECT * FROM `ga_company` WHERE `ID` = '".$arFieldsProp["ID_COMPANY"]."'");
 		$company_exist = $DB->DBprint();
 		
 		if(!$company_exist)
 			$this->Error["Update"][] = "Компания не существует";	
 		
 		///запрос к услугам
-		$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = (".$arFieldsProp["ID_ALLSERVICES"].")");
+		$DB->Query("SELECT * FROM `ga_allservices` WHERE `ID` = '".$arFieldsProp["ID_ALLSERVICES"]."'");
 		$cervices_exist = $DB->DBprint();
 		
 		if(!$cervices_exist)
@@ -214,7 +214,7 @@ class CPrices extends CAllMain
 		
 		if (intval($id))
 		{		
-			$DB->Query("DELETE FROM `ga_prices` WHERE `ID` = (".$id.")");			
+			$DB->Query("DELETE FROM `ga_prices` WHERE `ID` = '".$id."'");			
 			return $DB->DBprint();
 		}
 	}
