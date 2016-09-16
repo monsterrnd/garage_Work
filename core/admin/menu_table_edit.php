@@ -212,9 +212,9 @@
 		
 		</div>
 		<div class="panel-footer">
-			<a href="javascript:void(0)"  class="btn btn-success" onclick="ExFormated.getModule('#menu_table_edit','menu_table_edit','','','','','window.location.href =\' /core/admin/user_list.php\'');">Сохранить</a>
+			<a href="javascript:void(0)"  class="btn btn-success" onclick="ExFormated.getModule('#menu_table_edit','menu_table_edit','','','','','history.back()');">Сохранить</a>
 			<a href="javascript:void(0)"  class="btn btn-default" onclick="ExFormated.getModule('#menu_table_edit','menu_table_edit','','','','','');">Применить</a>
-			<button type="button" class="btn btn-default">Отменить</button>
+			<a href="javascript:void(0)"  class="btn btn-default" onclick="history.back()">Отменить</a>
 		</div>
 		<!-- /.panel-body -->
 	</div>

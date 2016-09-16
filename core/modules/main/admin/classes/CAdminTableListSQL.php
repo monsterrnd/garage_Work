@@ -55,9 +55,12 @@ class CAdminTableListSQL
 	{
 		if($this->set_header_noarray == true){
 			$set_data_array = $this->set_data_array;
-			foreach (current($set_data_array) as $name=>$set_data_array_el)
+			if ($set_data_array)
 			{
-				$this->set_header_array[$name] = $name;
+				foreach (current($set_data_array) as $name=>$set_data_array_el)
+				{
+					$this->set_header_array[$name] = $name;
+				}
 			}
 		}
 	}
@@ -68,8 +71,16 @@ class CAdminTableListSQL
 	{
 		$this->get_list_object = $object;
 		$this->get_list_object_table = $table;
+		$filter = array();
 		$sort[CRequest::getRequest("by")]= CRequest::getRequest("sort");
-		$data = $this->get_list_object->ParentGetList($table, $sort, array(), array("ELEMENT_TO_PAGE"=>30,"PAGE"=>1));
+		$search = CRequest::getRequest("search");
+		$in_search = CRequest::getRequest("in_search");
+		
+		if($search && $in_search)
+			$filter = array_merge ($filter,array("??".$in_search=>$search));
+		 
+			
+		$data = $this->get_list_object->ParentGetList($table, $sort,$filter, array("ELEMENT_TO_PAGE"=>30,"PAGE"=>1));
 		$this->set_data_array = $data;
 	}
 
@@ -121,7 +132,6 @@ class CAdminTableListSQL
 								<a href="<?=CRequest::GetPageParam(array("by"=>$keyHeadName,"sort"=>$sort))?>"><?=$hederEl?></a>
 
 
-
 							</th>
 							<?endforeach;?>
 						</tr>
@@ -134,17 +144,11 @@ class CAdminTableListSQL
 										<a class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-cog"></i></a>
 										<ul class="dropdown-menu dropdown-tasks">
 											<li>
-												<a href="user_edit.php?ID=<?=$dataEl["ID"]?>"><i class="glyphicon glyphicon-edit"></i> Изменить</a>
+												<a href="table_edit.php?ID=<?=$dataEl["ID"]?>&TABLE=<?=$this->get_list_object_table?>"><i class="glyphicon glyphicon-edit"></i> Изменить</a>
 											</li>
 											<li>
-												<a href="#"><i class="glyphicon glyphicon-remove"></i> Удалить</a>
+												<a href="savascript:void(0)" onclick="ExAdmin.deleteEl('table_delete',{'TABLE':'<?=$this->get_list_object_table?>','ID':'<?=$dataEl["ID"]?>'})"><i class="glyphicon glyphicon-remove"></i> Удалить</a>
 											</li>
-											<li>
-												<a href="#"><i class="fa fa-copy"></i> Копировать</a>
-											</li>
-											<li>
-												<a href="#"><i class="fa fa-circle-thin"></i> Деактивировать</a>
-											</li> 
 										</ul>
 									</div>
 								</td>
@@ -155,6 +159,10 @@ class CAdminTableListSQL
 						<?endforeach;?>                                         
 					</tbody>
 				</table>
+				<br>
+				<br>
+				<br>
+				<br>
 			</div>
 		</div>
 		<div class="panel-footer">

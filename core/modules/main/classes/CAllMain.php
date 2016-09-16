@@ -205,7 +205,7 @@ class CAllMain
 		}
 		
 		//////////filter
-		$typeWhere= array("<=",">=","!!","<<",">>");
+		$typeWhere= array("<=",">=","!!","<<",">>","??");
 		$arrayNotWhere = array();
 		
 		if(count($arFilter))
@@ -233,7 +233,7 @@ class CAllMain
 			
 		}
 		
-	
+
 			
 		$sqlWhere ="";
 		$logic = " AND ";
@@ -269,6 +269,10 @@ class CAllMain
 						//не равно
 						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,"!=");
 					break;
+					case "??":
+						//содержит 
+						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray("%".$arFilterCorrectEl."%","LIKE");
+					break;
 					default:
 						//без условия
 						$sqlWhere .= "`".$arFilterCorrectKey."`".$this->filterArray($arFilterCorrectEl,"=");
@@ -288,8 +292,8 @@ class CAllMain
 			else
 			{
 				$DB->Query("SELECT COUNT(*) FROM `".$table."`".$sqlWhere);
-
-				$pageNav["COUNTS_ELEMENT"]		= $DB->db_EXEC->fetchColumn();
+				$countElSQL = $DB->db_EXEC->fetchColumn();
+				$pageNav["COUNTS_ELEMENT"]		= ($countElSQL < 1)? 1 : $countElSQL;
 				$pageNav["ELEMENT_TO_PAGE"]		= ($pageNav["ELEMENT_TO_PAGE"] > $pageNav["COUNTS_ELEMENT"]) ? $pageNav["COUNTS_ELEMENT"] : $pageNav["ELEMENT_TO_PAGE"];
 				$pageNav["PAGES"]				= ceil($pageNav["COUNTS_ELEMENT"] / $pageNav["ELEMENT_TO_PAGE"]);
 				

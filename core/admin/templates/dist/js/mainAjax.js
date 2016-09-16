@@ -1,4 +1,4 @@
-var debagger = 0;
+var debagger = 1;
 var bag;
 bag = {
 	i : function (varib,name){
@@ -312,7 +312,21 @@ MainAjax = {
 }
 
 
-
+var ExAdmin;
+ExAdmin = {
+	deleteEl : function (module,objforsendandname){
+		
+	deletee = confirm("Удалить лемент "+objforsendandname.ID+"?");
+	if (deletee == true){
+		var query = {};
+		query[module] = {
+			"FILDS" : objforsendandname,
+			"CALL_BACK" : "location.reload()"
+		}
+		MainAjax.returnOneToBlocks(query,true)
+	 }
+	}
+}
 
 var ExForm;
 ExForm = {

@@ -53,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">ГАРАЖ</a>
+                <a class="navbar-brand" href="/core/admin/">ГАРАЖ</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -82,9 +82,9 @@
                     <ul class="nav" id="side-menu">
 					
                         <li>
-                            <a href="index.html"><i class="fa fa-th"></i> Рабочий стол</a>
+                            <a href="/core/admin/"><i class="fa fa-th"></i> Рабочий стол</a>
                         </li>
-                        <li>
+                        <!--li>
                             <a href="company.html"><i class="fa fa-users"></i> Компании</a>
                         </li>
                         <li>
@@ -98,9 +98,52 @@
                         </li>
                         <li>
                             <a href="index.html"><i class="fa fa-wrench"></i> Типы услуг</a>
+                        </li-->                       
+                        <li>
+                           
+							<a href="#"><i class="fa fa-table fa-fw"></i> Таблицы<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="/core/admin/table_name_edit.php"><i class="fa fa-gear"></i> Настройки</a>
+								</li>								
+								<?
+								
+								$tablesLoad = array();
+								$TablesForEdit= new CAllMain;						
+								$tablesLoad = $TablesForEdit->ParentGetList("ga_name_table", array(), array());
+
+								////сортируем по ключу
+								$tableResLoadSort = array();
+								foreach ($tablesLoad as $tablesLoadEL)
+								{
+									$tableResLoadSort[$tablesLoadEL["TABLE"]] = $tablesLoadEL;			
+								}
+								
+								
+								/////список таблиц
+								$tablesSQLList = array();
+								$DB->Query("SHOW TABLES FROM ".$DB->DBName);
+								foreach ($DB->DBprint() as $tableNamesEl)
+								{
+									$tablesSQLList[]= current($tableNamesEl);
+								}
+
+								foreach ($tablesSQLList as $tablesSQLListEl)
+								{
+									?>
+									<?if ($tableResLoadSort[$tablesSQLListEl]["HIDDEN"] != "Y"):?> 
+										<li>
+											<a href="/core/admin/table_list.php?TABLE=<?=$tablesSQLListEl?>"><?=($tableResLoadSort[$tablesSQLListEl]["NAME_RUS"])? $tableResLoadSort[$tablesSQLListEl]["NAME_RUS"] : $tablesSQLListEl?></a>
+										</li>
+									<?endif;?>
+									<?
+								}								
+								?>
+								
+							</ul>							
                         </li>                       
 						<li>
-                            <a href="index.html"><i class="fa fa-gear"></i> Настройки</a>
+                            <a href="#"><i class="fa fa-gear"></i> Настройки</a>
                         </li>
 
 

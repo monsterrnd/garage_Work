@@ -54,9 +54,10 @@ class CDatabase
 		$end_arraySQL = explode(" ",$end_timeSQL);
 		$end_timeSQL = $end_arraySQL[1] + $end_arraySQL[0];
 		$timeSQL = $end_timeSQL - $start_timeSQL;
-		//echo "<br><b>";
-		//printf("Запрос за %f секунд",  $timeSQL);
-		//echo "</b></div>";
+		
+		///echo "<br><b>";
+		///printf("Запрос за %f секунд",  $timeSQL);
+		///echo "</b></div>";
 		
 		return true;
 	}	
