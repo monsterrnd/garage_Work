@@ -60,7 +60,7 @@ $APPLICATION->SessionInit();
 //$CORDER		=	new COrder;
 //$CUSERCAR		=	new CUserCar;
 //$CAR			=	new CCar;
-$REST			=	new CRestMethod;
+//$REST			=	new CRestMethod;
 //$MESSAGE = new CMessage;
 
 
