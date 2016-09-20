@@ -139,7 +139,7 @@ class CAdminTableListSQL
 					<tbody>
 						<?foreach($this->set_data_array as $dataEl):?>
 							<tr>
-								<td>
+								<th>
 									<div class="dropdown">
 										<a class="dropdown-toggle btn btn-default btn-xs" data-toggle="dropdown" href="#" aria-expanded="false"><i class="fa fa-cog"></i></a>
 										<ul class="dropdown-menu dropdown-tasks">
@@ -151,12 +151,17 @@ class CAdminTableListSQL
 											</li>
 										</ul>
 									</div>
-								</td>
+								</th>
 								<?foreach($this->set_header_array as $nameRows=>$hederEl):?>
 									<td><?=$dataEl[$nameRows]?></td>
 								<?endforeach;?>									
 							</tr>
-						<?endforeach;?>                                         
+						<?endforeach;?>     
+						<?if(!count($this->set_data_array)):?>
+							<tr>
+								<td>Нет не одной записи</td>
+							</tr>	
+						<?endif?>
 					</tbody>
 				</table>
 				<br>

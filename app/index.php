@@ -14,28 +14,112 @@ if ($get = $REST->method("get","/services/"))
 	$res = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"), array("ID_ALLSERVICES"=>0), array());
 	$filelist[] = $res;
 }
+
 if ($get = $REST->method("get","/services/{%}/"))
 {
+	$user = "asdfasdfasdf";
+	$result = array();
+	
 	$res = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"),array("ID_ALLSERVICES"=>$get["REQUEST"][1]), array());
-	$filelist[] = $res;
+	foreach ($res as $key => $arItem) {
+		$result[$key]["ID"] = $arItem["ID"];
+		$result[$key]["NAME"] = $arItem["NAME"];
+	}
+	
+	if (!count($res))
+	{
+		////проверка существует услуга в бд если существует берем эту услугу для выборки
+		$exist_service = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"),array("ID"=>$get["REQUEST"][1]), array());
+		if (count($exist_service))
+		{
+			$exist_service = reset($exist_service);
+			
+			////Подгружаем данные пользователя
+			$user = $CAllMain->ParentGetList("ga_user", array("SORT"=>"asc"), array("SESSION"=>$user), array());
+			if (count($user))
+			{
+				$user = reset($user);
+				
+				////Подгружаем авто пользователя
+				$auto = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"), array("ID_USER"=>$user["ID"],"ID"=>$user["MAIN_AUTO"]), array());
+				if (count($auto))
+				{
+					$auto = reset($auto);
+					
+					////Показываем цены по выбранной услуге
+					$price = $CAllMain->ParentGetList("ga_prices", array("SORT"=>"asc"), array("ID_CAR_MARK"=>$auto["ID_CAR_MARK"],"ID_ALLSERVICES"=>$exist_service["ID"]), array());
+					if (count($price))
+					{		
+						
+						$companySelect = array();
+						$priceSortId = array();
+						////Собераем масив с прайсами для выборки компаний
+						foreach ($price as $priceKey => $priceItem) 
+						{
+							$companySelect[] =  $priceItem["ID_COMPANY"];
+							$priceSortId[$priceItem["ID_COMPANY"]] = $priceItem;
+						}
+						if (count($companySelect))
+						{
+							///Запрос к компаниям по ID полученого из $companySelect;
+							$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ACTIVE"=>"Y","ID"=>$companySelect), array());
+							
+
+							////собераем ответ роутора
+							foreach ($company as $companyKey => $companyItem) 
+							{
+								$result[$companyKey]["ID"]				= $companyItem["ID"];
+								$result[$companyKey]["PRICE"]			= $priceSortId[$companyItem["ID"]]["PRICE"];
+								$result[$companyKey]["COMMENT"]			= $priceSortId[$companyItem["ID"]]["COMMENT"];
+								$result[$companyKey]["NAME"]			= $companyItem["NAME"];
+								$result[$companyKey]["LOGO"]			= $companyItem["LOGO"];
+								$result[$companyKey]["ADDRESS"]			= $companyItem["ADDRESS"];
+								$result[$companyKey]["DESCRIPTION"]		= $companyItem["DESCRIPTION"];
+							}
+						}
+					}
+					
+				}
+
+			}
+			
+
+		}
+	}
+
+	$filelist[] = $result;
 }
 
 if ($get = $REST->method("get","/services/{%}/{%}/"))
 {
+	
+
+	
+	$result = array();
 	$res = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"), array("ID_ALLSERVICES"=>$get["REQUEST"][2]), array());
-	$filelist[] = $res;
+	foreach ($res as $key => $arItem) {
+		$result[$key]["ID"] = $arItem["ID"];
+		$result[$key]["NAME"] = $arItem["NAME"];
+	}
+	$filelist[] = $result;
 }
 
-if ($get = $REST->method("get","/services/{%}/{%}/{%}/"))
-{
-	$res = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"), array("ID_ALLSERVICES"=>$get["REQUEST"][3]), array());
-	$filelist[] = $res;
-}
+
+
+
+
+
 
 if ($get = $REST->method("get","/auto/"))
 {
+	$result = array();
 	$res = $CAllMain->ParentGetList("car_mark", array(), array(), array());
-	$filelist[] = $res;
+	foreach ($res as $key => $arItem) {
+		$result[$key]["ID"] = $arItem["id_car_mark"];
+		$result[$key]["NAME"] = $arItem["name"];
+	}
+	
+	$filelist[] = $result;
 }
 
 if ($get = $REST->method("get","/auto/{%}/"))

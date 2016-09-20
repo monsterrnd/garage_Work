@@ -3,10 +3,15 @@ class CForms
 {
 	static function TypeFilds($fildType, $name = "", $value = "", $disabled = "", $req = "", $errorMsg = "", $class = "")
 	{
+		
+
+		
 		$res = "";
 		switch ($fildType)
 		{
-			case "TEXT":			
+			case "TEXT":
+				$value = htmlspecialchars($value);
+				$errorMsg = htmlspecialchars($errorMsg);
 				$res =  "<input " 
 					. "type=\"text\" "
 					. "c-data-needed=\"".(($req == "Y") ? "1" : "0")."\" "
@@ -19,7 +24,9 @@ class CForms
 					. ">\n";
 
 			break;
-			case "HIDDEN":			
+			case "HIDDEN":	
+				$value = htmlspecialchars($value);
+				$errorMsg = htmlspecialchars($errorMsg);
 				$res =  "<input " 
 					. "type=\"hidden\" "
 					. "c-data-needed=\"0\" "
@@ -46,6 +53,8 @@ class CForms
 					. "</select>\n";
 			break;
 			case "TEXTAREA":
+				$value = htmlspecialchars($value);
+				$errorMsg = htmlspecialchars($errorMsg);
 				$res =  "<textarea "
 					. "rows=\"5\" "
 					. "cols=\"45\" "
