@@ -21,7 +21,7 @@ class CForms
 					. ((!empty($name)) ? (" id=\"".$name."_input\" ") : "")
 					. ((!empty($value)) ? (" value=\"".$value."\" ") : "")
 					. (($disabled == "Y") ? ("disabled=\"disabled\" ") : "")
-					. ">\n";
+					. "/>\n";
 
 			break;
 			case "HIDDEN":	
@@ -35,7 +35,7 @@ class CForms
 					. "class=\"".$class."\" "
 					. ((!empty($name)) ? (" id=\"".$name."_input\" ") : "")
 					. ((!empty($value)) ? (" value=\"".$value."\" ") : "")
-					. ">\n";
+					. "/>\n";
 
 			break;
 			case "SELECT":
@@ -80,7 +80,7 @@ class CForms
 					. ((!empty($name)) ? (" id=\"".$name."_input\" ") : "")
 					. (($value == "Y") ? ("checked=\"checked\" ") : "")
 					. (($disabled == "Y") ? ("disabled=\"disabled\" ") : "")
-					. ">\n";			
+					. "/>\n";			
 			break;
 		}
 		return $res;
