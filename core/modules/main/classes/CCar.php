@@ -19,6 +19,14 @@ class CCar extends CAllMain
 		return $DB->DBprint();
 	}
 	
+	function GetByIdMark($id)
+	{
+		global $DB;
+		$DB->Query("SELECT * FROM `car_mark` WHERE `id_car_mark` = '".$id."'");	  
+		$res = $DB->DBprint(); 		
+		return $res[0];
+	}
+	
 	/**
 	* @package Список модель авто
 	* @param integer $id Ключа в таблице

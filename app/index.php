@@ -9,6 +9,7 @@ $filelist = array();
 
 if ($get = $REST->method("get","/services/"))
 {
+	$result = array();
 	$res = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"), array("ID_ALLSERVICES"=>0), array());
 	
 	foreach ($res as $key => $arItem) {
@@ -157,6 +158,59 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 
 
 
+if ($get = $REST->method("get","/car_user/"))
+{
+
+	$result = array();
+	$params = array();
+	
+	$res = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
+	
+	foreach ($res as $key => $arItem) {
+		$result[$key]["ID"]	= $arItem["ID"];
+		//$result[$key]["NAME"]			= $arItem["NAME"];	
+		//
+		///@TODO исправить на ParentGetById
+		$CAR_MARK = $CAllMain->ParentGetList("car_mark", array(), array("id_car_mark"=>$arItem["ID_CAR_MARK"]), array());
+		$CAR_MARK = reset($CAR_MARK);
+		
+		///@TODO исправить на ParentGetById
+		$CAR_MODEL = $CAllMain->ParentGetList("car_model", array(), array("id_car_model"=>$arItem["ID_CAR_MODEL"]), array());
+		$CAR_MODEL = reset($CAR_MODEL);
+		
+		///@TODO исправить на ParentGetById
+		$CAR_GENERATION = $CAllMain->ParentGetList("car_generation", array(), array("id_car_generation"=>$arItem["ID_CAR_GENERATION"]), array());
+		$CAR_GENERATION = reset($CAR_GENERATION);
+		
+		///@TODO исправить на ParentGetById
+		$ID_CAR_SERIE = $CAllMain->ParentGetList("car_serie", array(), array("id_car_serie"=>$arItem["ID_CAR_SERIE"]), array());
+		$ID_CAR_SERIE = reset($ID_CAR_SERIE);
+		
+		///@TODO исправить на ParentGetById
+		$ID_CAR_MODIFICATION = $CAllMain->ParentGetList("car_modification", array(), array("id_car_modification"=>$arItem["ID_CAR_MODIFICATION"]), array());
+		$ID_CAR_MODIFICATION = reset($ID_CAR_MODIFICATION);
+		
+		
+		
+		$result[$key]["NAME"] = $CAR_MARK["name"].", ".$CAR_MODEL["name"].", ".$CAR_GENERATION["name"].", ".$ID_CAR_SERIE["name"].", ".$ID_CAR_MODIFICATION["name"];
+		
+	}	
+	
+
+	$result["add"]["ID"] = "add";
+	$result["add"]["NAME"] = "Добавить авто";
+	
+	if (count($result))
+		$filelist["LIST"] = $result;
+}
+
+if ($get = $REST->method("get","/car_user/{%}/"))
+{
+	$result = array(1,2);
+		//if (count($result))
+	$filelist["CARS_ADD"] = $result;
+	
+}
 
 
 
@@ -201,11 +255,13 @@ if ($get = $REST->method("get","/company/"))
 }
 
 ///запись
+if(count($filelist) == 0)
+	$filelist["NOT_QUERE"] = "Y";
 if ($filelist)
 {
 	echo json_encode($filelist);
 	//echo "<pre>";
-	//print_r($filelist);
+	///print_r($filelist);
 	//echo "</pre>";
 }
 ?>
