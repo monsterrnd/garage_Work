@@ -143,6 +143,7 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 						$result["ADDRESS"]			= $company["ADDRESS"];
 						$result["ADDRESS_MAP"]		= $company["ADDRESS_MAP"];
 						$result["DESCRIPTION"]		= $company["DESCRIPTION"];	
+						$result["COUNT_REVIEW"]		= 100;	
 						
 						$filelist["DETAIL"] = $result;
 					}
@@ -220,22 +221,32 @@ if ($get = $REST->method("get","/auto/"))
 	$result = array();
 	$res = $CAllMain->ParentGetList("car_mark", array(), array(), array());
 	foreach ($res as $key => $arItem) {
-		$result[$key]["ID"] = $arItem["id_car_mark"];
-		$result[$key]["NAME"] = $arItem["name"];
+		$result[$key]["id"] = $arItem["id_car_mark"];
+		$result[$key]["name"] = $arItem["name"];
 	}
 	
-	$filelist[] = $result;
+	$filelist["MARK_LIST"] = $result;
 }
 
 if ($get = $REST->method("get","/auto/{%}/"))
 {
+	$result = array();
 	$res = $CAllMain->ParentGetList("car_model", array(), array("id_car_mark"=>$get["REQUEST"][1]), array());
-	$filelist[] = $res;
+	foreach ($res as $key => $arItem) {
+		$result[$key]["id"] = $arItem["id_car_model"];
+		$result[$key]["name"] = $arItem["name"];
+	}
+	$filelist["MODEL_LIST"] = $result;
 }
 if ($get = $REST->method("get","/auto/{%}/{%}/"))
 {
+	$result = array();
 	$res = $CAllMain->ParentGetList("car_generation", array(), array("id_car_model"=>$get["REQUEST"][2]), array());
-	$filelist[] = $res;
+	foreach ($res as $key => $arItem) {
+		$result[$key]["id"] = $arItem["id_car_generation"];
+		$result[$key]["name"] = $arItem["name"];
+	}
+	$filelist["GENERATION_LIST"] = $result;
 }
 if ($get = $REST->method("get","/auto/{%}/{%}/{%}/"))
 {
