@@ -8,7 +8,8 @@ class CAllMain
 	public $Error = array();
 	public $pagination_list = array();
 
-	function SessionInit(){
+	function SessionInit()
+	{
 		session_start();
 		if (!isset($_SESSION['PRIVATE_KEY']))
 		{
@@ -21,6 +22,11 @@ class CAllMain
     */
 	function deBugTimer(){
 		
+	}
+	static function QuotesRemove($str)
+	{
+		$str = str_replace(array("'",'"'),' ',$str);
+		return $str;
 	}
 	/**
     * 

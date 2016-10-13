@@ -1,11 +1,14 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/core/modules/main/root.php");?>
 <?
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: DELETE, PUT");
 header('Content-type: application/json');
 $REST = new CRestMethod;	
 $CAllMain = new CAllMain;	
-	
+
+
 $filelist = array();
+
 
 if ($get = $REST->method("get","/services/"))
 {
@@ -198,31 +201,27 @@ if ($get = $REST->method("get","/car_user/"))
 	}	
 	
 
-	$result["add"]["ID"] = "add";
-	$result["add"]["NAME"] = "Добавить авто";
-	
-	if (count($result))
-		$filelist["LIST"] = $result;
+
+	$filelist["LIST"] = $result;
 }
 
 if ($get = $REST->method("get","/car_user/{%}/"))
 {
 	$result = array(1,2);
-		//if (count($result))
 	$filelist["CARS_ADD"] = $result;
 	
 }
 
 
-
-
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 if ($get = $REST->method("get","/auto/"))
 {
 	$result = array();
 	$res = $CAllMain->ParentGetList("car_mark", array(), array(), array());
 	foreach ($res as $key => $arItem) {
 		$result[$key]["id"] = $arItem["id_car_mark"];
-		$result[$key]["name"] = $arItem["name"];
+		$result[$key]["name"] = CAllMain::QuotesRemove($arItem["name"]);
 	}
 	
 	$filelist["MARK_LIST"] = $result;
@@ -234,30 +233,77 @@ if ($get = $REST->method("get","/auto/{%}/"))
 	$res = $CAllMain->ParentGetList("car_model", array(), array("id_car_mark"=>$get["REQUEST"][1]), array());
 	foreach ($res as $key => $arItem) {
 		$result[$key]["id"] = $arItem["id_car_model"];
-		$result[$key]["name"] = $arItem["name"];
+		$result[$key]["name"] = CAllMain::QuotesRemove($arItem["name"]);
 	}
 	$filelist["MODEL_LIST"] = $result;
 }
+
 if ($get = $REST->method("get","/auto/{%}/{%}/"))
 {
 	$result = array();
 	$res = $CAllMain->ParentGetList("car_generation", array(), array("id_car_model"=>$get["REQUEST"][2]), array());
 	foreach ($res as $key => $arItem) {
 		$result[$key]["id"] = $arItem["id_car_generation"];
-		$result[$key]["name"] = $arItem["name"];
+		$result[$key]["name"] = CAllMain::QuotesRemove($arItem["name"]);
 	}
 	$filelist["GENERATION_LIST"] = $result;
 }
+
 if ($get = $REST->method("get","/auto/{%}/{%}/{%}/"))
 {
+	$result = array();
 	$res = $CAllMain->ParentGetList("car_serie", array(), array("id_car_generation"=>$get["REQUEST"][3]), array());
-	$filelist[] = $res;
+	foreach ($res as $key => $arItem) {
+		$result[$key]["id"] = $arItem["id_car_serie"];
+		$result[$key]["name"] = CAllMain::QuotesRemove($arItem["name"]);
+	}
+	$filelist["SERIE_LIST"] = $result;
 }
+
 if ($get = $REST->method("get","/auto/{%}/{%}/{%}/{%}/"))
 {
+	$result = array();	
 	$res = $CAllMain->ParentGetList("car_modification", array(), array("id_car_serie"=>$get["REQUEST"][4]), array());
-	$filelist[] = $res;
+	foreach ($res as $key => $arItem) {
+		$result[$key]["id"] = $arItem["id_car_modification"];
+		$result[$key]["name"] = CAllMain::QuotesRemove($arItem["name"]);
+	}
+	$filelist["MODIFICATION_LIST"] = $result;
 }
+
+////добавляем авто
+if ($post = $REST->method("post","/auto/"))
+{
+	$result = array();
+	
+	
+	
+	$result["ID_USER"]					= 52; ////@TODO добавить пользователя
+	$result["ID_CAR_MARK"]			= $post["PARAMS"]["ID_CAR_MARK"];		
+	$result["ID_CAR_MODEL"]			= $post["PARAMS"]["ID_CAR_MODEL"];		
+	$result["ID_CAR_GENERATION"]	= $post["PARAMS"]["ID_CAR_GENERATION"];
+	$result["ID_CAR_SERIE"]			= $post["PARAMS"]["ID_CAR_SERIE"];		
+	$result["ID_CAR_MODIFICATION"]	= $post["PARAMS"]["ID_CAR_MODIFICATION"];
+	$res = $CAllMain->ParentAdd("ga_user_car", $result);
+//	foreach ($post["PARAMS"] as $keyParams => $arParams) {
+//		$result[$keyParams] = $arParams;
+//	}
+	
+	$filelist["ADD_CAR"] = $res;
+}
+
+///удалить авто
+if ($delete = $REST->method("DELETE","/auto/{%}/"))
+{
+	$result = array();
+	$res = $CAllMain->ParentDelete("ga_user_car", $delete["REQUEST"][1]);
+	$filelist["ADD_DELETE"] = $res;
+}
+//
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+
 
 if ($get = $REST->method("get","/company/"))
 {
