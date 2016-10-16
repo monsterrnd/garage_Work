@@ -202,7 +202,7 @@ if ($get = $REST->method("get","/car_user/"))
 	
 
 
-	$filelist["LIST"] = $result;
+	$filelist["LIST_AUTO"] = $result;
 }
 
 if ($get = $REST->method("get","/car_user/{%}/"))
