@@ -108,7 +108,18 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 {
 	$user = "asdfasdfasdf";
 	$result = array();
-	
+	$date = array();
+	///// добавляем дату на 2 недели
+	for ($i = 0; $i <= 13; $i++) 
+	{
+		$thisdate = date("d")+$i.".".date("m").".".date("Y");
+		$date[$i]["value"] = $thisdate;
+		if ($i == 0) 
+			$date[$i]["name"]  = "сегодня";
+		else
+			$date[$i]["name"]  = $thisdate;
+	}
+	  
 	////проверка существует услуга в бд если существует берем эту услугу для выборки
 	$exist_service = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"),array("ID"=>$get["REQUEST"][1]), array());
 	if (count($exist_service))
@@ -139,7 +150,9 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 						$price = reset($price);
 						
 						$result["ID"]				= $company["ID"];
+						$result["DATE"]				= $date;
 						$result["PRICE"]			= $price["PRICE"];
+						$result["SERVICE_NAME"]		= $exist_service["NAME"];
 						$result["COMMENT"]			= $price["COMMENT"];
 						$result["NAME"]				= $company["NAME"];
 						$result["LOGO"]				= $company["LOGO"];
@@ -285,9 +298,7 @@ if ($post = $REST->method("post","/auto/"))
 	$result["ID_CAR_SERIE"]			= $post["PARAMS"]["ID_CAR_SERIE"];		
 	$result["ID_CAR_MODIFICATION"]	= $post["PARAMS"]["ID_CAR_MODIFICATION"];
 	$res = $CAllMain->ParentAdd("ga_user_car", $result);
-//	foreach ($post["PARAMS"] as $keyParams => $arParams) {
-//		$result[$keyParams] = $arParams;
-//	}
+
 	
 	$filelist["ADD_CAR"] = $res;
 }
@@ -310,6 +321,42 @@ if ($get = $REST->method("get","/company/"))
 	$res = $CAllMain->ParentGetList("ga_company", array(), array(), array());
 	$filelist[] = $res;
 }
+
+///список заявок
+if ($post = $REST->method("get","/order/"))
+{
+	$res = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
+	foreach ($res as $keyOrder => &$arItemOrder) {
+		$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ID"=>$arItemOrder["ID_COMPANY"]), array());
+		$company = reset($company);
+		$arItemOrder["COMPANY_NAME"] = $company["NAME"];
+	}
+	
+	
+	$filelist["LIST_ORDER"] = $res;
+}
+
+///добавить заявку
+if ($post = $REST->method("post","/order/"))
+{
+	$result = array();					
+				
+//ID_PRICES						
+
+	$result["ID_USER"]					= 52; ////@TODO добавить пользователя
+	$result["ID_COMPANY"]			= $post["PARAMS"]["ID"];		
+	$result["FIRST_NAME"]			= $post["PARAMS"]["NAME"];		
+	$result["PHONE"]				= $post["PARAMS"]["PHONE"];
+	$result["DATE"]					= $post["PARAMS"]["DATE"];
+	///$result["ITS_PARTS"]			= $post["PARAMS"]["REPAIR"];	@TODO исправить
+	$result["SERVICE_NAME"]			= $post["PARAMS"]["SERVICE_NAME"];		
+	$result["COMMENT"]				= $post["PARAMS"]["COMMENT"];
+	$res = $CAllMain->ParentAdd("ga_order", $result);
+
+	$filelist["ADD_ORDER"] = $res;
+}
+
+
 
 ///запись
 if(count($filelist) == 0)
