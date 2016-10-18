@@ -82,11 +82,13 @@ if ($get = $REST->method("get","/services/{%}/"))
 								////собераем ответ роутора
 								foreach ($company as $companyKey => $companyItem) 
 								{
+									$logo = $CAllMain->ParentGetList("ga_media_link", array(), array("GROUP_FOTO_ID"=>$companyItem["LOGO"],"SIZE"=>150));
+									$logo = reset($logo);
 									$result[$companyKey]["ID"]				= $companyItem["ID"];
 									$result[$companyKey]["PRICE"]			= $priceSortId[$companyItem["ID"]]["PRICE"];
 									$result[$companyKey]["COMMENT"]			= $priceSortId[$companyItem["ID"]]["COMMENT"];
 									$result[$companyKey]["NAME"]			= $companyItem["NAME"];
-									$result[$companyKey]["LOGO"]			= $companyItem["LOGO"];
+									$result[$companyKey]["LOGO"]			= $logo["PATH"];
 									$result[$companyKey]["ADDRESS"]			= $companyItem["ADDRESS"];
 									$result[$companyKey]["DESCRIPTION"]		= $companyItem["DESCRIPTION"];
 								}
@@ -148,14 +150,15 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 					if (count($price))
 					{
 						$price = reset($price);
-						
+						$logo = $CAllMain->ParentGetList("ga_media_link", array(), array("GROUP_FOTO_ID"=>$company["LOGO"],"SIZE"=>150));
+						$logo = reset($logo);
 						$result["ID"]				= $company["ID"];
 						$result["DATE"]				= $date;
 						$result["PRICE"]			= $price["PRICE"];
 						$result["SERVICE_NAME"]		= $exist_service["NAME"];
 						$result["COMMENT"]			= $price["COMMENT"];
 						$result["NAME"]				= $company["NAME"];
-						$result["LOGO"]				= $company["LOGO"];
+						$result["LOGO"]				= $logo["PATH"];
 						$result["ADDRESS"]			= $company["ADDRESS"];
 						$result["ADDRESS_MAP"]		= $company["ADDRESS_MAP"];
 						$result["DESCRIPTION"]		= $company["DESCRIPTION"];	
@@ -174,50 +177,27 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 }
 
 
-
+///список авто пользователя
 if ($get = $REST->method("get","/car_user/"))
 {
 
 	$result = array();
 	$params = array();
 	
+	$user = $CAllMain->ParentGetList("ga_user", array("SORT"=>"asc"),array("ID_USER"=>52,), array()); ////@TODO добавить пользователя
+	$user = reset($user);
 	$res = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
 	
 	foreach ($res as $key => $arItem) {
-		$result[$key]["ID"]	= $arItem["ID"];
-		//$result[$key]["NAME"]			= $arItem["NAME"];	
-		//
-		///@TODO исправить на ParentGetById
-		$CAR_MARK = $CAllMain->ParentGetList("car_mark", array(), array("id_car_mark"=>$arItem["ID_CAR_MARK"]), array());
-		$CAR_MARK = reset($CAR_MARK);
-		
-		///@TODO исправить на ParentGetById
-		$CAR_MODEL = $CAllMain->ParentGetList("car_model", array(), array("id_car_model"=>$arItem["ID_CAR_MODEL"]), array());
-		$CAR_MODEL = reset($CAR_MODEL);
-		
-		///@TODO исправить на ParentGetById
-		$CAR_GENERATION = $CAllMain->ParentGetList("car_generation", array(), array("id_car_generation"=>$arItem["ID_CAR_GENERATION"]), array());
-		$CAR_GENERATION = reset($CAR_GENERATION);
-		
-		///@TODO исправить на ParentGetById
-		$ID_CAR_SERIE = $CAllMain->ParentGetList("car_serie", array(), array("id_car_serie"=>$arItem["ID_CAR_SERIE"]), array());
-		$ID_CAR_SERIE = reset($ID_CAR_SERIE);
-		
-		///@TODO исправить на ParentGetById
-		$ID_CAR_MODIFICATION = $CAllMain->ParentGetList("car_modification", array(), array("id_car_modification"=>$arItem["ID_CAR_MODIFICATION"]), array());
-		$ID_CAR_MODIFICATION = reset($ID_CAR_MODIFICATION);
-		
-		
-		
-		$result[$key]["NAME"] = $CAR_MARK["name"].", ".$CAR_MODEL["name"].", ".$CAR_GENERATION["name"].", ".$ID_CAR_SERIE["name"].", ".$ID_CAR_MODIFICATION["name"];
-		
+		$result[$key]["ID"]	  = $arItem["ID"];	
+		$result[$key]["NAME"] = $arItem["FULL_NAME_CAR"];
+		$result[$key]["DEF"]  = ($user["MAIN_AUTO"] == $arItem["ID"]) ? "Y" : "";
 	}	
 	
-
-
 	$filelist["LIST_AUTO"] = $result;
 }
 
+/// построить список для добавления авто
 if ($get = $REST->method("get","/car_user/{%}/"))
 {
 	$result = array(1,2);
@@ -225,6 +205,11 @@ if ($get = $REST->method("get","/car_user/{%}/"))
 	
 }
 
+if ($post = $REST->method("post","/set_main_auto/"))
+{
+	$res = $CAllMain->ParentUpdate("ga_user", array("ID"=>52,"MAIN_AUTO"=>$post["PARAMS"]["ID"])); ////@TODO добавить пользователя
+	
+}
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -289,7 +274,31 @@ if ($post = $REST->method("post","/auto/"))
 {
 	$result = array();
 	
+	$name_auto = "";
+	///@TODO исправить на ParentGetById
+	$CAR_MARK = $CAllMain->ParentGetList("car_mark", array(), array("id_car_mark"=>$post["PARAMS"]["ID_CAR_MARK"]), array());
+	$CAR_MARK = reset($CAR_MARK);
+	$name_auto .= (($CAR_MARK["name"]) ? $CAR_MARK["name"] : "");
+
+	///@TODO исправить на ParentGetById
+	$CAR_MODEL = $CAllMain->ParentGetList("car_model", array(), array("id_car_model"=>$post["PARAMS"]["ID_CAR_MODEL"]), array());
+	$CAR_MODEL = reset($CAR_MODEL);
+	$name_auto .= (($CAR_MODEL["name"]) ? (", ".$CAR_MODEL["name"]) : "");
 	
+	///@TODO исправить на ParentGetById
+	$CAR_GENERATION = $CAllMain->ParentGetList("car_generation", array(), array("id_car_generation"=>$post["PARAMS"]["ID_CAR_GENERATION"]), array());
+	$CAR_GENERATION = reset($CAR_GENERATION);
+	$name_auto .= (($CAR_GENERATION["name"]) ? (", ".$CAR_GENERATION["name"]) : "");
+
+	///@TODO исправить на ParentGetById
+	$ID_CAR_SERIE = $CAllMain->ParentGetList("car_serie", array(), array("id_car_serie"=>$post["PARAMS"]["ID_CAR_SERIE"]), array());
+	$ID_CAR_SERIE = reset($ID_CAR_SERIE);
+	$name_auto .= (($ID_CAR_SERIE["name"]) ? (", ".$ID_CAR_SERIE["name"]) : "");
+	
+	///@TODO исправить на ParentGetById
+	$ID_CAR_MODIFICATION = $CAllMain->ParentGetList("car_modification", array(), array("id_car_modification"=>$post["PARAMS"]["ID_CAR_MODIFICATION"]), array());
+	$ID_CAR_MODIFICATION = reset($ID_CAR_MODIFICATION);	
+	$name_auto .= (($ID_CAR_MODIFICATION["name"]) ? (", ".$ID_CAR_MODIFICATION["name"]) : "");
 	
 	$result["ID_USER"]					= 52; ////@TODO добавить пользователя
 	$result["ID_CAR_MARK"]			= $post["PARAMS"]["ID_CAR_MARK"];		
@@ -297,6 +306,8 @@ if ($post = $REST->method("post","/auto/"))
 	$result["ID_CAR_GENERATION"]	= $post["PARAMS"]["ID_CAR_GENERATION"];
 	$result["ID_CAR_SERIE"]			= $post["PARAMS"]["ID_CAR_SERIE"];		
 	$result["ID_CAR_MODIFICATION"]	= $post["PARAMS"]["ID_CAR_MODIFICATION"];
+	$result["FULL_NAME_CAR"]		= $name_auto;
+
 	$res = $CAllMain->ParentAdd("ga_user_car", $result);
 
 	

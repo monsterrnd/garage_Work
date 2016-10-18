@@ -84,6 +84,9 @@
                         <li>
                             <a href="/core/admin/"><i class="fa fa-th"></i> Рабочий стол</a>
                         </li>
+                        <li>
+                            <a href="/core/admin/testloadfoto.php"><i class="fa fa-users"></i>Загрузка фото</a>
+                        </li>
                         <!--li>
                             <a href="company.html"><i class="fa fa-users"></i> Компании</a>
                         </li>
