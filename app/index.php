@@ -327,14 +327,10 @@ if ($delete = $REST->method("DELETE","/auto/{%}/"))
 
 
 
-if ($get = $REST->method("get","/company/"))
-{
-	$res = $CAllMain->ParentGetList("ga_company", array(), array(), array());
-	$filelist[] = $res;
-}
+
 
 ///список заявок
-if ($post = $REST->method("get","/order/"))
+if ($get = $REST->method("get","/order/"))
 {
 	$res = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
 	foreach ($res as $keyOrder => &$arItemOrder) {
@@ -345,6 +341,21 @@ if ($post = $REST->method("get","/order/"))
 	
 	
 	$filelist["LIST_ORDER"] = $res;
+}
+//заявка детально
+if ($get = $REST->method("get","/order/{%}/"))
+{
+	$order = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID"=>$get["REQUEST"][1],"ID_USER"=>52), array()); ////@TODO добавить пользователя
+	$order = reset($order);
+
+	$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ID"=>$order["ID_COMPANY"]), array());
+	$company = reset($company);
+	$order["COMPANY"] = $company;
+	
+	$review = $CAllMain->ParentGetList("ga_rewview", array("SORT"=>"asc"), array("ID_COMPANY"=>$company["ID"],"ID_USER"=>52), array());
+	$order["REVIEW_LIST"] = $review;	
+	
+	$filelist["DETAIL_ORDER"] = $order;
 }
 
 ///добавить заявку
@@ -367,7 +378,19 @@ if ($post = $REST->method("post","/order/"))
 	$filelist["ADD_ORDER"] = $res;
 }
 
-
+///список отзывов пользователя
+if ($get = $REST->method("get","/reviews/"))
+{
+	$review = $CAllMain->ParentGetList("ga_rewview", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
+	
+	foreach ($review as $keyOrder => &$arItemOrder) {
+		$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ID"=>$arItemOrder["ID_COMPANY"]), array());
+		$company = reset($company);
+		$arItemOrder["COMPANY"] = $company;
+	}	
+	
+	$filelist["LIST_REWIEV"] = $review;
+}
 
 ///запись
 if(count($filelist) == 0)
