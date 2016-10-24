@@ -7,6 +7,12 @@ $REST = new CRestMethod;
 $CAllMain = new CAllMain;	
 
 
+global $USER;
+$user = "asdfasdfasdf";
+$USER  = $CAllMain->ParentGetList("ga_user", array("SORT"=>"asc"), array("SESSION"=>$user), array());
+$USER = reset($USER);
+
+
 $filelist = array();
 
 
@@ -26,7 +32,7 @@ if ($get = $REST->method("get","/services/"))
 
 if ($get = $REST->method("get","/services/{%}/"))
 {
-	$user = "asdfasdfasdf";
+	
 	$result = array();
 	
 	$res = $CAllMain->ParentGetList("ga_allservices", array("SORT"=>"asc"),array("ID_ALLSERVICES"=>$get["REQUEST"][1]), array());
@@ -48,13 +54,10 @@ if ($get = $REST->method("get","/services/{%}/"))
 			$exist_service = reset($exist_service);
 			
 			////Подгружаем данные пользователя
-			$user = $CAllMain->ParentGetList("ga_user", array("SORT"=>"asc"), array("SESSION"=>$user), array());
-			if (count($user))
-			{
-				$user = reset($user);
-				
+			if ($USER)
+			{			
 				////Подгружаем авто пользователя
-				$auto = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"), array("ID_USER"=>$user["ID"],"ID"=>$user["MAIN_AUTO"]), array());
+				$auto = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"), array("ID_USER"=>$USER["ID"],"ID"=>$USER["MAIN_AUTO"]), array());
 				if (count($auto))
 				{
 					$auto = reset($auto);
@@ -108,7 +111,6 @@ if ($get = $REST->method("get","/services/{%}/"))
 
 if ($get = $REST->method("get","/services/{%}/{%}/"))
 {
-	$user = "asdfasdfasdf";
 	$result = array();
 	$date = array();
 	///// добавляем дату на 2 недели
@@ -129,13 +131,11 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 		$exist_service = reset($exist_service);
 
 		////Подгружаем данные пользователя
-		$user = $CAllMain->ParentGetList("ga_user", array("SORT"=>"asc"), array("SESSION"=>$user), array());
-		if (count($user))
+		if ($USER)
 		{
-			$user = reset($user);
 
 			////Подгружаем авто пользователя
-			$auto = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"), array("ID_USER"=>$user["ID"],"ID"=>$user["MAIN_AUTO"]), array());
+			$auto = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"), array("ID_USER"=>$USER["ID"],"ID"=>$USER["MAIN_AUTO"]), array());
 			if (count($auto))
 			{
 				$auto = reset($auto);
@@ -147,6 +147,13 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 				{
 					$company = reset($company);
 					$price = $CAllMain->ParentGetList("ga_prices", array("SORT"=>"asc"), array("ID_CAR_MARK"=>$auto["ID_CAR_MARK"],"ID_ALLSERVICES"=>$exist_service["ID"],"ID_COMPANY"=>$company["ID"]), array());
+					
+					$review = $CAllMain->ParentGetList("ga_rewview", array("SORT"=>"asc"), array("ID_COMPANY"=>$company["ID"],"ID_USER"=>$USER["ID"]), array());
+					$result["REVIEW_LIST"] = $review;
+					
+					$result["USER"]["PHONE"] = $USER["PHONE"];
+					$result["USER"]["FIRST_NAME"] = $USER["FIRST_NAME"];
+					
 					if (count($price))
 					{
 						$price = reset($price);
@@ -162,6 +169,7 @@ if ($get = $REST->method("get","/services/{%}/{%}/"))
 						$result["ADDRESS"]			= $company["ADDRESS"];
 						$result["ADDRESS_MAP"]		= $company["ADDRESS_MAP"];
 						$result["DESCRIPTION"]		= $company["DESCRIPTION"];	
+						
 						$result["COUNT_REVIEW"]		= 100;	
 						
 						$filelist["DETAIL"] = $result;
@@ -184,14 +192,13 @@ if ($get = $REST->method("get","/car_user/"))
 	$result = array();
 	$params = array();
 	
-	$user = $CAllMain->ParentGetList("ga_user", array("SORT"=>"asc"),array("ID_USER"=>52,), array()); ////@TODO добавить пользователя
-	$user = reset($user);
-	$res = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
+
+	$res = $CAllMain->ParentGetList("ga_user_car", array("SORT"=>"asc"),array("ID_USER"=>$USER["ID"]), array()); 
 	
 	foreach ($res as $key => $arItem) {
 		$result[$key]["ID"]	  = $arItem["ID"];	
 		$result[$key]["NAME"] = $arItem["FULL_NAME_CAR"];
-		$result[$key]["DEF"]  = ($user["MAIN_AUTO"] == $arItem["ID"]) ? "Y" : "";
+		$result[$key]["DEF"]  = ($USER["MAIN_AUTO"] == $arItem["ID"]) ? "Y" : "";
 	}	
 	
 	$filelist["LIST_AUTO"] = $result;
@@ -300,7 +307,7 @@ if ($post = $REST->method("post","/auto/"))
 	$ID_CAR_MODIFICATION = reset($ID_CAR_MODIFICATION);	
 	$name_auto .= (($ID_CAR_MODIFICATION["name"]) ? (", ".$ID_CAR_MODIFICATION["name"]) : "");
 	
-	$result["ID_USER"]					= 52; ////@TODO добавить пользователя
+	$result["ID_USER"]				= $USER["ID"]; 
 	$result["ID_CAR_MARK"]			= $post["PARAMS"]["ID_CAR_MARK"];		
 	$result["ID_CAR_MODEL"]			= $post["PARAMS"]["ID_CAR_MODEL"];		
 	$result["ID_CAR_GENERATION"]	= $post["PARAMS"]["ID_CAR_GENERATION"];
@@ -332,7 +339,7 @@ if ($delete = $REST->method("DELETE","/auto/{%}/"))
 ///список заявок
 if ($get = $REST->method("get","/order/"))
 {
-	$res = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
+	$res = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID_USER"=>$USER["ID"]), array()); 
 	foreach ($res as $keyOrder => &$arItemOrder) {
 		$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ID"=>$arItemOrder["ID_COMPANY"]), array());
 		$company = reset($company);
@@ -345,14 +352,18 @@ if ($get = $REST->method("get","/order/"))
 //заявка детально
 if ($get = $REST->method("get","/order/{%}/"))
 {
-	$order = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID"=>$get["REQUEST"][1],"ID_USER"=>52), array()); ////@TODO добавить пользователя
+	$order = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID"=>$get["REQUEST"][1],"ID_USER"=>$USER["ID"]), array());
 	$order = reset($order);
 
 	$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ID"=>$order["ID_COMPANY"]), array());
 	$company = reset($company);
+	
+	$logo = $CAllMain->ParentGetList("ga_media_link", array(), array("GROUP_FOTO_ID"=>$company["LOGO"],"SIZE"=>150));
+	$logo= reset($logo);
+	$company["LOGO"]  = $logo["PATH"];
 	$order["COMPANY"] = $company;
 	
-	$review = $CAllMain->ParentGetList("ga_rewview", array("SORT"=>"asc"), array("ID_COMPANY"=>$company["ID"],"ID_USER"=>52), array());
+	$review = $CAllMain->ParentGetList("ga_rewview", array("SORT"=>"asc"), array("ID_COMPANY"=>$company["ID"],"ID_USER"=>$USER["ID"]), array());
 	$order["REVIEW_LIST"] = $review;	
 	
 	$filelist["DETAIL_ORDER"] = $order;
@@ -362,10 +373,15 @@ if ($get = $REST->method("get","/order/{%}/"))
 if ($post = $REST->method("post","/order/"))
 {
 	$result = array();					
+	$user_new_info = array();					
 				
-//ID_PRICES						
-
-	$result["ID_USER"]					= 52; ////@TODO добавить пользователя
+	$user_new_info["ID"]			= $USER["ID"];
+	$user_new_info["FIRST_NAME"]	= $post["PARAMS"]["NAME"]; 
+	$user_new_info["PHONE"]			= $post["PARAMS"]["PHONE"]; 
+	$user_res = $CAllMain->ParentUpdate("ga_user", $user_new_info);
+	
+	//ID_PRICES	
+	$result["ID_USER"]				= $USER["ID"];
 	$result["ID_COMPANY"]			= $post["PARAMS"]["ID"];		
 	$result["FIRST_NAME"]			= $post["PARAMS"]["NAME"];		
 	$result["PHONE"]				= $post["PARAMS"]["PHONE"];
@@ -374,6 +390,7 @@ if ($post = $REST->method("post","/order/"))
 	$result["SERVICE_NAME"]			= $post["PARAMS"]["SERVICE_NAME"];		
 	$result["COMMENT"]				= $post["PARAMS"]["COMMENT"];
 	$res = $CAllMain->ParentAdd("ga_order", $result);
+	
 
 	$filelist["ADD_ORDER"] = $res;
 }
@@ -381,7 +398,7 @@ if ($post = $REST->method("post","/order/"))
 ///список отзывов пользователя
 if ($get = $REST->method("get","/reviews/"))
 {
-	$review = $CAllMain->ParentGetList("ga_rewview", array("SORT"=>"asc"),array("ID_USER"=>52), array()); ////@TODO добавить пользователя
+	$review = $CAllMain->ParentGetList("ga_rewview", array("SORT"=>"asc"),array("ID_USER"=>$USER["ID"]), array());
 	
 	foreach ($review as $keyOrder => &$arItemOrder) {
 		$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ID"=>$arItemOrder["ID_COMPANY"]), array());
