@@ -339,7 +339,7 @@ if ($delete = $REST->method("DELETE","/auto/{%}/"))
 ///список заявок
 if ($get = $REST->method("get","/order/"))
 {
-	$res = $CAllMain->ParentGetList("ga_order", array("SORT"=>"asc"),array("ID_USER"=>$USER["ID"]), array()); 
+	$res = $CAllMain->ParentGetList("ga_order", array("ID"=>"desc"),array("ID_USER"=>$USER["ID"]), array()); 
 	foreach ($res as $keyOrder => &$arItemOrder) {
 		$company = $CAllMain->ParentGetList("ga_company", array("SORT"=>"asc"), array("ID"=>$arItemOrder["ID_COMPANY"]), array());
 		$company = reset($company);
@@ -389,6 +389,8 @@ if ($post = $REST->method("post","/order/"))
 	///$result["ITS_PARTS"]			= $post["PARAMS"]["REPAIR"];	@TODO исправить
 	$result["SERVICE_NAME"]			= $post["PARAMS"]["SERVICE_NAME"];		
 	$result["COMMENT"]				= $post["PARAMS"]["COMMENT"];
+	$result["STATUS"]				= "Y";
+	$result["PRICE"]				= $post["PARAMS"]["PRICE"];
 	$res = $CAllMain->ParentAdd("ga_order", $result);
 	
 
